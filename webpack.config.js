@@ -8,8 +8,8 @@ module.exports = {
     mode: process.env.NODE_ENV || 'development',
     devtool: 'inline-source-map',
     entry: {
-        content: './src/app/content.ts',
-        background: './src/app/background.ts',
+        content: './src/scripts/content.ts',
+        background: './src/scripts/background.ts',
         popup: './src/ui/popup.tsx',
     },
     output: {
