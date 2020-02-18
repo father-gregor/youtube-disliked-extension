@@ -1,8 +1,9 @@
+const webpack = require('webpack');
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
-const packageJson = require('./package.json');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
-console.log('Dir', __dirname);
+const packageJson = require('./package.json');
 
 module.exports = {
     mode: process.env.NODE_ENV || 'development',
@@ -26,6 +27,8 @@ module.exports = {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin({cleanOnceBeforeBuildPatterns: [path.join(__dirname, 'dist/*')]}),
+        new webpack.ProgressPlugin(),
         new CopyPlugin([
             {
                 from: './src',
@@ -43,6 +46,6 @@ module.exports = {
                     }, null, 4))
                 }
             }
-        ]),
+        ])
     ]
 };
