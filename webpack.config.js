@@ -14,7 +14,7 @@ module.exports = {
         popup: './src/ui/popup.tsx',
     },
     output: {
-        path: path.join(__dirname, 'dist/js'),
+        path: path.join(__dirname, 'dist/youtube-disliked/js'),
         filename: '[name].js'
     },
     resolve: {
@@ -27,17 +27,17 @@ module.exports = {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin({cleanOnceBeforeBuildPatterns: [path.join(__dirname, 'dist/*')]}),
+        new CleanWebpackPlugin({cleanOnceBeforeBuildPatterns: [path.join(__dirname, 'dist/youtube-disliked/*')]}),
         new webpack.ProgressPlugin(),
         new CopyPlugin([
             {
                 from: './src',
-                to: path.join(__dirname, 'dist'),
+                to: path.join(__dirname, 'dist/youtube-disliked'),
                 ignore: ['*.js', '*.tsx', '*.ts', 'manifest.json']
             },
             {
                 from: 'src/manifest.json',
-                to: path.join(__dirname, 'dist'),
+                to: path.join(__dirname, 'dist/youtube-disliked'),
                 transform: function (content) {
                     return Buffer.from(JSON.stringify({
                         ...JSON.parse(content.toString()),
