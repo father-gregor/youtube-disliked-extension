@@ -3,6 +3,7 @@
     "version": "",
     "manifest_version": 2,
     "description": "",
+    "key": "",
     "homepage_url": "https://github.com/father-gregor",
     "icons": {
       "16": "assets/icons/icon16.png",
@@ -18,7 +19,7 @@
         "128":"assets/icons/icon128.png"
       },
       "default_title": "Youtube Disliked",
-      "default_popup": "menu.html"
+      "default_popup": "popup-index.html"
     },
     "default_locale": "en",
     "background": {
@@ -26,6 +27,10 @@
         "js/background.js"
       ],
       "persistent": false
+    },
+    "oauth2": {
+      "client_id": "",
+      "scopes": ["https://www.googleapis.com/auth/youtube.readonly"]
     },
     "permissions": [
       "identity"
