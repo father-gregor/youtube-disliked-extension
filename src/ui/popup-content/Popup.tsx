@@ -1,13 +1,13 @@
 import React from "react"
 import ReactDOM from "react-dom"
 
-import "../styles/Popup.css"
+import "../../styles/Popup.scss"
 
 class Popup extends React.Component {
     render() {
         return (
             <div className="popup-padded">
-                <h1>{chrome.i18n.getMessage("l10nHello")}</h1>
+                <h1>{chrome.i18n.getMessage("dislikedButtonText")}</h1>
             </div>
         )
     }

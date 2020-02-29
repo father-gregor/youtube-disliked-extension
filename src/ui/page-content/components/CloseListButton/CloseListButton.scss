@@ -1,0 +1,11 @@
+@import '../../../../styles/common/page-variables.scss';
+
+.close-list-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: $main-color-text;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}

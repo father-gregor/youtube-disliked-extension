@@ -1,0 +1,11 @@
+@mixin if-dark-theme () {
+    html[dark="true"] {
+        @content;
+    }
+}
+
+@mixin if-light-theme () {
+    html:not([dark]) {
+        @content;
+    }
+}

@@ -23,9 +23,7 @@
     },
     "default_locale": "en",
     "background": {
-      "scripts": [
-        "js/background.js"
-      ],
+      "scripts": ["js/background.js"],
       "persistent": false
     },
     "oauth2": {
@@ -39,8 +37,12 @@
     "content_scripts": [
       {
         "matches": ["https://*.youtube.com/*"],
-        "js": ["js/content.js"]
+        "js": ["js/content.js"],
+        "css": []
       }
+    ],
+    "web_accessible_resources": [
+      "_locales/**/*.json"
     ]
   }
   

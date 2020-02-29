@@ -1,0 +1,50 @@
+@import './common/page-variables.scss';
+@import './common/page-mixins.scss';
+
+body {
+    ytd-browse {
+        position: relative;
+    }
+
+    #extension-root-disliked-list {
+        position: fixed;
+        background: $list-background-color;
+        width: 80%;
+        height: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        top: 70px;
+        left: 240px;
+        right: 0;
+        font-size: 1.5rem;
+        z-index: -1;
+    }
+
+    &.body_disliked-list-opened {
+        overflow: hidden;
+
+        ytd-page-manager {
+            position: relative;
+        }
+
+        ytd-browse {
+            visibility: collapse;
+        }
+
+        #extension-root-disliked-list {
+            z-index: 1000;
+        }
+    }
+}
+
+@include if-dark-theme () {
+    body #extension-root-disliked-list {
+        box-shadow: 0 5px 10px $list-shadow-color_dark;
+    }
+}
+
+@include if-light-theme () {
+    body #extension-root-disliked-list {
+        box-shadow: 0 5px 10px $list-shadow-color_light;
+    }
+}
