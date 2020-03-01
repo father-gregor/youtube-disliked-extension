@@ -8,10 +8,12 @@
     align-items: center;
     margin: 50 20 0 20;
 
-    &,
-    button,
-    Button {
+    & {
         color: $main-color-text;
+    }
+
+    &,
+    Button {
         font-size: 1.5rem;
         font-family: $main-text-font;
     }

@@ -1,10 +1,10 @@
 import React from 'react';
-import Icon from 'react-icons-kit';
+import {Icon} from 'react-icons-kit';
 import {ic_clear} from 'react-icons-kit/md/ic_clear';
 
 import {Bind} from "../../decorators/Bind.decorator";
 
-import './CloseListButton.scss'
+import './CloseListButton.scss';
 
 export class CloseListButton extends React.Component<{onClose: () => void}> {
     @Bind

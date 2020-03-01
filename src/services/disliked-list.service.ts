@@ -1,8 +1,9 @@
-import { renderRootComponent } from "../ui/page-content/components/DislikedListContainer/DislikedListContainer";
+import { renderRootComponent } from "../ui/page-content/components/RootContainer/RootContainer";
 
 export class DislikedListService {
     private listRootElem: Element;
     private isOpened: boolean;
+    private currentThemeMode: 'light' | 'dark';
     private isListInserted = false;
     private PAGE_MANAGE_SELECTOR = 'ytd-page-manager';
     private LIST_ROOT_ID = 'extension-root-disliked-list';
@@ -10,10 +11,16 @@ export class DislikedListService {
 
     private static instance: DislikedListService;
 
-    private constructor () {}
+    private constructor () {
+        this.updateCurrentThemeMode();
+    }
 
     public get uiState () {
         return this.isOpened;
+    }
+
+    public getCurrentThemeMode () {
+        return this.currentThemeMode;
     }
 
     public toggleList () {
@@ -23,6 +30,10 @@ export class DislikedListService {
         else {
             this.openList();
         }
+    }
+
+    public updateCurrentThemeMode () {
+        this.currentThemeMode = document.documentElement.getAttribute('dark') ? 'dark' : 'light';
     }
 
     public openList () {

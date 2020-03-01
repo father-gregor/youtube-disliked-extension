@@ -33,7 +33,7 @@
     "permissions": [
       "identity"
     ],
-    "content_security_policy": "default-src 'self';",
+    "content_security_policy": "default-src 'self'; connect-src https://www.googleapis.com",
     "content_scripts": [
       {
         "matches": ["https://*.youtube.com/*"],
