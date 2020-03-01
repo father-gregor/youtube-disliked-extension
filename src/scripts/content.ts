@@ -44,7 +44,7 @@ function setupDislikedButtonProps (container: Element, originalContainer: Elemen
 }
 
 (async () => {
-    I18n = await I18nService.create(document.documentElement.lang);
+    I18n = await I18nService.create();
 
     chrome.runtime.sendMessage({}, (response) => {
         var checkReady = setInterval(() => {
@@ -60,10 +60,5 @@ function setupDislikedButtonProps (container: Element, originalContainer: Elemen
         let dislikedButtonContainerElem: Element = likedButtonContainerElem.cloneNode(true) as Element;
         dislikedButtonContainerElem = likedButtonContainerElem.parentNode.insertBefore(dislikedButtonContainerElem, likedButtonContainerElem.nextSibling);
         setupDislikedButtonProps(dislikedButtonContainerElem, likedButtonContainerElem);
-    
-        /* ReactDOM.render(
-            <DislikedButton id={likeButtonLink.id} className={likeButtonLink.className}/>,
-            rootElem
-        );*/
     }
 })();

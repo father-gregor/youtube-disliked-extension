@@ -19,7 +19,7 @@ module.exports = {
     mode: process.env.NODE_ENV || 'development',
     devtool: 'inline-source-map',
     entry: {
-        content: './src/scripts/content.tsx',
+        content: './src/scripts/content.ts',
         background: './src/scripts/background.ts',
         Popup: './src/ui/popup-content/Popup.tsx',
     },

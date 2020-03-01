@@ -2,10 +2,17 @@
 
 .react-root-disliked-list-container {
     height: 100%;
-    color: $main-color-text;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 50 20 0 20;
+
+    &,
+    button,
+    Button {
+        color: $main-color-text;
+        font-size: 1.5rem;
+        font-family: $main-text-font;
+    }
 }

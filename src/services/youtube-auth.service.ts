@@ -8,17 +8,25 @@ export class YoutubeAuthService {
         return this.isAppAuthorized;
     }
 
+    public async authorizeWithConsentPopup () {
+        return this.authorize(true);
+    }
+
+    private async authorize (withPopup: boolean) {
+        this.isAppAuthorized = await new Promise((resolve) => {
+            chrome.runtime.sendMessage({type: 'checkYoutubeAuth', popup: withPopup}, ({isAuthorized}: {isAuthorized: boolean}) => {
+                resolve(isAuthorized);
+            });
+        });
+        return this.isAppAuthorized;
+    }
+
     public static async create () {
         if (!YoutubeAuthService.instance) {
             YoutubeAuthService.instance = new YoutubeAuthService();
         }
-        YoutubeAuthService.instance.isAppAuthorized = await new Promise((resolve) => {
-            console.log('Try to send message');
-            chrome.runtime.sendMessage({type: 'checkYoutubeAuth'}, ({isAuthorized}: {isAuthorized: boolean}) => {
-                console.log('Response', isAuthorized);
-                resolve(isAuthorized);
-            });
-        });
+
+        await YoutubeAuthService.instance.authorize(false);
         return YoutubeAuthService.instance;
     }
 }

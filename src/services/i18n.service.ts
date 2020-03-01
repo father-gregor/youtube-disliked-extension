@@ -29,7 +29,8 @@ export class I18nService {
         }
     }
 
-    public static async create (locale: string) {
+    public static async create (customLocale?: string) {
+        let locale = customLocale || document.documentElement.lang;
         let instance;
         if (I18nService.instanceForLocale[locale]) {
             instance = I18nService.instanceForLocale[locale];
