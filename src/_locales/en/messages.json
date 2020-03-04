@@ -7,5 +7,11 @@
     },
     "askForAuthorizationButton": {
         "message": "Get Disliked Videos List"
+    },
+    "failedToLoadVideosMessage": {
+        "message": "Your videos wasn't loaded, unfortunately. Try again by pressing button below."
+    },
+    "failedToLoadVideosButton" : {
+        "message": "Reload"
     }
 }

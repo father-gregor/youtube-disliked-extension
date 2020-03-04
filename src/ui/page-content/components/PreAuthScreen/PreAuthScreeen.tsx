@@ -3,6 +3,8 @@ import Button from '@material-ui/core/Button';
 import {Icon} from 'react-icons-kit';
 import {google} from 'react-icons-kit/fa/google'
 
+import {MessageWithButton} from '../MessageWithButton/MessageWithButton';
+
 import {createRootContext, IRootContext, RootContextType} from "../RootContainer/RootContext";
 import {Bind} from '../../decorators/Bind.decorator';
 
@@ -29,7 +31,6 @@ export class PreAuthScreen extends React.Component<{onSuccessAuth: () => void}, 
         if (isAuthorized) {
             this.props.onSuccessAuth();
         }
-        console.log(isAuthorized);
     }
 
     toggleAuthButton (state: boolean) {
@@ -38,17 +39,12 @@ export class PreAuthScreen extends React.Component<{onSuccessAuth: () => void}, 
 
     render () {
         return (
-            <div className='pre-auth-screen'>
-                <p className='pre-auth-message'>{this.context.I18n.getMessage('askForAuthorizationMessage')}</p>
-                <Button variant='contained' 
-                        color='primary'
-                        disabled={this.state.authButtonDisabled}
-                        className='pre-auth-button'
-                        startIcon={<div style={{width: 25}}><Icon size='100%' icon={google}></Icon></div>}
-                        onClick={this.handleAskForAuthorization}>
-                    {this.context.I18n.getMessage('askForAuthorizationButton')}
-                </Button>
-            </div>
+            <MessageWithButton message={this.context.I18n.getMessage('askForAuthorizationMessage')}
+                            buttonTitle={this.context.I18n.getMessage('askForAuthorizationButton')}
+                            buttonIcon={google}
+                            buttonDisabled={this.state.authButtonDisabled}
+                            onButtonClick={this.handleAskForAuthorization}>
+            </MessageWithButton>
         );
     }
 }

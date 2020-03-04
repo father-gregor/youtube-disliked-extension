@@ -4,7 +4,7 @@ export class DislikedVideosStorageService {
     private constructor () {}
 
     public async getVideos () {
-        await new Promise((resolve) => {
+        return new Promise((resolve) => {
             chrome.runtime.sendMessage({type: 'getDislikedVideos'}, (videos: any[]) => {
                 resolve(videos);
             });
