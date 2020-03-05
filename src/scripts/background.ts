@@ -57,6 +57,7 @@ chrome.runtime.onMessage.addListener((message: {type: 'checkYoutubeAuth', popup?
             }
             else if (message.type === 'getCurrentUserChannel') {
                 await getCurrentUserChannel(token);
+                sendResponse('NOT IMPLEMENTED YET');
             }
             else if (message.type === 'getDislikedVideos') {
                 let videosRes = await getDislikedVideos(token);
