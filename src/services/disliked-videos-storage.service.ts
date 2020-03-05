@@ -4,9 +4,13 @@ export class DislikedVideosStorageService {
     private constructor () {}
 
     public async getVideos () {
-        return new Promise((resolve) => {
-            chrome.runtime.sendMessage({type: 'getDislikedVideos'}, (videos: any[]) => {
-                resolve(videos);
+        return new Promise((resolve, reject) => {
+            chrome.runtime.sendMessage({type: 'getDislikedVideos'}, (response: any) => {
+                if (response instanceof Error) {
+                    reject(response);
+                }
+
+                resolve(response);
             });
         });
     }

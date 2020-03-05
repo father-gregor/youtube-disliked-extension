@@ -1,18 +1,19 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import {Icon} from 'react-icons-kit';
+import Grid from '@material-ui/core/Grid';
 import {ic_refresh} from 'react-icons-kit/md/ic_refresh'
 
 import {LoadingSpinner} from '../LoadingSpinner/LoadingSpinner';
 import {MessageWithButton} from '../MessageWithButton/MessageWithButton';
+import {DislikedVideosInfoPanel} from '../DislikedVideosInfoPanel/DislikedVideosInfoPanel';
 
 import {Bind} from '../../decorators/Bind.decorator';
 import {IRootContext, createRootContext, RootContextType} from '../RootContainer/RootContext';
+
 interface IDislikedVideosListState {
     loadedState: 'notReady' | 'ready' | 'failed';
 }
 
-export class DislikedVideosList extends React.Component<{}, IDislikedVideosListState> {
+export class DislikedVideosContainer extends React.Component<{}, IDislikedVideosListState> {
     static contextType: React.Context<IRootContext> = createRootContext();
     context!: RootContextType;
 
@@ -37,7 +38,7 @@ export class DislikedVideosList extends React.Component<{}, IDislikedVideosListS
             })
         }).catch(() => {
             this.setState({
-                loadedState: 'notReady'
+                loadedState: 'failed'
             });
         });
     }
@@ -49,7 +50,15 @@ export class DislikedVideosList extends React.Component<{}, IDislikedVideosListS
             content = <LoadingSpinner/>;
         }
         else if (this.state.loadedState === 'ready') {
-            content = <p>Loadeds</p>;
+            content = 
+            <Grid container spacing={2}>
+                <Grid item xs={12} sm={4}>
+                    <DislikedVideosInfoPanel></DislikedVideosInfoPanel>
+                </Grid>
+                <Grid item xs={12} sm={8}>
+                    
+                </Grid>
+            </Grid>;
         }
         else if (this.state.loadedState === 'failed') {
             content = 

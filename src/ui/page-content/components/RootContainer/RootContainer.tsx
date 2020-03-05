@@ -7,7 +7,7 @@ import {LoadingSpinner} from '../LoadingSpinner/LoadingSpinner';
 import {CloseListButton} from '../CloseListButton/CloseListButton';
 import {PreAuthScreen} from '../PreAuthScreen/PreAuthScreeen';
 import {ThemeChangeListener} from '../ThemeChangeListener/ThemeChangeListener';
-import {DislikedVideosList} from '../DislikedVideosList/DislikedVideosList';
+import {DislikedVideosContainer} from '../DislikedVideosContainer/DislikedVideosContainer';
 
 import {Bind} from '../../decorators/Bind.decorator';
 import {createRootContext, IRootContext} from './RootContext';
@@ -97,7 +97,7 @@ export class RootContainer extends React.Component<{}, {isAuthorized: boolean, r
 
         if (YoutubeAuth) {
             if (YoutubeAuth.isAuthorized()) {
-                content = <DislikedVideosList></DislikedVideosList>;
+                content = <DislikedVideosContainer></DislikedVideosContainer>;
             }
             else {
                 content = <PreAuthScreen onSuccessAuth={this.handleSuccessAuth}></PreAuthScreen>;
