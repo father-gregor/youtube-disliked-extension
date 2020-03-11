@@ -1,3 +1,6 @@
+import {IUserChannel} from '../interfaces/channel';
+import { IGetVideosResponse, IYoutubeVideo } from "../interfaces/video";
+
 const YOUTUBE_DISLIKED_URL = 'https://www.googleapis.com/youtube/v3/videos';
 const YOUTUBE_CURRENT_CHANNEL_URL = 'https://www.googleapis.com/youtube/v3/channels';
 
@@ -32,20 +35,50 @@ async function getAuthToken (isInteractive: boolean): Promise<string> {
     });
 }
 
-async function getCurrentUserChannel (token: string) {
+async function getCurrentUserChannel (token: string): Promise<IUserChannel> {
     const query = {
-        part: 'id,snipper',
+        part: 'id,snippet',
         mine: true
     };
-    return await fetchUrl(YOUTUBE_CURRENT_CHANNEL_URL, query, token);
+
+    const response = await fetchUrl(YOUTUBE_CURRENT_CHANNEL_URL, query, token);
+
+    let channel: IUserChannel;
+    if (response.items[0]) {
+        let item = response.items[0];
+        channel = {
+            id: item.id,
+            title: item.snippet.title,
+            description: item.snippet.description,
+            thumbnail: item.snippet?.thumbnails?.default?.url
+        };
+    }
+    return channel;
 }
 
-async function getDislikedVideos (token: string) {
+async function getDislikedVideos (token: string): Promise<IGetVideosResponse> {
     const query = {
         part: 'id,snippet',
         myRating: 'dislike'
     };
-    return await fetchUrl(YOUTUBE_DISLIKED_URL, query, token);
+
+    const response = await fetchUrl(YOUTUBE_DISLIKED_URL, query, token);
+    return {
+        videos: response.items.map((v) => {
+            return {
+                id: v.id,
+                title: v.snippet.title,
+                description: v.snippet.description,
+                thumbnail: v.snippet.thumbnails?.default?.url,
+                channelId: v.snippet.channelId,
+                channelTitle: v.snippet.channelTitle
+            } as IYoutubeVideo;
+        }),
+        totalCount: response.pageInfo?.totalResults,
+        perPageCount: response.pageInfo?.resultsPerPage,
+        nextPageToken: response.nextPageToken,
+        prevPageToken: response.prevPageToken
+    };
 }
 
 chrome.runtime.onMessage.addListener((message: {type: 'checkYoutubeAuth', popup?: boolean}, sender, sendResponse) => {
@@ -56,8 +89,8 @@ chrome.runtime.onMessage.addListener((message: {type: 'checkYoutubeAuth', popup?
                 sendResponse({isAuthorized: !!token});
             }
             else if (message.type === 'getCurrentUserChannel') {
-                await getCurrentUserChannel(token);
-                sendResponse('NOT IMPLEMENTED YET');
+                const channel = await getCurrentUserChannel(token);
+                sendResponse(channel);
             }
             else if (message.type === 'getDislikedVideos') {
                 let videosRes = await getDislikedVideos(token);

@@ -4,7 +4,7 @@ import {ic_clear} from 'react-icons-kit/md/ic_clear';
 
 import {Bind} from "../../decorators/Bind.decorator";
 
-export class DislikedVideosInfoPanel extends React.Component {
+export class DislikedVideosList extends React.Component {
     @Bind
     handleCloseList () {
         // this.props.onClose();

@@ -1,6 +1,8 @@
+import {IUserChannel} from '../interfaces/channel';
+
 export class YoutubeAuthService {
     private isAppAuthorized = false;
-    private user: any;
+    private userChannel: IUserChannel;
     private static instance: YoutubeAuthService;
 
     private constructor () {}
@@ -13,19 +15,23 @@ export class YoutubeAuthService {
         return this.authorize(true);
     }
 
-    public async getCurrentUser () {
-        if (!this.user) {
-            this.user = await new Promise((resolve) => {
-                chrome.runtime.sendMessage({type: 'getCurrentUserChannel'}, (user: any) => {
+    public async saveCurrentUserChannel () {
+        if (!this.userChannel) {
+            this.userChannel = await new Promise((resolve, reject) => {
+                chrome.runtime.sendMessage({type: 'getCurrentUserChannel'}, (user: IUserChannel) => {
+                    console.log('CURRENT USER CHANNEL', user);
+                    if (!user) {
+                        reject('Cannot get channel info');
+                    }
                     resolve(user);
                 });
             });
         }
-        return this.user;
+        return this.userChannel;
     }
 
     private async authorize (withPopup: boolean) {
-        this.user = null;
+        this.userChannel = null;
         this.isAppAuthorized = await new Promise((resolve) => {
             chrome.runtime.sendMessage({type: 'checkYoutubeAuth', popup: withPopup}, ({isAuthorized}: {isAuthorized: boolean}) => {
                 resolve(isAuthorized);
@@ -33,7 +39,7 @@ export class YoutubeAuthService {
         });
 
         if (this.isAppAuthorized) {
-            await this.getCurrentUser();
+            await this.saveCurrentUserChannel();
         }
         return this.isAppAuthorized;
     }

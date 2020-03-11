@@ -5,6 +5,7 @@ import {ic_refresh} from 'react-icons-kit/md/ic_refresh'
 import {LoadingSpinner} from '../LoadingSpinner/LoadingSpinner';
 import {MessageWithButton} from '../MessageWithButton/MessageWithButton';
 import {DislikedVideosInfoPanel} from '../DislikedVideosInfoPanel/DislikedVideosInfoPanel';
+import {DislikedVideosList} from '../DislikedVideosList/DislikedVideosList';
 
 import {Bind} from '../../decorators/Bind.decorator';
 import {IRootContext, createRootContext, RootContextType} from '../RootContainer/RootContext';
@@ -33,9 +34,9 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
     loadVideos () {
         return this.context.DislikedVideosStorage.getVideos().then((videos: any) => {
             console.log(videos);
-            this.setState({
+            /* this.setState({
                 loadedState: 'ready'
-            })
+            })*/
         }).catch(() => {
             this.setState({
                 loadedState: 'failed'
@@ -45,9 +46,11 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
 
     render () {
         let content;
+        let isCentered = false;
 
         if (this.state.loadedState === 'notReady') {
             content = <LoadingSpinner/>;
+            isCentered = true;
         }
         else if (this.state.loadedState === 'ready') {
             content = 
@@ -56,7 +59,7 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
                     <DislikedVideosInfoPanel></DislikedVideosInfoPanel>
                 </Grid>
                 <Grid item xs={12} sm={8}>
-                    
+                    <DislikedVideosList></DislikedVideosList>
                 </Grid>
             </Grid>;
         }
@@ -71,7 +74,7 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
         }
 
         return (
-            <div className='disliked-videos-container'>
+            <div className={`disliked-videos-container ${isCentered ? 'centered' : ''}`}>
                 {content}
             </div>
         );

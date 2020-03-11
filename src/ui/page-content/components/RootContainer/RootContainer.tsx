@@ -94,10 +94,12 @@ export class RootContainer extends React.Component<{}, {isAuthorized: boolean, r
     render () {
         const YoutubeAuth = this.state.rootContext.YoutubeAuth;
         let content;
+        let isCentered = true;
 
         if (YoutubeAuth) {
             if (YoutubeAuth.isAuthorized()) {
                 content = <DislikedVideosContainer></DislikedVideosContainer>;
+                isCentered = false;
             }
             else {
                 content = <PreAuthScreen onSuccessAuth={this.handleSuccessAuth}></PreAuthScreen>;
@@ -111,7 +113,7 @@ export class RootContainer extends React.Component<{}, {isAuthorized: boolean, r
             <RootContext.Provider value={this.state.rootContext}>
                 <ThemeProvider theme={this.state.rootTheme}>
                     <ClickAwayListener onClickAway={this.handleCloseList}>
-                        <div className='react-root-disliked-list-container'>
+                        <div className={`react-root-disliked-list-container ${isCentered ? 'centered' : ''}`}>
                             <CloseListButton onClose={this.handleCloseList}></CloseListButton>
                             {content}
                         </div>
