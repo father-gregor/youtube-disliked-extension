@@ -1,7 +1,7 @@
 import {IGetVideosResponse, IYoutubeVideo} from "../interfaces/video";
 
 export class DislikedVideosStorageService {
-    private videos: IYoutubeVideo[];
+    private videos: IYoutubeVideo[] = [];
     private totalCount: number;
     private perPageCount: number;
     private nextPageToken: string;
@@ -11,29 +11,43 @@ export class DislikedVideosStorageService {
     private constructor () {}
 
     public async getVideos () {
+        if (this.totalCount && this.videos.length >= this.totalCount) {
+            return [];
+        }
+
         const res: IGetVideosResponse = await new Promise((resolve, reject) => {
-            chrome.runtime.sendMessage({type: 'getDislikedVideos'}, (response: IGetVideosResponse) => {
+            chrome.runtime.sendMessage({type: 'getDislikedVideos', pageToken: this.nextPageToken}, (response: IGetVideosResponse) => {
                 if (response instanceof Error) {
                     reject(response);
                 }
 
-                console.log('Videos', response);
+                console.log('Videos Response', response);
 
                 resolve(response);
             });
         });
 
         let newVideos = res.videos;
-        if (!this.videos) {
-            this.videos = newVideos;
+
+        if (!newVideos) {
+            return [];
         }
 
+        this.videos = this.videos.concat(newVideos);
         this.totalCount = res.totalCount || this.totalCount;
         this.perPageCount = res.perPageCount || this.perPageCount;
         this.nextPageToken = res.nextPageToken || this.nextPageToken;
         this.prevPageToken = res.prevPageToken || this.prevPageToken;
 
         return newVideos;
+    }
+
+    public isMoreVideosAvailable () {
+        return this.totalCount && this.videos.length < this.totalCount;
+    }
+
+    public getTotalCount () {
+        return this.totalCount;
     }
 
     public static create () {

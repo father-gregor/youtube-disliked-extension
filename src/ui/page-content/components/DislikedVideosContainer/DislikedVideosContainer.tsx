@@ -9,12 +9,17 @@ import {DislikedVideosList} from '../DislikedVideosList/DislikedVideosList';
 
 import {Bind} from '../../decorators/Bind.decorator';
 import {IRootContext, createRootContext, RootContextType} from '../RootContainer/RootContext';
+import {IYoutubeVideo} from "../../../../interfaces/video";
 
-interface IDislikedVideosListState {
-    loadedState: 'notReady' | 'ready' | 'failed';
+import './DislikedVideosContainer.scss';
+
+interface IDislikedVideosContainerState {
+    videos: IYoutubeVideo[];
+    isMoreVideosAvailable: boolean;
+    loadedState?: 'notReady' | 'ready' | 'failed';
 }
 
-export class DislikedVideosContainer extends React.Component<{}, IDislikedVideosListState> {
+export class DislikedVideosContainer extends React.Component<{}, IDislikedVideosContainerState> {
     static contextType: React.Context<IRootContext> = createRootContext();
     context!: RootContextType;
 
@@ -22,6 +27,8 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
         super(props);
 
         this.state = {
+            videos: [],
+            isMoreVideosAvailable: true,
             loadedState: 'notReady'
         };
     }
@@ -31,17 +38,25 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
     }
 
     @Bind
-    loadVideos () {
-        return this.context.DislikedVideosStorage.getVideos().then((videos: any) => {
-            console.log(videos);
-            /* this.setState({
-                loadedState: 'ready'
-            })*/
-        }).catch(() => {
+    async loadVideos () {
+        try {
+            const videos: IYoutubeVideo[] = await this.context.DislikedVideosStorage.getVideos();
+            this.setState((state: IDislikedVideosContainerState) => {
+                const newState: IDislikedVideosContainerState = {
+                    videos: state.videos.concat(videos),
+                    isMoreVideosAvailable: this.context.DislikedVideosStorage.isMoreVideosAvailable()
+                };
+                if (state.loadedState !== 'ready') {
+                    newState.loadedState = 'ready';
+                }
+                return newState;
+            });
+        }
+        catch (err) {
             this.setState({
                 loadedState: 'failed'
             });
-        });
+        }
     }
 
     render () {
@@ -59,7 +74,7 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
                     <DislikedVideosInfoPanel></DislikedVideosInfoPanel>
                 </Grid>
                 <Grid item xs={12} sm={8}>
-                    <DislikedVideosList></DislikedVideosList>
+                    <DislikedVideosList videos={this.state.videos} showLoadVideosButton={this.state.isMoreVideosAvailable} loadVideos={this.loadVideos}></DislikedVideosList>
                 </Grid>
             </Grid>;
         }

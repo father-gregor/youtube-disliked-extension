@@ -7,7 +7,7 @@ import {Bind} from '../../decorators/Bind.decorator';
 import './MessageWithButton.scss';
 
 interface IMessageWithButtonProps {
-    message: string;
+    message?: string;
     buttonTitle: string;
     buttonIcon?: any;
     buttonDisabled?: boolean;
@@ -20,13 +20,17 @@ export class MessageWithButton extends React.Component<IMessageWithButtonProps> 
     }
 
     @Bind
-    async handleButtonClick () {
+    handleButtonClick () {
         this.props.onButtonClick();
     }
 
     render () {
+        let messageContent = null;
         let iconContent = null;
 
+        if (this.props.message) {
+            messageContent = <p className='message-with-button_msg'>{this.props.message}</p>;
+        }
         if (this.props.buttonIcon) {
             iconContent = 
                 <div style={{width: 25}}>
@@ -36,7 +40,7 @@ export class MessageWithButton extends React.Component<IMessageWithButtonProps> 
 
         return (
             <div className='message-with-button'>
-                <p className='message-with-button_msg'>{this.props.message}</p>
+                {messageContent}
                 <Button variant='contained' 
                         color='primary'
                         disabled={this.props.buttonDisabled != null && this.props.buttonDisabled}

@@ -13,5 +13,8 @@
     },
     "failedToLoadVideosButton" : {
         "message": "Reload"
+    },
+    "loadMoreVideosButton": {
+        "message": "Load More"
     }
 }

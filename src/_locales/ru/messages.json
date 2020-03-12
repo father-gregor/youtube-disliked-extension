@@ -13,5 +13,8 @@
     },
     "failedToLoadVideosButton" : {
         "message": "Загрузить еще раз"
+    },
+    "loadMoreVideosButton": {
+        "message": "Загрузить еще"
     }
 }

@@ -56,13 +56,18 @@ async function getCurrentUserChannel (token: string): Promise<IUserChannel> {
     return channel;
 }
 
-async function getDislikedVideos (token: string): Promise<IGetVideosResponse> {
-    const query = {
+async function getDislikedVideos (token: string, pageToken?: string): Promise<IGetVideosResponse> {
+    const query: any = {
         part: 'id,snippet',
         myRating: 'dislike'
     };
 
+    if (pageToken) {
+        query.pageToken = pageToken;
+    }
+
     const response = await fetchUrl(YOUTUBE_DISLIKED_URL, query, token);
+
     return {
         videos: response.items.map((v) => {
             return {
@@ -81,7 +86,13 @@ async function getDislikedVideos (token: string): Promise<IGetVideosResponse> {
     };
 }
 
-chrome.runtime.onMessage.addListener((message: {type: 'checkYoutubeAuth', popup?: boolean}, sender, sendResponse) => {
+interface IMessageListenerData {
+    type: 'checkYoutubeAuth' | 'getCurrentUserChannel' | 'getDislikedVideos';
+    popup?: boolean;
+    pageToken?: string;
+}
+
+chrome.runtime.onMessage.addListener((message: IMessageListenerData, sender, sendResponse) => {
     getAuthToken(message.popup).then(async (token: string) => {
         try {
             if (message.type === 'checkYoutubeAuth') {
@@ -93,7 +104,7 @@ chrome.runtime.onMessage.addListener((message: {type: 'checkYoutubeAuth', popup?
                 sendResponse(channel);
             }
             else if (message.type === 'getDislikedVideos') {
-                let videosRes = await getDislikedVideos(token);
+                let videosRes = await getDislikedVideos(token, message.pageToken);
                 sendResponse(videosRes);
             }
         }

@@ -1,19 +1,46 @@
 import React from 'react';
-import {Icon} from 'react-icons-kit';
-import {ic_clear} from 'react-icons-kit/md/ic_clear';
 
-import {Bind} from "../../decorators/Bind.decorator";
+import {MessageWithButton} from '../MessageWithButton/MessageWithButton';
 
-export class DislikedVideosList extends React.Component {
+import {Bind} from '../../decorators/Bind.decorator';
+import {IRootContext, createRootContext, RootContextType} from '../RootContainer/RootContext';
+import {IYoutubeVideo} from '../../../../interfaces/video';
+
+interface IDislikedVideosListProps {
+    videos: IYoutubeVideo[];
+    showLoadVideosButton: boolean;
+    loadVideos: () => void;
+}
+
+export class DislikedVideosList extends React.Component<IDislikedVideosListProps> {
+    static contextType: React.Context<IRootContext> = createRootContext();
+    context!: RootContextType;
+
+    constructor (props) {
+        super(props);
+    }
+
     @Bind
-    handleCloseList () {
-        // this.props.onClose();
+    handleLoadVideosClick () {
+        this.props.loadVideos();
     }
 
     render () {
+        let videos = [];
+        for (let video of this.props.videos) {
+            videos.push(<div key={video.id}>{video.title}</div>);
+        }
+
         return (
-            <div className='close-list-button'>
-                <Icon size='100%' icon={ic_clear} onClick={this.handleCloseList}/>
+            <div className='disliked-videos-list'>
+                <div>
+                    {videos}
+                </div>
+                {this.props.showLoadVideosButton &&
+                    <MessageWithButton buttonTitle={this.context.I18n.getMessage('loadMoreVideosButton')}
+                                    onButtonClick={this.handleLoadVideosClick}>
+                    </MessageWithButton>
+                }
             </div>
         );
     }
