@@ -45,20 +45,14 @@ function setupDislikedButtonProps (container: Element, originalContainer: Elemen
 
 (async () => {
     I18n = await I18nService.create();
-
-    chrome.runtime.sendMessage({}, (response) => {
-        var checkReady = setInterval(() => {
-            if (document.readyState === "complete") {
-                clearInterval(checkReady)
-                console.log("We're in the injected content script!")
-            }
-        })
-    })
     
-    const likedButtonContainerElem = getLikedButtonContainer();
-    if (likedButtonContainerElem) {
-        let dislikedButtonContainerElem: Element = likedButtonContainerElem.cloneNode(true) as Element;
-        dislikedButtonContainerElem = likedButtonContainerElem.parentNode.insertBefore(dislikedButtonContainerElem, likedButtonContainerElem.nextSibling);
-        setupDislikedButtonProps(dislikedButtonContainerElem, likedButtonContainerElem);
-    }
+    const intervalId = setInterval(() => {
+        const likedButtonContainerElem = getLikedButtonContainer();
+        if (likedButtonContainerElem) {
+            clearInterval(intervalId);
+            let dislikedButtonContainerElem: Element = likedButtonContainerElem.cloneNode(true) as Element;
+            dislikedButtonContainerElem = likedButtonContainerElem.parentNode.insertBefore(dislikedButtonContainerElem, likedButtonContainerElem.nextSibling);
+            setupDislikedButtonProps(dislikedButtonContainerElem, likedButtonContainerElem);
+        }
+    }, 1000);
 })();

@@ -1,0 +1,13 @@
+.disliked-videos-info-panel {
+    .channel-title-container {
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        font-weight: 500;
+    }
+
+    .MuiDivider-root {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}

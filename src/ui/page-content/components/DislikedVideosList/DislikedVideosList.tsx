@@ -16,10 +16,6 @@ export class DislikedVideosList extends React.Component<IDislikedVideosListProps
     static contextType: React.Context<IRootContext> = createRootContext();
     context!: RootContextType;
 
-    constructor (props) {
-        super(props);
-    }
-
     @Bind
     handleLoadVideosClick () {
         this.props.loadVideos();

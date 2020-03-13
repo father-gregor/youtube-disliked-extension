@@ -12,6 +12,7 @@ import {IRootContext, createRootContext, RootContextType} from '../RootContainer
 import {IYoutubeVideo} from "../../../../interfaces/video";
 
 import './DislikedVideosContainer.scss';
+import { IUserChannel } from "../../../../interfaces/channel";
 
 interface IDislikedVideosContainerState {
     videos: IYoutubeVideo[];
@@ -62,21 +63,18 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
     render () {
         let content;
         let isCentered = false;
+        let channel = this.context.YoutubeAuth.getUserChannel();
 
         if (this.state.loadedState === 'notReady') {
             content = <LoadingSpinner/>;
             isCentered = true;
         }
         else if (this.state.loadedState === 'ready') {
-            content = 
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm={4}>
-                    <DislikedVideosInfoPanel></DislikedVideosInfoPanel>
-                </Grid>
-                <Grid item xs={12} sm={8}>
-                    <DislikedVideosList videos={this.state.videos} showLoadVideosButton={this.state.isMoreVideosAvailable} loadVideos={this.loadVideos}></DislikedVideosList>
-                </Grid>
-            </Grid>;
+            content =
+                <DislikedVideosList videos={this.state.videos}
+                                    showLoadVideosButton={this.state.isMoreVideosAvailable}
+                                    loadVideos={this.loadVideos}>
+                </DislikedVideosList>;
         }
         else if (this.state.loadedState === 'failed') {
             content = 
@@ -89,8 +87,15 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
         }
 
         return (
-            <div className={`disliked-videos-container ${isCentered ? 'centered' : ''}`}>
-                {content}
+            <div className='disliked-videos-container'>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} sm={4}>
+                        <DislikedVideosInfoPanel channelTitle={channel.title} channelAvatar={channel.thumbnail}></DislikedVideosInfoPanel>
+                    </Grid>
+                    <Grid className={isCentered ? 'centered' : ''} item xs={12} sm={8}>
+                        {content}
+                    </Grid>
+                </Grid>
             </div>
         );
     }

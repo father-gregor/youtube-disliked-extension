@@ -15,6 +15,10 @@ export class YoutubeAuthService {
         return this.authorize(true);
     }
 
+    public getUserChannel () {
+        return this.userChannel;
+    }
+
     public async saveCurrentUserChannel () {
         if (!this.userChannel) {
             this.userChannel = await new Promise((resolve, reject) => {
