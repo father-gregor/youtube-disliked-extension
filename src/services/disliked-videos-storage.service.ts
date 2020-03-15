@@ -10,7 +10,10 @@ export class DislikedVideosStorageService {
 
     private constructor () {}
 
-    public async getVideos () {
+    public async getVideos (isFirstLoad?: boolean) {
+        if (isFirstLoad) {
+            this.clearStoredVideos();
+        }
         if (this.totalCount && this.videos.length >= this.totalCount) {
             return [];
         }
@@ -48,6 +51,14 @@ export class DislikedVideosStorageService {
 
     public getTotalCount () {
         return this.totalCount;
+    }
+
+    private clearStoredVideos () {
+        this.videos = [];
+        this.totalCount = null;
+        this.perPageCount = null;
+        this.nextPageToken = null;
+        this.prevPageToken = null;
     }
 
     public static create () {

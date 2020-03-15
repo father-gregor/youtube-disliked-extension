@@ -1,5 +1,7 @@
+import {parse, Duration} from 'iso8601-duration';
+
 import {IUserChannel} from '../interfaces/channel';
-import { IGetVideosResponse, IYoutubeVideo } from "../interfaces/video";
+import {IGetVideosResponse, IYoutubeVideo} from '../interfaces/video';
 
 const YOUTUBE_DISLIKED_URL = 'https://www.googleapis.com/youtube/v3/videos';
 const YOUTUBE_CURRENT_CHANNEL_URL = 'https://www.googleapis.com/youtube/v3/channels';
@@ -26,6 +28,38 @@ async function fetchUrl (url: string, query: any, token: string) {
     return response.json();
 }
 
+function parseDuration (duration: string) {
+    if (!duration) {
+        return duration;
+    }
+
+    const parsedDuration: Duration = parse(duration);
+    const days = parsedDuration.days;
+    let hours = `${parsedDuration.minutes || '00'}`;
+    let minutes = `${parsedDuration.minutes || '00'}`;
+    let seconds = `${parsedDuration.seconds || '00'}`;
+
+    if (parsedDuration.days) {
+        hours = zeroPadding(hours);
+        minutes = zeroPadding(minutes);
+        seconds = zeroPadding(seconds);
+        return `${days}:${hours}:${minutes}:${seconds}`;
+    }
+    else if (parsedDuration.hours) {
+        minutes = zeroPadding(minutes);
+        seconds = zeroPadding(seconds);
+        return `${hours}:${minutes}:${seconds}`;
+    }
+    else {
+        seconds = zeroPadding(seconds);
+        return `${minutes}:${seconds}`;
+    }
+
+    function zeroPadding (value: string) {
+        return value.length < 2 ? `0${value}` : value;
+    }
+}
+
 async function getAuthToken (isInteractive: boolean): Promise<string> {
     return new Promise ((resolve) => {
         chrome.identity.getAuthToken({interactive: isInteractive}, (token) => {
@@ -44,13 +78,15 @@ async function getCurrentUserChannel (token: string): Promise<IUserChannel> {
     const response = await fetchUrl(YOUTUBE_CURRENT_CHANNEL_URL, query, token);
 
     let channel: IUserChannel;
+    console.log('Full user', response);
     if (response.items[0]) {
         let item = response.items[0];
         channel = {
             id: item.id,
             title: item.snippet.title,
             description: item.snippet.description,
-            thumbnail: item.snippet?.thumbnails?.default?.url
+            url: `https://www.youtube.com/channel/${item.id}`,
+            thumbnail: item.snippet?.thumbnails?.medium?.url
         };
     }
     return channel;
@@ -58,8 +94,9 @@ async function getCurrentUserChannel (token: string): Promise<IUserChannel> {
 
 async function getDislikedVideos (token: string, pageToken?: string): Promise<IGetVideosResponse> {
     const query: any = {
-        part: 'id,snippet',
-        myRating: 'dislike'
+        part: 'id,snippet,contentDetails',
+        myRating: 'dislike',
+        maxResults: 15
     };
 
     if (pageToken) {
@@ -67,16 +104,20 @@ async function getDislikedVideos (token: string, pageToken?: string): Promise<IG
     }
 
     const response = await fetchUrl(YOUTUBE_DISLIKED_URL, query, token);
+    console.log(response.items);
 
     return {
-        videos: response.items.map((v) => {
+        videos: (response.items || []).map((v) => {
             return {
                 id: v.id,
                 title: v.snippet.title,
                 description: v.snippet.description,
-                thumbnail: v.snippet.thumbnails?.default?.url,
+                url: `https://www.youtube.com/watch?v=${v.id}`,
+                thumbnail: v.snippet.thumbnails?.medium?.url,
+                duration: parseDuration(v.contentDetails.duration),
                 channelId: v.snippet.channelId,
-                channelTitle: v.snippet.channelTitle
+                channelTitle: v.snippet.channelTitle,
+                channelUrl: `https://www.youtube.com/channel/${v.snippet.channelId}`
             } as IYoutubeVideo;
         }),
         totalCount: response.pageInfo?.totalResults,

@@ -1,9 +1,27 @@
+@import '../../../../styles/common/page-variables.scss';
+
 .disliked-videos-info-panel {
+    padding: 25px;
+
+    a {
+        text-decoration: none;
+
+        &,
+        &:visited {
+            color: $main-color-text;
+        }
+    }
+
     .channel-title-container {
         display:flex;
         flex-direction: column;
         justify-content: center;
         font-weight: 500;
+    }
+
+    .MuiAvatar-root {
+        width: 48px;
+        height: auto;
     }
 
     .MuiDivider-root {

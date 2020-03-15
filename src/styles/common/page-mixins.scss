@@ -9,3 +9,18 @@
         @content;
     }
 }
+
+@mixin styled-scrollbar ($scrollbarColor: hsla(0, 0%, 53.3%, 0.4), $scrollbarWidth: 9px) {
+    &::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: $scrollbarWidth;
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: $scrollbarColor;
+        -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+        box-shadow: 0 0 1px rgba(255,255,255,.5)
+    }
+}

@@ -1,13 +1,17 @@
 import React from 'react';
 
+import {DislikedVideoItem} from '../DislikedVideoItem/DislikedVideoItem';
 import {MessageWithButton} from '../MessageWithButton/MessageWithButton';
 
 import {Bind} from '../../decorators/Bind.decorator';
 import {IRootContext, createRootContext, RootContextType} from '../RootContainer/RootContext';
 import {IYoutubeVideo} from '../../../../interfaces/video';
 
+import './DislikedVideosList.scss';
+
 interface IDislikedVideosListProps {
     videos: IYoutubeVideo[];
+    totalCount: number;
     showLoadVideosButton: boolean;
     loadVideos: () => void;
 }
@@ -23,18 +27,16 @@ export class DislikedVideosList extends React.Component<IDislikedVideosListProps
 
     render () {
         let videos = [];
-        for (let video of this.props.videos) {
-            videos.push(<div key={video.id}>{video.title}</div>);
-        }
+        this.props.videos.forEach((video, index) => {
+            videos.push(<DislikedVideoItem key={video.id} video={video} index={index + 1}></DislikedVideoItem>);
+        });
 
         return (
             <div className='disliked-videos-list'>
-                <div>
-                    {videos}
-                </div>
+                {videos}
                 {this.props.showLoadVideosButton &&
                     <MessageWithButton buttonTitle={this.context.I18n.getMessage('loadMoreVideosButton')}
-                                    onButtonClick={this.handleLoadVideosClick}>
+                                       onButtonClick={this.handleLoadVideosClick}>
                     </MessageWithButton>
                 }
             </div>

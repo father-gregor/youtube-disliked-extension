@@ -9,13 +9,13 @@ import {DislikedVideosList} from '../DislikedVideosList/DislikedVideosList';
 
 import {Bind} from '../../decorators/Bind.decorator';
 import {IRootContext, createRootContext, RootContextType} from '../RootContainer/RootContext';
-import {IYoutubeVideo} from "../../../../interfaces/video";
+import {IYoutubeVideo} from '../../../../interfaces/video';
 
 import './DislikedVideosContainer.scss';
-import { IUserChannel } from "../../../../interfaces/channel";
 
 interface IDislikedVideosContainerState {
     videos: IYoutubeVideo[];
+    videosTotalCount?: number;
     isMoreVideosAvailable: boolean;
     loadedState?: 'notReady' | 'ready' | 'failed';
 }
@@ -35,18 +35,21 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
     }
 
     componentDidMount() {
-        this.loadVideos();
+        this.loadVideos(true);
     }
 
     @Bind
-    async loadVideos () {
+    async loadVideos (isFirstLoad?: boolean) {
         try {
-            const videos: IYoutubeVideo[] = await this.context.DislikedVideosStorage.getVideos();
+            const videos: IYoutubeVideo[] = await this.context.DislikedVideosStorage.getVideos(isFirstLoad);
             this.setState((state: IDislikedVideosContainerState) => {
                 const newState: IDislikedVideosContainerState = {
                     videos: state.videos.concat(videos),
                     isMoreVideosAvailable: this.context.DislikedVideosStorage.isMoreVideosAvailable()
                 };
+                if (state.videosTotalCount == null) {
+                    newState.videosTotalCount = this.context.DislikedVideosStorage.getTotalCount();
+                }
                 if (state.loadedState !== 'ready') {
                     newState.loadedState = 'ready';
                 }
@@ -72,6 +75,7 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
         else if (this.state.loadedState === 'ready') {
             content =
                 <DislikedVideosList videos={this.state.videos}
+                                    totalCount={this.state.videosTotalCount}
                                     showLoadVideosButton={this.state.isMoreVideosAvailable}
                                     loadVideos={this.loadVideos}>
                 </DislikedVideosList>;
@@ -88,11 +92,14 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
 
         return (
             <div className='disliked-videos-container'>
-                <Grid container spacing={3}>
-                    <Grid item xs={12} sm={4}>
-                        <DislikedVideosInfoPanel channelTitle={channel.title} channelAvatar={channel.thumbnail}></DislikedVideosInfoPanel>
+                <Grid container spacing={0} className='root-grid'>
+                    <Grid className={'info-column-grid'} item xs={12} sm={4} md={3}>
+                        <DislikedVideosInfoPanel channelTitle={channel.title}
+                                                 channelAvatar={channel.thumbnail}
+                                                 channelUrl={channel.url}>
+                        </DislikedVideosInfoPanel>
                     </Grid>
-                    <Grid className={isCentered ? 'centered' : ''} item xs={12} sm={8}>
+                    <Grid className={`content-column-grid ${isCentered ? 'centered' : ''}`} item xs={12} sm={8} md={9}>
                         {content}
                     </Grid>
                 </Grid>

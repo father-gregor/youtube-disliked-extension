@@ -1,3 +1,18 @@
+@import '../../../../styles/common/page-mixins.scss';
+
 .disliked-videos-container {
-    padding: 25px 40px;
+    height: 100%;
+    overflow: hidden;
+
+    .root-grid {
+        height: 100%;
+    }
+
+    .content-column-grid {
+        height: inherit;
+        overflow: auto;
+        background: var(--yt-spec-general-background-b);
+
+        @include styled-scrollbar();
+    }
 }
