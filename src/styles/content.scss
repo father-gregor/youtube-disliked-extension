@@ -19,6 +19,10 @@ body {
         z-index: -1;
     }
 
+    [data-disliked-button] {
+        animation: insertDislikedButton .5s ease-in-out;
+    }
+
     &.body_disliked-list-opened {
         overflow: hidden;
 
@@ -33,6 +37,14 @@ body {
         #extension-root-disliked-list {
             z-index: 3000;
         }
+    }
+}
+
+@keyframes insertDislikedButton {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+        background: $list-background-color;
     }
 }
 

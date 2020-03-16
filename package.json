@@ -1,6 +1,6 @@
 {
   "name": "youtube-disliked-extension",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Add new 'Disliked' button to Youtube that show list of all videos that you disliked.",
   "scripts": {
     "zip": "npm run build && node ./tasks/archive-build",

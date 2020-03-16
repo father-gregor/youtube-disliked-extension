@@ -16,5 +16,11 @@
     },
     "loadMoreVideosButton": {
         "message": "Load More"
+    },
+    "infoPanel_header": {
+        "message":"Disliked videos"
+    },
+    "infoPanel_videoCountTitlePart": {
+        "message": "videos"
     }
 }

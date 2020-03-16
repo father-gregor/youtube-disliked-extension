@@ -11,6 +11,17 @@
             color: $main-color-text;
         }
     }
+    
+    .info-panel-header {
+        font-size: 2.4rem;
+        font-weight: 400;
+    }
+
+    .info-panel-videos-count {
+        margin-top: 10px;
+        color: $secondary-color-text;
+        font-weight: 300;
+    }
 
     .channel-title-container {
         display:flex;

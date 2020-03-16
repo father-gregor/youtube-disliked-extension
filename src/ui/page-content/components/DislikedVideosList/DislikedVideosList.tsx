@@ -13,6 +13,7 @@ interface IDislikedVideosListProps {
     videos: IYoutubeVideo[];
     totalCount: number;
     showLoadVideosButton: boolean;
+    disableLoadVideosButton: boolean;
     loadVideos: () => void;
 }
 
@@ -36,7 +37,8 @@ export class DislikedVideosList extends React.Component<IDislikedVideosListProps
                 {videos}
                 {this.props.showLoadVideosButton &&
                     <MessageWithButton buttonTitle={this.context.I18n.getMessage('loadMoreVideosButton')}
-                                       onButtonClick={this.handleLoadVideosClick}>
+                                       onButtonClick={this.handleLoadVideosClick}
+                                       buttonDisabled={this.props.disableLoadVideosButton}>
                     </MessageWithButton>
                 }
             </div>

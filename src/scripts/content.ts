@@ -21,6 +21,8 @@ function toggleDislikedList (event: MouseEvent) {
 }
 
 function setupDislikedButtonProps (container: Element, originalContainer: Element) {
+    container.setAttribute('data-disliked-button', 'true');
+
     // Removing href attribute from <a> tag and setting custom title
     const dislikedButtonElem = container.firstElementChild;
     dislikedButtonElem.removeAttribute('href');

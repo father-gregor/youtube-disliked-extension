@@ -17,6 +17,7 @@ interface IDislikedVideosContainerState {
     videos: IYoutubeVideo[];
     videosTotalCount?: number;
     isMoreVideosAvailable: boolean;
+    isVideosLoading?: boolean;
     loadedState?: 'notReady' | 'ready' | 'failed';
 }
 
@@ -41,10 +42,14 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
     @Bind
     async loadVideos (isFirstLoad?: boolean) {
         try {
+            this.setState({
+                isVideosLoading: true
+            });
             const videos: IYoutubeVideo[] = await this.context.DislikedVideosStorage.getVideos(isFirstLoad);
             this.setState((state: IDislikedVideosContainerState) => {
                 const newState: IDislikedVideosContainerState = {
                     videos: state.videos.concat(videos),
+                    isVideosLoading: false,
                     isMoreVideosAvailable: this.context.DislikedVideosStorage.isMoreVideosAvailable()
                 };
                 if (state.videosTotalCount == null) {
@@ -58,7 +63,8 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
         }
         catch (err) {
             this.setState({
-                loadedState: 'failed'
+                loadedState: 'failed',
+                isVideosLoading: false
             });
         }
     }
@@ -77,6 +83,7 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
                 <DislikedVideosList videos={this.state.videos}
                                     totalCount={this.state.videosTotalCount}
                                     showLoadVideosButton={this.state.isMoreVideosAvailable}
+                                    disableLoadVideosButton={this.state.isVideosLoading}
                                     loadVideos={this.loadVideos}>
                 </DislikedVideosList>;
         }
@@ -96,7 +103,8 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
                     <Grid className={'info-column-grid'} item xs={12} sm={4} md={3}>
                         <DislikedVideosInfoPanel channelTitle={channel.title}
                                                  channelAvatar={channel.thumbnail}
-                                                 channelUrl={channel.url}>
+                                                 channelUrl={channel.url}
+                                                 videosTotalCount={this.state.videosTotalCount}>
                         </DislikedVideosInfoPanel>
                     </Grid>
                     <Grid className={`content-column-grid ${isCentered ? 'centered' : ''}`} item xs={12} sm={8} md={9}>

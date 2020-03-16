@@ -16,5 +16,11 @@
     },
     "loadMoreVideosButton": {
         "message": "Загрузить еще"
+    },
+    "infoPanel_header": {
+        "message":"Непонравившиеся"
+    },
+    "infoPanel_videoCountTitlePart": {
+        "message": "видео"
     }
 }
