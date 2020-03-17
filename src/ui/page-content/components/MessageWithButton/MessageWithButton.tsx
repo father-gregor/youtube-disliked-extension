@@ -8,10 +8,10 @@ import './MessageWithButton.scss';
 
 interface IMessageWithButtonProps {
     message?: string;
-    buttonTitle: string;
+    buttonTitle?: string;
     buttonIcon?: any;
     buttonDisabled?: boolean;
-    onButtonClick: () => void;
+    onButtonClick?: () => void;
 }
 
 export class MessageWithButton extends React.Component<IMessageWithButtonProps> {
@@ -41,14 +41,14 @@ export class MessageWithButton extends React.Component<IMessageWithButtonProps> 
         return (
             <div className='message-with-button'>
                 {messageContent}
-                <Button variant='contained' 
+                {this.props.buttonTitle && <Button variant='contained' 
                         color='primary'
                         disabled={this.props.buttonDisabled != null && this.props.buttonDisabled}
                         className='message-with-button_btn'
                         startIcon={iconContent}
                         onClick={this.handleButtonClick}>
                     {this.props.buttonTitle}
-                </Button>
+                </Button>}
             </div>
         );
     }

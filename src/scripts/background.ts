@@ -1,4 +1,4 @@
-import {parse, Duration} from 'iso8601-duration';
+import {parse as parseIsoDuration, Duration} from 'iso8601-duration';
 
 import {IUserChannel} from '../interfaces/channel';
 import {IGetVideosResponse, IYoutubeVideo} from '../interfaces/video';
@@ -33,9 +33,9 @@ function parseDuration (duration: string) {
         return duration;
     }
 
-    const parsedDuration: Duration = parse(duration);
+    const parsedDuration: Duration = parseIsoDuration(duration);
     const days = parsedDuration.days;
-    let hours = `${parsedDuration.minutes || '00'}`;
+    let hours = `${parsedDuration.hours || '00'}`;
     let minutes = `${parsedDuration.minutes || '00'}`;
     let seconds = `${parsedDuration.seconds || '00'}`;
 
@@ -63,8 +63,15 @@ function parseDuration (duration: string) {
 async function getAuthToken (isInteractive: boolean): Promise<string> {
     return new Promise ((resolve) => {
         chrome.identity.getAuthToken({interactive: isInteractive}, (token) => {
-            console.log('TOKEN', token);
             resolve(token);
+        });
+    });
+}
+
+async function removeAuthToken (corruptedToken: string) {
+    return new Promise((resolve) => {
+        chrome.identity.removeCachedAuthToken({token: corruptedToken}, () => {
+            resolve();
         });
     });
 }
@@ -78,7 +85,6 @@ async function getCurrentUserChannel (token: string): Promise<IUserChannel> {
     const response = await fetchUrl(YOUTUBE_CURRENT_CHANNEL_URL, query, token);
 
     let channel: IUserChannel;
-    console.log('Full user', response);
     if (response.items[0]) {
         let item = response.items[0];
         channel = {
@@ -104,7 +110,6 @@ async function getDislikedVideos (token: string, pageToken?: string): Promise<IG
     }
 
     const response = await fetchUrl(YOUTUBE_DISLIKED_URL, query, token);
-    console.log(response.items);
 
     return {
         videos: (response.items || []).map((v) => {
@@ -137,7 +142,6 @@ chrome.runtime.onMessage.addListener((message: IMessageListenerData, sender, sen
     getAuthToken(message.popup).then(async (token: string) => {
         try {
             if (message.type === 'checkYoutubeAuth') {
-                console.log('TOKEN', token);
                 sendResponse({isAuthorized: !!token});
             }
             else if (message.type === 'getCurrentUserChannel') {
@@ -145,13 +149,12 @@ chrome.runtime.onMessage.addListener((message: IMessageListenerData, sender, sen
                 sendResponse(channel);
             }
             else if (message.type === 'getDislikedVideos') {
-                let videosRes = await getDislikedVideos(token, message.pageToken);
+                const videosRes = await getDislikedVideos(token, message.pageToken);
                 sendResponse(videosRes);
             }
         }
         catch (err) {
-            console.log('Error occured', err);
-            sendResponse(err);
+            sendResponse({err, authTokenRemoved: true});
         }
     });
 

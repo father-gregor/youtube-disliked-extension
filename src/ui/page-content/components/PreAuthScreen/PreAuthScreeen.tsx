@@ -17,7 +17,6 @@ export class PreAuthScreen extends React.Component<{onSuccessAuth: () => void}, 
     constructor (props) {
         super(props);
 
-        console.log('CONTEXT', this.context);
         this.state = {
             authButtonDisabled: false
         };

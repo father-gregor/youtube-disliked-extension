@@ -48,6 +48,8 @@ function setupDislikedButtonProps (container: Element, originalContainer: Elemen
 (async () => {
     I18n = await I18nService.create();
     
+    const maxTries = 20;
+    let currentTry = 0;
     const intervalId = setInterval(() => {
         const likedButtonContainerElem = getLikedButtonContainer();
         if (likedButtonContainerElem) {
@@ -55,6 +57,12 @@ function setupDislikedButtonProps (container: Element, originalContainer: Elemen
             let dislikedButtonContainerElem: Element = likedButtonContainerElem.cloneNode(true) as Element;
             dislikedButtonContainerElem = likedButtonContainerElem.parentNode.insertBefore(dislikedButtonContainerElem, likedButtonContainerElem.nextSibling);
             setupDislikedButtonProps(dislikedButtonContainerElem, likedButtonContainerElem);
+        }
+        else if (currentTry >= maxTries) {
+            clearInterval(intervalId);
+        }
+        else {
+            currentTry++;
         }
     }, 1000);
 })();

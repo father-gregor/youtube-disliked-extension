@@ -46,7 +46,6 @@ export class DislikedListService {
             this.listRootElem = document.createElement('div');
             this.listRootElem.id = this.LIST_ROOT_ID;
             container.appendChild(this.listRootElem);
-            renderRootComponent(this.listRootElem, true);
 
             this.isListInserted = true;
         }

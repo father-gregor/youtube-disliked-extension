@@ -1,3 +1,4 @@
+import {ChromeMessagingService} from './chrome-messaging.service';
 import {IGetVideosResponse, IYoutubeVideo} from "../interfaces/video";
 
 export class DislikedVideosStorageService {
@@ -6,9 +7,12 @@ export class DislikedVideosStorageService {
     private perPageCount: number;
     private nextPageToken: string;
     private prevPageToken: string;
+    private ChromeMessaging: ChromeMessagingService
     private static instance: DislikedVideosStorageService;
 
-    private constructor () {}
+    private constructor () {
+        this.ChromeMessaging = ChromeMessagingService.create();
+    }
 
     public async getVideos (isFirstLoad?: boolean) {
         if (isFirstLoad) {
@@ -18,18 +22,7 @@ export class DislikedVideosStorageService {
             return [];
         }
 
-        const res: IGetVideosResponse = await new Promise((resolve, reject) => {
-            chrome.runtime.sendMessage({type: 'getDislikedVideos', pageToken: this.nextPageToken}, (response: IGetVideosResponse) => {
-                if (response instanceof Error) {
-                    reject(response);
-                }
-
-                console.log('Videos Response', response);
-
-                resolve(response);
-            });
-        });
-
+        const res: IGetVideosResponse = await this.ChromeMessaging.sendMessage('getDislikedVideos', {pageToken: this.nextPageToken});
         let newVideos = res.videos;
 
         if (!newVideos) {
