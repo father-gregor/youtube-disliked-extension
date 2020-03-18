@@ -1,10 +1,10 @@
 import {I18nService} from '../services/i18n.service';
-import {DislikedListService} from '../services/disliked-list.service';
+import {DislikedVideosPopupService} from '../services/disliked-videos-popup.service';
 
 import '../styles/content.scss';
 
 let I18n: I18nService;
-let DislikedList: DislikedListService = DislikedListService.create();
+let DislikedVideosPopup: DislikedVideosPopupService = DislikedVideosPopupService.create();
 
 const LIKED_BUTTON_SELECTOR = 'ytd-app #sections ytd-guide-section-renderer ytd-guide-collapsible-section-entry-renderer #section-items ytd-guide-entry-renderer';
 
@@ -17,7 +17,7 @@ function toggleDislikedList (event: MouseEvent) {
     event.stopPropagation();
     event.preventDefault();
 
-    DislikedList.toggleList();
+    DislikedVideosPopup.toggleList();
 }
 
 function setupDislikedButtonProps (container: Element, originalContainer: Element) {

@@ -4,7 +4,7 @@ import {Theme, ThemeProvider} from '@material-ui/core/styles';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 import {LoadingSpinner} from '../LoadingSpinner/LoadingSpinner';
-import {CloseListButton} from '../CloseListButton/CloseListButton';
+import {ClosePopupButton} from '../ClosePopupButton/ClosePopupButton';
 import {PreAuthScreen} from '../PreAuthScreen/PreAuthScreeen';
 import {MessageWithButton} from '../MessageWithButton/MessageWithButton';
 import {ThemeChangeListener} from '../ThemeChangeListener/ThemeChangeListener';
@@ -14,7 +14,7 @@ import {Bind} from '../../decorators/Bind.decorator';
 import {createRootContext, IRootContext} from './RootContext';
 import {createRootTheme} from './RootTheme';
 import {GeneralErrorType} from '../../../../interfaces/general';
-import {DislikedListService} from '../../../../services/disliked-list.service';
+import {DislikedVideosPopupService} from '../../../../services/disliked-videos-popup.service';
 import {YoutubeAuthService} from '../../../../services/youtube-auth.service';
 import {I18nService} from '../../../../services/i18n.service';
 import {DislikedVideosStorageService} from '../../../../services/disliked-videos-storage.service';
@@ -36,7 +36,7 @@ let PreMountError: string = null;
 
 export class RootContainer extends React.Component<{}, IRootContainerState> {
     private rootContext: IRootContext = {
-        DislikedList: null,
+        DislikedVideosPopup: null,
         I18n: null,
         YoutubeAuth: null,
         DislikedVideosStorage: null,
@@ -49,7 +49,7 @@ export class RootContainer extends React.Component<{}, IRootContainerState> {
         super(props);
 
         this.updateRootContext({
-            DislikedList: DislikedListService.create(),
+            DislikedVideosPopup: DislikedVideosPopupService.create(),
             DislikedVideosStorage: DislikedVideosStorageService.create(),
             ChromeMessaging: ChromeMessagingService.create()
         });
@@ -67,7 +67,7 @@ export class RootContainer extends React.Component<{}, IRootContainerState> {
             isAuthorized: this.rootContext.YoutubeAuth ? this.rootContext.YoutubeAuth.isAuthorized() : false,
             isRootContextLoaded: false,
             rootContext: this.rootContext,
-            rootTheme: createRootTheme(this.rootContext.DislikedList.getCurrentThemeMode()),
+            rootTheme: createRootTheme(this.rootContext.DislikedVideosPopup.getCurrentThemeMode()),
             currentError: PreMountError
         };
 
@@ -119,7 +119,7 @@ export class RootContainer extends React.Component<{}, IRootContainerState> {
 
     @Bind
     handleCloseList () {
-        this.rootContext.DislikedList.closeList();
+        this.rootContext.DislikedVideosPopup.closePopup();
     }
 
     componentDidMount () {
@@ -169,7 +169,7 @@ export class RootContainer extends React.Component<{}, IRootContainerState> {
                 <ThemeProvider theme={this.state.rootTheme}>
                     <ClickAwayListener onClickAway={this.handleCloseList}>
                         <div className={`react-root-disliked-list-container ${isCentered ? 'centered' : ''}`}>
-                            <CloseListButton onClose={this.handleCloseList}></CloseListButton>
+                            <ClosePopupButton onClose={this.handleCloseList}></ClosePopupButton>
                             {content}
                         </div>
                     </ClickAwayListener>

@@ -1,6 +1,6 @@
 import { renderRootComponent } from "../ui/page-content/components/RootContainer/RootContainer";
 
-export class DislikedListService {
+export class DislikedVideosPopupService {
     private listRootElem: Element;
     private isOpened: boolean;
     private currentThemeMode: 'light' | 'dark';
@@ -9,7 +9,7 @@ export class DislikedListService {
     private LIST_ROOT_ID = 'extension-root-disliked-list';
     private LIST_OPENED_BODY_CLASS = 'body_disliked-list-opened';
 
-    private static instance: DislikedListService;
+    private static instance: DislikedVideosPopupService;
 
     private constructor () {
         this.updateCurrentThemeMode();
@@ -25,7 +25,7 @@ export class DislikedListService {
 
     public toggleList () {
         if (this.isOpened) {
-            this.closeList();
+            this.closePopup();
         }
         else {
             this.openList();
@@ -55,16 +55,16 @@ export class DislikedListService {
         this.isOpened = true;
     }
 
-    public closeList () {
+    public closePopup () {
         renderRootComponent(this.listRootElem, false);
         document.body.classList.remove(this.LIST_OPENED_BODY_CLASS);
         this.isOpened = false;
     }
 
     public static create () {
-        if (!DislikedListService.instance) {
-            DislikedListService.instance = new DislikedListService();
+        if (!DislikedVideosPopupService.instance) {
+            DislikedVideosPopupService.instance = new DislikedVideosPopupService();
         }
-        return DislikedListService.instance;
+        return DislikedVideosPopupService.instance;
     }
 }

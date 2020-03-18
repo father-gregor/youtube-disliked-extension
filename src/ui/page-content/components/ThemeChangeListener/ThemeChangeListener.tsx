@@ -23,8 +23,8 @@ export class ThemeChangeListener extends React.Component<{onThemeChange: (string
     }
 
     private handleCurrentThemeModeChange () {
-        this.context.DislikedList.updateCurrentThemeMode();
-        this.props.onThemeChange(this.context.DislikedList.getCurrentThemeMode());
+        this.context.DislikedVideosPopup.updateCurrentThemeMode();
+        this.props.onThemeChange(this.context.DislikedVideosPopup.getCurrentThemeMode());
     }
 
     private observeThemeModeChange () {

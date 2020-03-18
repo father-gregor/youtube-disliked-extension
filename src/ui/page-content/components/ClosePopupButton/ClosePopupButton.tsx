@@ -4,9 +4,9 @@ import {ic_clear} from 'react-icons-kit/md/ic_clear';
 
 import {Bind} from "../../decorators/Bind.decorator";
 
-import './CloseListButton.scss';
+import './ClosePopupButton.scss';
 
-export class CloseListButton extends React.Component<{onClose: () => void}> {
+export class ClosePopupButton extends React.Component<{onClose: () => void}> {
     @Bind
     handleCloseList () {
         this.props.onClose();
