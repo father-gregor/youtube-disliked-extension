@@ -32,14 +32,19 @@ export class YoutubeAuthService {
     }
 
     private async authorize (withPopup: boolean) {
-        this.userChannel = null;
-        const res: {isAuthorized: boolean} = await this.ChromeMessaging.sendMessage('checkYoutubeAuth', {popup: withPopup});
-        this.isAppAuthorized = res.isAuthorized;
+        try {
+            this.userChannel = null;
+            const res: {isAuthorized: boolean} = await this.ChromeMessaging.sendMessage('checkYoutubeAuth', {popup: withPopup});
+            this.isAppAuthorized = res.isAuthorized;
 
-        if (this.isAppAuthorized) {
-            await this.saveCurrentUserChannel();
+            if (this.isAppAuthorized) {
+                await this.saveCurrentUserChannel();
+            }
+            return this.isAppAuthorized;
         }
-        return this.isAppAuthorized;
+        catch (err) {
+            return false;
+        }
     }
 
     public static async create () {

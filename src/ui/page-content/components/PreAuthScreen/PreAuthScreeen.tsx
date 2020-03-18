@@ -38,12 +38,17 @@ export class PreAuthScreen extends React.Component<{onSuccessAuth: () => void}, 
 
     render () {
         return (
-            <MessageWithButton message={this.context.I18n.getMessage('askForAuthorizationMessage')}
-                            buttonTitle={this.context.I18n.getMessage('askForAuthorizationButton')}
-                            buttonIcon={google}
-                            buttonDisabled={this.state.authButtonDisabled}
-                            onButtonClick={this.handleAskForAuthorization}>
-            </MessageWithButton>
+            <div className='pre-auth-screen'>
+                <MessageWithButton message={this.context.I18n.getMessage('askForAuthorizationMessage')}
+                                buttonTitle={this.context.I18n.getMessage('askForAuthorizationButton')}
+                                buttonIcon={google}
+                                buttonDisabled={this.state.authButtonDisabled}
+                                onButtonClick={this.handleAskForAuthorization}>
+                                    <div className='extension-info'>
+                                        <p>{this.context.I18n.getMessage('extensionName')}</p>
+                                    </div>
+                </MessageWithButton>
+            </div>
         );
     }
 }

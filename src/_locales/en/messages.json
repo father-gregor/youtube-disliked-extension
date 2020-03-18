@@ -1,9 +1,12 @@
 {
+    "extensionName": {
+        "message": "YouTube Disliked"
+    },
     "dislikedButtonText": {
         "message": "Disliked videos"
     },
     "askForAuthorizationMessage": {
-        "message": "To retrieve list of your disliked videos you need to sign in to authenticate your account in \"Youtube Disliked\" extension by pressing button below. After that Google auth screen will appear. We don't use this access for anything other than getting disliked videos list - we don't process, store or send your personal data."
+        "message": "To retrieve list of your disliked videos you need to sign in to authenticate your account in \"YouTube Disliked\" extension by pressing button below. After that Google auth screen will appear. We don't use this access for anything other than getting disliked videos list - we don't process, store or send your personal data."
     },
     "askForAuthorizationButton": {
         "message": "Get Disliked Videos List"
@@ -22,5 +25,8 @@
     },
     "infoPanel_videoCountTitlePart": {
         "message": "videos"
+    },
+    "reloadRequiredError": {
+        "message": "Something went wrong. Please reload page to fix problem."
     }
 }

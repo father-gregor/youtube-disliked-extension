@@ -42,7 +42,8 @@
       }
     ],
     "web_accessible_resources": [
-      "_locales/**/*.json"
+      "_locales/**/*.json",
+      "assets/fonts/*.ttf"
     ]
   }
   

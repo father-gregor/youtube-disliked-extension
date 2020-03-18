@@ -6,51 +6,81 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import {LoadingSpinner} from '../LoadingSpinner/LoadingSpinner';
 import {CloseListButton} from '../CloseListButton/CloseListButton';
 import {PreAuthScreen} from '../PreAuthScreen/PreAuthScreeen';
+import {MessageWithButton} from '../MessageWithButton/MessageWithButton';
 import {ThemeChangeListener} from '../ThemeChangeListener/ThemeChangeListener';
 import {DislikedVideosContainer} from '../DislikedVideosContainer/DislikedVideosContainer';
 
 import {Bind} from '../../decorators/Bind.decorator';
 import {createRootContext, IRootContext} from './RootContext';
 import {createRootTheme} from './RootTheme';
+import {GeneralErrorType} from '../../../../interfaces/general';
 import {DislikedListService} from '../../../../services/disliked-list.service';
 import {YoutubeAuthService} from '../../../../services/youtube-auth.service';
 import {I18nService} from '../../../../services/i18n.service';
 import {DislikedVideosStorageService} from '../../../../services/disliked-videos-storage.service';
+import {ChromeMessagingService} from '../../../../services/chrome-messaging.service';
 
 import './RootContainer.scss';
 
 const RootContext = createRootContext();
 
-export class RootContainer extends React.Component<{}, {isAuthorized: boolean, rootContext: IRootContext, rootTheme: Theme}> {
+interface IRootContainerState {
+    isAuthorized: boolean;
+    isRootContextLoaded: boolean;
+    rootContext: IRootContext;
+    rootTheme: Theme;
+    currentError: string;
+}
+
+let PreMountError: string = null;
+
+export class RootContainer extends React.Component<{}, IRootContainerState> {
     private rootContext: IRootContext = {
         DislikedList: null,
         I18n: null,
         YoutubeAuth: null,
-        DislikedVideosStorage: null
+        DislikedVideosStorage: null,
+        ChromeMessaging: null
     };
+    private mounted: boolean;
+    private messagingSubId: number;
 
     constructor (props) {
         super(props);
 
-        this.initContext();
+        this.updateRootContext({
+            DislikedList: DislikedListService.create(),
+            DislikedVideosStorage: DislikedVideosStorageService.create(),
+            ChromeMessaging: ChromeMessagingService.create()
+        });
+
+        this.messagingSubId = this.rootContext.ChromeMessaging.subscribeToErrors((errorType: GeneralErrorType) => {
+            if (this.mounted) {
+                this.setState({currentError: errorType});
+            }
+            else {
+                PreMountError = errorType;
+            }
+        });
 
         this.state = {
             isAuthorized: this.rootContext.YoutubeAuth ? this.rootContext.YoutubeAuth.isAuthorized() : false,
+            isRootContextLoaded: false,
             rootContext: this.rootContext,
-            rootTheme: createRootTheme(this.rootContext.DislikedList.getCurrentThemeMode())
+            rootTheme: createRootTheme(this.rootContext.DislikedList.getCurrentThemeMode()),
+            currentError: PreMountError
         };
+
+        if (PreMountError) {
+            PreMountError = null;
+        }
+
+        this.initAsyncContext();
     }
 
-    initContext () {
-        this.updateRootContext({
-            DislikedList: DislikedListService.create(),
-            DislikedVideosStorage: DislikedVideosStorageService.create()
-        });
-
+    initAsyncContext () {
         YoutubeAuthService.create().then((instance) => {
-            setTimeout(() => {
-                this.updateRootContext({YoutubeAuth: instance});
-            }, 1000);
+            setTimeout(() => this.updateRootContext({YoutubeAuth: instance}), 1000);
         });
 
         I18nService.create().then((instance: I18nService) => {
@@ -68,6 +98,7 @@ export class RootContainer extends React.Component<{}, {isAuthorized: boolean, r
         }
 
         this.setState({
+            isRootContextLoaded: true,
             rootContext: this.rootContext
         });
     }
@@ -91,18 +122,42 @@ export class RootContainer extends React.Component<{}, {isAuthorized: boolean, r
         this.rootContext.DislikedList.closeList();
     }
 
+    componentDidMount () {
+        this.mounted = true;
+        if (PreMountError) {
+            this.setState({
+                currentError: PreMountError
+            });
+            PreMountError = null;
+        }
+    }
+
+    componentWillUnmount () {
+        this.mounted = false;
+        PreMountError = null;
+        if (this.messagingSubId) {
+            this.rootContext.ChromeMessaging.unsubscribe(this.messagingSubId);
+        }
+    }
+
     render () {
-        const YoutubeAuth = this.state.rootContext.YoutubeAuth;
         let content;
         let isCentered = true;
+        if (this.state.isRootContextLoaded) {
+            const YoutubeAuth = this.state.rootContext.YoutubeAuth;
+            const I18n = this.rootContext.I18n;
 
-        if (YoutubeAuth) {
-            if (YoutubeAuth.isAuthorized()) {
-                content = <DislikedVideosContainer></DislikedVideosContainer>;
-                isCentered = false;
+            if (this.state.currentError) {
+                content = <MessageWithButton message={I18n.getMessage(`${this.state.currentError}Error`)}></MessageWithButton>;
             }
             else {
-                content = <PreAuthScreen onSuccessAuth={this.handleSuccessAuth}></PreAuthScreen>;
+                if (YoutubeAuth.isAuthorized()) {
+                    content = <DislikedVideosContainer></DislikedVideosContainer>;
+                    isCentered = false;
+                }
+                else {
+                    content = <PreAuthScreen onSuccessAuth={this.handleSuccessAuth}></PreAuthScreen>;
+                }
             }
         }
         else {

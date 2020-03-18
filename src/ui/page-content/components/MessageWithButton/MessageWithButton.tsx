@@ -29,7 +29,7 @@ export class MessageWithButton extends React.Component<IMessageWithButtonProps> 
         let iconContent = null;
 
         if (this.props.message) {
-            messageContent = <p className='message-with-button_msg'>{this.props.message}</p>;
+            messageContent = <p className='message-with-button-msg'>{this.props.message}</p>;
         }
         if (this.props.buttonIcon) {
             iconContent = 
@@ -40,11 +40,12 @@ export class MessageWithButton extends React.Component<IMessageWithButtonProps> 
 
         return (
             <div className='message-with-button'>
+                {this.props.children}
                 {messageContent}
                 {this.props.buttonTitle && <Button variant='contained' 
                         color='primary'
                         disabled={this.props.buttonDisabled != null && this.props.buttonDisabled}
-                        className='message-with-button_btn'
+                        className='message-with-button-btn'
                         startIcon={iconContent}
                         onClick={this.handleButtonClick}>
                     {this.props.buttonTitle}

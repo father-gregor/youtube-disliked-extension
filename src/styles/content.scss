@@ -1,6 +1,13 @@
 @import './common/page-variables.scss';
 @import './common/page-mixins.scss';
 
+@font-face {
+    font-family: 'Oswald-Medium';
+    font-style: normal;
+    font-weight: 400;
+    src: url('chrome-extension://__MSG_@@extension_id__/assets/fonts/Oswald-Medium.ttf'); 
+}
+
 body {
     ytd-browse {
         position: relative;

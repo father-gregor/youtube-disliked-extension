@@ -17,7 +17,7 @@ export class ChromeMessagingService {
     }
 
     public async sendMessage (type: ChromeMessageType, data: any = {}): Promise<any> {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             try {
                 chrome.runtime.sendMessage({type, ...data}, (resp: any) => {
                     resolve(resp);
@@ -27,6 +27,7 @@ export class ChromeMessagingService {
                 if (err.message && err.message.includes('Extension context invalidated')) {
                     this.handleError('reloadRequired');
                 }
+                reject(err);
             }
         });
     }
