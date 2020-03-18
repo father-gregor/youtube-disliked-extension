@@ -1,5 +1,6 @@
 import {parse as parseIsoDuration, Duration} from 'iso8601-duration';
 
+import {ChromeMessageType} from './../interfaces/general.d';
 import {IUserChannel} from '../interfaces/channel';
 import {IGetVideosResponse, IYoutubeVideo} from '../interfaces/video';
 
@@ -133,10 +134,14 @@ async function getDislikedVideos (token: string, pageToken?: string): Promise<IG
 }
 
 interface IMessageListenerData {
-    type: 'checkYoutubeAuth' | 'getCurrentUserChannel' | 'getDislikedVideos';
+    type: ChromeMessageType;
     popup?: boolean;
     pageToken?: string;
 }
+
+chrome.webNavigation.onHistoryStateUpdated.addListener((data) => {
+    console.log('webNavigation changed', data);
+});
 
 chrome.runtime.onMessage.addListener((message: IMessageListenerData, sender, sendResponse) => {
     getAuthToken(message.popup).then(async (token: string) => {

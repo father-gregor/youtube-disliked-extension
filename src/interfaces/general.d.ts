@@ -1,3 +1,3 @@
-export type ChromeMessageType = 'checkYoutubeAuth' | 'getCurrentUserChannel' | 'getDislikedVideos';
+export type ChromeMessageType = 'onPageNavigation' | 'checkYoutubeAuth' | 'getCurrentUserChannel' | 'getDislikedVideos';
 
 export type GeneralErrorType = 'reloadRequired';
