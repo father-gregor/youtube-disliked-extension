@@ -1,4 +1,4 @@
-import {ChromeMessageType, GeneralErrorType} from '../interfaces/general';
+import {GeneralErrorType, BackgroundChromeMessageType, ContentChromeMessageType} from '../interfaces/general';
 
 export class ChromeMessagingService {
     private errorSubs: {id: number, callback: (type: GeneralErrorType) => any}[] = [];
@@ -16,7 +16,7 @@ export class ChromeMessagingService {
         this.errorSubs = this.errorSubs.filter((s) => s.id === id);
     }
 
-    public async sendMessage (type: ChromeMessageType, data: any = {}): Promise<any> {
+    public async sendMessage (type: ContentChromeMessageType, data: any = {}): Promise<any> {
         return new Promise((resolve, reject) => {
             try {
                 chrome.runtime.sendMessage({type, ...data}, (resp: any) => {

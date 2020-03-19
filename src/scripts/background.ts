@@ -1,11 +1,17 @@
 import {parse as parseIsoDuration, Duration} from 'iso8601-duration';
 
-import {ChromeMessageType} from './../interfaces/general.d';
+import {ContentChromeMessageType} from './../interfaces/general.d';
 import {IUserChannel} from '../interfaces/channel';
 import {IGetVideosResponse, IYoutubeVideo} from '../interfaces/video';
 
 const YOUTUBE_DISLIKED_URL = 'https://www.googleapis.com/youtube/v3/videos';
 const YOUTUBE_CURRENT_CHANNEL_URL = 'https://www.googleapis.com/youtube/v3/channels';
+
+interface IContentMessageListenerData {
+    type: ContentChromeMessageType;
+    popup?: boolean;
+    pageToken?: string;
+}
 
 async function fetchUrl (url: string, query: any, token: string) {
     const urlObj = new URL(url);
@@ -133,17 +139,16 @@ async function getDislikedVideos (token: string, pageToken?: string): Promise<IG
     };
 }
 
-interface IMessageListenerData {
-    type: ChromeMessageType;
-    popup?: boolean;
-    pageToken?: string;
+function onNavigation (details: chrome.webNavigation.WebNavigationUrlCallbackDetails) {
+    if (details.url.includes('/feed/library')) {
+        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+            chrome.tabs.sendMessage(tabs[0].id, {type: 'libraryPageOpened'});
+        });
+    }
 }
+chrome.webNavigation.onHistoryStateUpdated.addListener(onNavigation, {url: [{pathSuffix: 'feed/library'}]});
 
-chrome.webNavigation.onHistoryStateUpdated.addListener((data) => {
-    console.log('webNavigation changed', data);
-});
-
-chrome.runtime.onMessage.addListener((message: IMessageListenerData, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message: IContentMessageListenerData, sender, sendResponse) => {
     getAuthToken(message.popup).then(async (token: string) => {
         try {
             if (message.type === 'checkYoutubeAuth') {
