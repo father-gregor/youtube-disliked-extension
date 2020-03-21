@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {createRootContext, IRootContext, RootContextType} from '../../context/RootContext';
+import {createRootContext, IRootContext, RootContextType} from '../../../context/RootContext';
 
-export class DislikedVideosLibrarySection extends React.Component {
+export class DislikedVideosSectionHeader extends React.Component {
     static contextType: React.Context<IRootContext> = createRootContext();
     context!: RootContextType;
 
@@ -11,6 +11,6 @@ export class DislikedVideosLibrarySection extends React.Component {
     }
 
     render () {
-        return <div>Library Content</div>;
+        return <div>Header</div>;
     }
 }

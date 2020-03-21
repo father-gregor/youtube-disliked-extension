@@ -1,11 +1,11 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 
-import {IYoutubeVideo} from '../../../../interfaces/video';
+import {IYoutubeVideo} from '../../../../../interfaces/video';
 
 import './DislikedVideoItem.scss';
 
-import {Bind} from '../../decorators/Bind.decorator';
+import {Bind} from '../../../decorators/Bind.decorator';
 
 interface IDislikedVideoItemProps {
     video: IYoutubeVideo;

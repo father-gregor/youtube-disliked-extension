@@ -2,18 +2,18 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import {ic_refresh} from 'react-icons-kit/md/ic_refresh'
 
-import {LoadingSpinner} from '../LoadingSpinner/LoadingSpinner';
-import {MessageWithButton} from '../MessageWithButton/MessageWithButton';
+import {LoadingSpinner} from '../../LoadingSpinner/LoadingSpinner';
+import {MessageWithButton} from '../../MessageWithButton/MessageWithButton';
 import {DislikedVideosInfoPanel} from '../DislikedVideosInfoPanel/DislikedVideosInfoPanel';
 import {DislikedVideosList} from '../DislikedVideosList/DislikedVideosList';
 
-import {Bind} from '../../decorators/Bind.decorator';
-import {IRootContext, createRootContext, RootContextType} from '../../context/RootContext';
-import {IYoutubeVideo} from '../../../../interfaces/video';
+import {Bind} from '../../../decorators/Bind.decorator';
+import {IRootContext, createRootContext, RootContextType} from '../../../context/RootContext';
+import {IYoutubeVideo} from '../../../../../interfaces/video';
 
-import './DislikedVideosPopupContent.scss';
+import './DislikedVideosPopupRoot.scss';
 
-interface IDislikedVideosPopupContentState {
+interface IDislikedVideosPopupRootState {
     videos: IYoutubeVideo[];
     videosTotalCount?: number;
     isMoreVideosAvailable: boolean;
@@ -21,7 +21,7 @@ interface IDislikedVideosPopupContentState {
     loadedState?: 'notReady' | 'ready' | 'failed';
 }
 
-export class DislikedVideosPopupContent extends React.Component<{}, IDislikedVideosPopupContentState> {
+export class DislikedVideosPopupRoot extends React.Component<{}, IDislikedVideosPopupRootState> {
     static contextType: React.Context<IRootContext> = createRootContext();
     context!: RootContextType;
 
@@ -46,8 +46,8 @@ export class DislikedVideosPopupContent extends React.Component<{}, IDislikedVid
                 isVideosLoading: true
             });
             const videos: IYoutubeVideo[] = await this.context.DislikedVideosStorage.getVideos(isFirstLoad);
-            this.setState((state: IDislikedVideosPopupContentState) => {
-                const newState: IDislikedVideosPopupContentState = {
+            this.setState((state: IDislikedVideosPopupRootState) => {
+                const newState: IDislikedVideosPopupRootState = {
                     videos: state.videos.concat(videos),
                     isVideosLoading: false,
                     isMoreVideosAvailable: this.context.DislikedVideosStorage.isMoreVideosAvailable()

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {renderRootComponent} from '../ui/page-content/components/RootContainer/RootContainer';
-import {DislikedVideosLibrarySection} from '../ui/page-content/components/DislikedVideosLibrarySection/DislikedVideosLibrarySection';
+import {DislikedVideosSectionRoot} from '../ui/page-content/components/#library-section/DislikedVideosSectionRoot/DislikedVideosSectionRoot';
 
 export class DislikedVideosLibrarySectionService {
     private static instance: DislikedVideosLibrarySectionService;
@@ -9,7 +9,7 @@ export class DislikedVideosLibrarySectionService {
     private constructor () {}
 
     public renderSection (insertionPoint: HTMLElement) {
-        renderRootComponent(insertionPoint, <DislikedVideosLibrarySection></DislikedVideosLibrarySection>);
+        renderRootComponent(insertionPoint, <DislikedVideosSectionRoot></DislikedVideosSectionRoot>);
     }
 
     public static create () {

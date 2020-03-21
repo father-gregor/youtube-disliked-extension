@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {DislikedVideosPopupContent} from '../ui/page-content/components/DislikedVideosPopupContent/DislikedVideosPopupContent';
+import {DislikedVideosPopupRoot} from '../ui/page-content/components/#popup/DislikedVideosPopupRoot/DislikedVideosPopupRoot';
 import {renderRootComponent} from '../ui/page-content/components/RootContainer/RootContainer';
 
 export class DislikedVideosPopupService {
@@ -42,7 +42,7 @@ export class DislikedVideosPopupService {
             this.isListInserted = true;
         }
 
-        renderRootComponent(this.listRootElem, <DislikedVideosPopupContent></DislikedVideosPopupContent>, true);
+        renderRootComponent(this.listRootElem, <DislikedVideosPopupRoot></DislikedVideosPopupRoot>, true);
         document.body.classList.add(this.LIST_OPENED_BODY_CLASS);
         this.isOpened = true;
     }
