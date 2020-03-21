@@ -1,0 +1,45 @@
+@import '../../../../../styles/common/page-variables.scss';
+
+.disliked-videos-header {
+    display: flex;
+
+    .header-left {
+        flex-grow: 1;
+    }
+
+    .header-icon {
+        margin-right: 16px;
+        color: $secondary-color-text;
+        fill: var(--iron-icon-fill-color, $secondary-color-text);
+
+        svg {
+            width: 24px;
+            height: 24px;
+            transform: rotate(180deg);
+        }
+    }
+
+    .header-text,
+    .header-videos-count {
+        vertical-align: super;
+    }
+
+    .header-text {
+        margin-right: 8px;
+        font-size: 1.6rem;
+        font-weight: 500;
+    }
+
+    .header-videos-count {
+        color: $secondary-color-text;
+        font-size: 1.4rem;
+    }
+
+    .header-open-more-videos {
+        color: rgb(62, 166, 255);
+        font-size: 14px;
+        font-weight: 500;
+        margin-right: 16px;
+        cursor: pointer;
+    }
+}

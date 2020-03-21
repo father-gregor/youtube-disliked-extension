@@ -6,6 +6,7 @@ interface IContentLibraryDependencies {
 
 export function contentLibrary ({DislikedVideosLibrarySection}: IContentLibraryDependencies) {
     const ITEM_SECTION_SELECTOR = 'ytd-app ytd-browse[role^="main"] ytd-section-list-renderer #contents ytd-item-section-renderer';
+    const ITEM_SECTION_ID = 'extension-root-disliked-section';
 
     const maxTries = 20;
     let currentTry = 0;
@@ -35,6 +36,6 @@ export function contentLibrary ({DislikedVideosLibrarySection}: IContentLibraryD
         while(container.firstChild){
             container.removeChild(container.firstChild);
         }
-        container.id = 'disliked-section-library';
+        container.id = ITEM_SECTION_ID;
     }
 }

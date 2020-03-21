@@ -137,7 +137,7 @@ class RootContainer extends React.Component<IRootContainerProps, IRootContainerS
         return (
             <RootContext.Provider value={this.state.rootContext}>
                 <ThemeProvider theme={this.state.rootTheme}>
-                    <ClickAwayListener onClickAway={this.handleCloseList}>
+                    <ClickAwayListener mouseEvent={this.props.isContentCloseable ? 'onClick' : false} onClickAway={this.handleCloseList}>
                         <div className={`react-root-disliked-list-container ${isCentered ? 'centered' : ''}`}>
                             {this.props.isContentCloseable && <ClosePopupButton onClose={this.handleCloseList}></ClosePopupButton>}
                             {content}

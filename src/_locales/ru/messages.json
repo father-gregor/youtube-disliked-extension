@@ -28,5 +28,8 @@
     },
     "reloadRequiredError": {
         "message": "Что-то пошло не так. Пожалуйста перезагрузите страницу, чтобы исправить проблему."
+    },
+    "openMoreVideosButton": {
+        "message": "Ещё"
     }
 }

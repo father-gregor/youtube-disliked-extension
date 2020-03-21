@@ -13,7 +13,7 @@ body {
         position: relative;
     }
 
-    #extension-root-disliked-list {
+    #extension-root-disliked-popup {
         position: fixed;
         background: $list-background-color;
         width: 80%;
@@ -24,6 +24,11 @@ body {
         left: 240px;
         right: 0;
         z-index: -1;
+    }
+
+    #extension-root-disliked-section {
+        padding-top: 24px;
+        padding-bottom: 24px;
     }
 
     [data-disliked-button] {
@@ -41,7 +46,7 @@ body {
             visibility: collapse;
         }
 
-        #extension-root-disliked-list {
+        #extension-root-disliked-popup {
             z-index: 3000;
         }
     }
@@ -56,13 +61,13 @@ body {
 }
 
 @include if-dark-theme () {
-    body #extension-root-disliked-list {
+    body #extension-root-disliked-popup {
         box-shadow: 0 5px 10px $list-shadow-color_dark;
     }
 }
 
 @include if-light-theme () {
-    body #extension-root-disliked-list {
+    body #extension-root-disliked-popup{
         box-shadow: 0 5px 10px $list-shadow-color_light;
     }
 }
