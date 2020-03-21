@@ -4,7 +4,7 @@ import {DislikedVideoItem} from '../DislikedVideoItem/DislikedVideoItem';
 import {MessageWithButton} from '../MessageWithButton/MessageWithButton';
 
 import {Bind} from '../../decorators/Bind.decorator';
-import {IRootContext, createRootContext, RootContextType} from '../RootContainer/RootContext';
+import {IRootContext, createRootContext, RootContextType} from '../../context/RootContext';
 import {IYoutubeVideo} from '../../../../interfaces/video';
 
 import './DislikedVideosList.scss';

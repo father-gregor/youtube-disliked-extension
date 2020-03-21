@@ -6,9 +6,11 @@ import {DislikedVideosPopupService} from '../services/disliked-videos-popup.serv
 
 import '../styles/content.scss';
 import {BackgroundChromeMessageType} from '../interfaces/general';
+import { DislikedVideosLibrarySectionService } from "../services/disliked-videos-library-section.service";
 
 let I18n: I18nService;
 let DislikedVideosPopup: DislikedVideosPopupService = DislikedVideosPopupService.create();
+let DislikedVideosLibrarySection: DislikedVideosLibrarySectionService = DislikedVideosLibrarySectionService.create();
 
 (async () => {
     I18n = await I18nService.create();
@@ -16,13 +18,13 @@ let DislikedVideosPopup: DislikedVideosPopupService = DislikedVideosPopupService
     contentSidedrawer({DislikedVideosPopup, I18n});
 
     if (location.href.includes('/feed/library')) {
-        contentLibrary({});
+        contentLibrary({DislikedVideosLibrarySection});
     }
 
     chrome.runtime.onMessage.addListener((data: {type: BackgroundChromeMessageType}, sender, sendResponse) => {
         console.log('LIBRARY PAGE OPENED', data);
         if (data.type === 'libraryPageOpened') {
-            contentLibrary({});
+            contentLibrary({DislikedVideosLibrarySection});
         }
         sendResponse();
     });

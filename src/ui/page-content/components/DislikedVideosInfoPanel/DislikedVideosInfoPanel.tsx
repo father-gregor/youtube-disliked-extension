@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 
-import {IRootContext, createRootContext, RootContextType} from '../RootContainer/RootContext';
+import {IRootContext, createRootContext, RootContextType} from '../../context/RootContext';
 
 import './DislikedVideosInfoPanel.scss';
 

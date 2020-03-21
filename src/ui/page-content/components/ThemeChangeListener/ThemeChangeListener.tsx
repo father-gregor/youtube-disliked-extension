@@ -1,5 +1,5 @@
 import React from 'react';
-import {IRootContext, createRootContext, RootContextType} from '../RootContainer/RootContext';
+import {IRootContext, createRootContext, RootContextType} from '../../context/RootContext';
 
 export class ThemeChangeListener extends React.Component<{onThemeChange: (string) => void}> {
     static contextType: React.Context<IRootContext> = createRootContext();
@@ -23,8 +23,8 @@ export class ThemeChangeListener extends React.Component<{onThemeChange: (string
     }
 
     private handleCurrentThemeModeChange () {
-        this.context.DislikedVideosPopup.updateCurrentThemeMode();
-        this.props.onThemeChange(this.context.DislikedVideosPopup.getCurrentThemeMode());
+        this.context.Theme.updateCurrentTheme();
+        this.props.onThemeChange(this.context.Theme.getCurrentTheme());
     }
 
     private observeThemeModeChange () {

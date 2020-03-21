@@ -8,21 +8,20 @@ import {ClosePopupButton} from '../ClosePopupButton/ClosePopupButton';
 import {PreAuthScreen} from '../PreAuthScreen/PreAuthScreeen';
 import {MessageWithButton} from '../MessageWithButton/MessageWithButton';
 import {ThemeChangeListener} from '../ThemeChangeListener/ThemeChangeListener';
-import {DislikedVideosContainer} from '../DislikedVideosContainer/DislikedVideosContainer';
 
 import {Bind} from '../../decorators/Bind.decorator';
-import {createRootContext, IRootContext} from './RootContext';
-import {createRootTheme} from './RootTheme';
+import {createRootContext, IRootContext, initRuntimeRootContext} from '../../context/RootContext';
+import {createRootTheme} from '../../context/RootTheme';
+import {ThemeService} from '../../../../services/theme.service';
 import {GeneralErrorType} from '../../../../interfaces/general';
-import {DislikedVideosPopupService} from '../../../../services/disliked-videos-popup.service';
-import {YoutubeAuthService} from '../../../../services/youtube-auth.service';
-import {I18nService} from '../../../../services/i18n.service';
-import {DislikedVideosStorageService} from '../../../../services/disliked-videos-storage.service';
-import {ChromeMessagingService} from '../../../../services/chrome-messaging.service';
 
 import './RootContainer.scss';
 
 const RootContext = createRootContext();
+
+interface IRootContainerProps {
+    isContentCloseable: boolean;
+}
 
 interface IRootContainerState {
     isAuthorized: boolean;
@@ -34,40 +33,19 @@ interface IRootContainerState {
 
 let PreMountError: string = null;
 
-export class RootContainer extends React.Component<{}, IRootContainerState> {
-    private rootContext: IRootContext = {
-        DislikedVideosPopup: null,
-        I18n: null,
-        YoutubeAuth: null,
-        DislikedVideosStorage: null,
-        ChromeMessaging: null
-    };
+class RootContainer extends React.Component<IRootContainerProps, IRootContainerState> {
+    private rootContext: IRootContext = {} as IRootContext;
     private mounted: boolean;
     private messagingSubId: number;
 
     constructor (props) {
         super(props);
 
-        this.updateRootContext({
-            DislikedVideosPopup: DislikedVideosPopupService.create(),
-            DislikedVideosStorage: DislikedVideosStorageService.create(),
-            ChromeMessaging: ChromeMessagingService.create()
-        });
-
-        this.messagingSubId = this.rootContext.ChromeMessaging.subscribeToErrors((errorType: GeneralErrorType) => {
-            if (this.mounted) {
-                this.setState({currentError: errorType});
-            }
-            else {
-                PreMountError = errorType;
-            }
-        });
-
         this.state = {
-            isAuthorized: this.rootContext.YoutubeAuth ? this.rootContext.YoutubeAuth.isAuthorized() : false,
+            isAuthorized: false,
             isRootContextLoaded: false,
             rootContext: this.rootContext,
-            rootTheme: createRootTheme(this.rootContext.DislikedVideosPopup.getCurrentThemeMode()),
+            rootTheme: createRootTheme(ThemeService.create().getCurrentTheme()),
             currentError: PreMountError
         };
 
@@ -75,31 +53,23 @@ export class RootContainer extends React.Component<{}, IRootContainerState> {
             PreMountError = null;
         }
 
-        this.initAsyncContext();
-    }
+        initRuntimeRootContext().then((context) => {
+            this.rootContext = context;
 
-    initAsyncContext () {
-        YoutubeAuthService.create().then((instance) => {
-            setTimeout(() => this.updateRootContext({YoutubeAuth: instance}), 1000);
-        });
+            this.setState({
+                isAuthorized: context.YoutubeAuth.isAuthorized(),
+                isRootContextLoaded: true,
+                rootContext: this.rootContext
+            });
 
-        I18nService.create().then((instance: I18nService) => {
-            this.updateRootContext({I18n: instance});
-        });
-    }
-
-    updateRootContext (newContext: object) {
-        this.rootContext = {...this.rootContext, ...newContext};
-
-        for (let key of Object.keys(this.rootContext)) {
-            if (!this.rootContext[key]) {
-                return false;
-            }
-        }
-
-        this.setState({
-            isRootContextLoaded: true,
-            rootContext: this.rootContext
+            this.messagingSubId = this.rootContext.ChromeMessaging.subscribeToErrors((errorType: GeneralErrorType) => {
+                if (this.mounted) {
+                    this.setState({currentError: errorType});
+                }
+                else {
+                    PreMountError = errorType;
+                }
+            });
         });
     }
 
@@ -152,7 +122,7 @@ export class RootContainer extends React.Component<{}, IRootContainerState> {
             }
             else {
                 if (YoutubeAuth.isAuthorized()) {
-                    content = <DislikedVideosContainer></DislikedVideosContainer>;
+                    content = this.props.children;
                     isCentered = false;
                 }
                 else {
@@ -169,7 +139,7 @@ export class RootContainer extends React.Component<{}, IRootContainerState> {
                 <ThemeProvider theme={this.state.rootTheme}>
                     <ClickAwayListener onClickAway={this.handleCloseList}>
                         <div className={`react-root-disliked-list-container ${isCentered ? 'centered' : ''}`}>
-                            <ClosePopupButton onClose={this.handleCloseList}></ClosePopupButton>
+                            {this.props.isContentCloseable && <ClosePopupButton onClose={this.handleCloseList}></ClosePopupButton>}
                             {content}
                         </div>
                     </ClickAwayListener>
@@ -181,9 +151,13 @@ export class RootContainer extends React.Component<{}, IRootContainerState> {
     }
 }
 
-export function renderRootComponent (elem: Element, isOpened: boolean) {
+export function renderRootComponent (insertionPoint: Element, mainContent:React.ReactNode, isCloseable?: boolean) {
     ReactDOM.render(
-        isOpened ? <RootContainer/> : null,
-        elem
+        mainContent ?
+            <RootContainer isContentCloseable={isCloseable}>
+                {mainContent}
+            </RootContainer>
+            : null,
+        insertionPoint
     )
 }

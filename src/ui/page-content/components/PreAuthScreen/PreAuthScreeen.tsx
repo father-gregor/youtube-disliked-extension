@@ -5,7 +5,7 @@ import {google} from 'react-icons-kit/fa/google'
 
 import {MessageWithButton} from '../MessageWithButton/MessageWithButton';
 
-import {createRootContext, IRootContext, RootContextType} from "../RootContainer/RootContext";
+import {createRootContext, IRootContext, RootContextType} from "../../context/RootContext";
 import {Bind} from '../../decorators/Bind.decorator';
 
 import './PreAuthScreen.scss';

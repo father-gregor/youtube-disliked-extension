@@ -1,6 +1,10 @@
-interface IContentLibraryDependencies {}
+import {DislikedVideosLibrarySectionService} from '../services/disliked-videos-library-section.service';
 
-export function contentLibrary ({}: IContentLibraryDependencies) {
+interface IContentLibraryDependencies {
+    DislikedVideosLibrarySection: DislikedVideosLibrarySectionService
+}
+
+export function contentLibrary ({DislikedVideosLibrarySection}: IContentLibraryDependencies) {
     const ITEM_SECTION_SELECTOR = 'ytd-app ytd-browse[role^="main"] ytd-section-list-renderer #contents ytd-item-section-renderer';
 
     const maxTries = 20;
@@ -10,8 +14,9 @@ export function contentLibrary ({}: IContentLibraryDependencies) {
         if (itemSectionContainerElem) {
             clearInterval(intervalId);
             let dislikedSectionContainerElem: HTMLElement = itemSectionContainerElem.cloneNode(true) as HTMLElement;
+            setupDislikedSectionProps(dislikedSectionContainerElem);
             dislikedSectionContainerElem = itemSectionContainerElem.parentNode.insertBefore(dislikedSectionContainerElem, itemSectionContainerElem.nextSibling);
-            setupDislikedSectionProps(dislikedSectionContainerElem, itemSectionContainerElem);
+            DislikedVideosLibrarySection.renderSection(dislikedSectionContainerElem);
         }
         else if (currentTry >= maxTries) {
             clearInterval(intervalId);
@@ -26,7 +31,10 @@ export function contentLibrary ({}: IContentLibraryDependencies) {
         return entryList[3] as HTMLElement;
     }
 
-    function setupDislikedSectionProps (container: HTMLElement, originalContainer: HTMLElement) {
-        container.style.height = '600px';
+    function setupDislikedSectionProps (container: HTMLElement) {
+        while(container.firstChild){
+            container.removeChild(container.firstChild);
+        }
+        container.id = 'disliked-section-library';
     }
 }

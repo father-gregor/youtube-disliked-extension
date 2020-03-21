@@ -1,9 +1,11 @@
-import { renderRootComponent } from "../ui/page-content/components/RootContainer/RootContainer";
+import React from 'react';
+
+import {DislikedVideosPopupContent} from '../ui/page-content/components/DislikedVideosPopupContent/DislikedVideosPopupContent';
+import {renderRootComponent} from '../ui/page-content/components/RootContainer/RootContainer';
 
 export class DislikedVideosPopupService {
     private listRootElem: Element;
     private isOpened: boolean;
-    private currentThemeMode: 'light' | 'dark';
     private isListInserted = false;
     private PAGE_MANAGE_SELECTOR = 'ytd-page-manager';
     private LIST_ROOT_ID = 'extension-root-disliked-list';
@@ -11,16 +13,10 @@ export class DislikedVideosPopupService {
 
     private static instance: DislikedVideosPopupService;
 
-    private constructor () {
-        this.updateCurrentThemeMode();
-    }
+    private constructor () {}
 
     public get uiState () {
         return this.isOpened;
-    }
-
-    public getCurrentThemeMode () {
-        return this.currentThemeMode;
     }
 
     public toggleList () {
@@ -30,10 +26,6 @@ export class DislikedVideosPopupService {
         else {
             this.openList();
         }
-    }
-
-    public updateCurrentThemeMode () {
-        this.currentThemeMode = document.documentElement.getAttribute('dark') ? 'dark' : 'light';
     }
 
     public openList () {
@@ -50,13 +42,13 @@ export class DislikedVideosPopupService {
             this.isListInserted = true;
         }
 
-        renderRootComponent(this.listRootElem, true);
+        renderRootComponent(this.listRootElem, <DislikedVideosPopupContent></DislikedVideosPopupContent>, true);
         document.body.classList.add(this.LIST_OPENED_BODY_CLASS);
         this.isOpened = true;
     }
 
     public closePopup () {
-        renderRootComponent(this.listRootElem, false);
+        renderRootComponent(this.listRootElem, null);
         document.body.classList.remove(this.LIST_OPENED_BODY_CLASS);
         this.isOpened = false;
     }

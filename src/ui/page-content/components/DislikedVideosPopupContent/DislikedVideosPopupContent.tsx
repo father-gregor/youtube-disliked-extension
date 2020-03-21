@@ -8,12 +8,12 @@ import {DislikedVideosInfoPanel} from '../DislikedVideosInfoPanel/DislikedVideos
 import {DislikedVideosList} from '../DislikedVideosList/DislikedVideosList';
 
 import {Bind} from '../../decorators/Bind.decorator';
-import {IRootContext, createRootContext, RootContextType} from '../RootContainer/RootContext';
+import {IRootContext, createRootContext, RootContextType} from '../../context/RootContext';
 import {IYoutubeVideo} from '../../../../interfaces/video';
 
-import './DislikedVideosContainer.scss';
+import './DislikedVideosPopupContent.scss';
 
-interface IDislikedVideosContainerState {
+interface IDislikedVideosPopupContentState {
     videos: IYoutubeVideo[];
     videosTotalCount?: number;
     isMoreVideosAvailable: boolean;
@@ -21,7 +21,7 @@ interface IDislikedVideosContainerState {
     loadedState?: 'notReady' | 'ready' | 'failed';
 }
 
-export class DislikedVideosContainer extends React.Component<{}, IDislikedVideosContainerState> {
+export class DislikedVideosPopupContent extends React.Component<{}, IDislikedVideosPopupContentState> {
     static contextType: React.Context<IRootContext> = createRootContext();
     context!: RootContextType;
 
@@ -46,8 +46,8 @@ export class DislikedVideosContainer extends React.Component<{}, IDislikedVideos
                 isVideosLoading: true
             });
             const videos: IYoutubeVideo[] = await this.context.DislikedVideosStorage.getVideos(isFirstLoad);
-            this.setState((state: IDislikedVideosContainerState) => {
-                const newState: IDislikedVideosContainerState = {
+            this.setState((state: IDislikedVideosPopupContentState) => {
+                const newState: IDislikedVideosPopupContentState = {
                     videos: state.videos.concat(videos),
                     isVideosLoading: false,
                     isMoreVideosAvailable: this.context.DislikedVideosStorage.isMoreVideosAvailable()
