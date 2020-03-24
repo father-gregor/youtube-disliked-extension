@@ -1,19 +1,8 @@
 @import '../../../../../styles/common/page-variables.scss';
 
 .disliked-video-item {
-    cursor: pointer;
-
     &:hover {
         background-color: var(--yt-spec-badge-chip-background);
-    }
-
-    a {
-        text-decoration: none;
-
-        &,
-        &:visited {
-            color: $main-color-text;
-        }
     }
 
     .item-index {
@@ -24,47 +13,17 @@
         padding-right: 10px;
     }
 
+    .disliked-video-thumbnail {
+        margin: 0 8px 0 0;
+    }
+
     .item-metadata {
         border-bottom: 1px solid var(--yt-spec-10-percent-layer);
         padding: 16px 0;
         margin-left: 8px;
     }
 
-    .item-thumbnail {
-        position: relative;
-        margin: 0 8px 0 0;
-
-        &.MuiGrid-item {
-            padding: 0;
-        }
-
-        .item-duration {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.8);
-            color: #ffffff;
-            letter-spacing: 0.5px;
-            padding: 2px 4px;
-            border-radius: 2px;
-            font-size: 1.2rem;
-            font-weight: 500;
-            bottom: 0;
-            right: 0;
-            margin: 4px;
-        }
-    }
-
     .item-title {
         margin-bottom: 8px;
-    }
-
-    .item-channel-title {
-        a {
-            font-size: 87%;
-            color: $secondary-color-text;
-
-            &:hover {
-                color: $main-color-text;
-            }
-        }
     }
 }

@@ -8,6 +8,10 @@ export function contentLibrary ({DislikedVideosLibrarySection}: IContentLibraryD
     const ITEM_SECTION_SELECTOR = 'ytd-app ytd-browse[role^="main"] ytd-section-list-renderer #contents ytd-item-section-renderer';
     const ITEM_SECTION_ID = 'extension-root-disliked-section';
 
+    if (isAlreadyInserted()) {
+        return;
+    }
+
     const maxTries = 20;
     let currentTry = 0;
     const intervalId = setInterval(() => {
@@ -26,6 +30,11 @@ export function contentLibrary ({DislikedVideosLibrarySection}: IContentLibraryD
             currentTry++;
         }
     }, 1000);
+
+    function isAlreadyInserted () {
+        const elem = document.querySelector(`#${ITEM_SECTION_ID}`);
+        return !!elem;
+    }
 
     function getItemSectionContainer () {
         const entryList = Array.from(document.querySelectorAll(ITEM_SECTION_SELECTOR));

@@ -22,7 +22,6 @@ let DislikedVideosLibrarySection: DislikedVideosLibrarySectionService = Disliked
     }
 
     chrome.runtime.onMessage.addListener((data: {type: BackgroundChromeMessageType}, sender, sendResponse) => {
-        console.log('LIBRARY PAGE OPENED', data);
         if (data.type === 'libraryPageOpened') {
             contentLibrary({DislikedVideosLibrarySection});
         }

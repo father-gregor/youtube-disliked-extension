@@ -31,5 +31,17 @@
     },
     "openMoreVideosButton": {
         "message": "Ещё"
+    },
+    "viewCount_viewsWord": {
+        "message": "просмотров"
+    },
+    "viewCount_thousands": {
+        "message": " тыс."
+    },
+    "viewCount_millions": {
+        "message": " млн"
+    },
+    "viewCount_billions": {
+        "message": " млрд"
     }
 }

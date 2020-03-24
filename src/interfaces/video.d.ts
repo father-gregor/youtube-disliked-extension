@@ -5,6 +5,9 @@ export interface IYoutubeVideo {
     url: string;
     thumbnail: string;
     duration: string;
+    viewCount: number;
+    viewCountLocalized?: string;
+    publishedAt: string;
     channelId: string;
     channelTitle: string;
     channelUrl: string;

@@ -1,4 +1,5 @@
 import {ChromeMessagingService} from './chrome-messaging.service';
+import {I18nService} from './i18n.service';
 import {IGetVideosResponse, IYoutubeVideo} from "../interfaces/video";
 
 export class DislikedVideosStorageService {
@@ -7,11 +8,16 @@ export class DislikedVideosStorageService {
     private perPageCount: number;
     private nextPageToken: string;
     private prevPageToken: string;
-    private ChromeMessaging: ChromeMessagingService
+    private ChromeMessaging: ChromeMessagingService;
+    private I18n: I18nService;
+    private viewCountTiers = ['', 'thousands', 'millions', 'billions'];
     private static instance: DislikedVideosStorageService;
 
     private constructor () {
         this.ChromeMessaging = ChromeMessagingService.create();
+        I18nService.create().then((instance: I18nService) => {
+            this.I18n = instance;
+        });
     }
 
     public async getVideos (isFirstLoad?: boolean) {
@@ -29,7 +35,12 @@ export class DislikedVideosStorageService {
             return [];
         }
 
-        this.videos = this.videos.concat(newVideos);
+        this.videos = this.videos.concat(newVideos.map((video) => {
+            if (!video.viewCountLocalized) {
+                video.viewCountLocalized = this.localizedViewCount(video.viewCount);
+            }
+            return video;
+        }));
         this.totalCount = res.totalCount || this.totalCount;
         this.perPageCount = res.perPageCount || this.perPageCount;
         this.nextPageToken = res.nextPageToken || this.nextPageToken;
@@ -44,6 +55,21 @@ export class DislikedVideosStorageService {
 
     public getTotalCount () {
         return this.totalCount;
+    }
+
+    public localizedViewCount (viewCount: number){
+        const tier = Math.log10(viewCount) / 3 | 0;
+        const viewsWord = this.I18n.getMessage('viewCount_viewsWord');
+
+        if (tier === 0) {
+            return viewCount + ' ' + viewsWord;
+        }
+
+        const suffix = this.viewCountTiers[tier];
+        const scale = Math.pow(10, tier * 3);
+        const scaled = viewCount / scale;
+
+        return scaled.toFixed(1).replace('.', ',') + this.I18n.getMessage(`viewCount_${suffix}`) + ' ' + viewsWord;
     }
 
     private clearStoredVideos () {

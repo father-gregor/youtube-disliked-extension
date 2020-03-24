@@ -31,5 +31,17 @@
     },
     "openMoreVideosButton": {
         "message": "More"
+    },
+    "viewCount_viewsWord": {
+        "message": "views"
+    },
+    "viewCount_thousands": {
+        "message": "K"
+    },
+    "viewCount_millions": {
+        "message": "M"
+    },
+    "viewCount_billions": {
+        "message": "B"
     }
 }

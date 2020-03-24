@@ -1,0 +1,16 @@
+@import '../../../../styles/common/page-variables.scss';
+
+.disliked-video-channel {
+    a.channel-url {
+        font-size: 87%;
+
+        &,
+        &:visited {
+            color: $secondary-color-text;
+        }
+
+        &:hover {
+            color: $main-color-text;
+        }
+    }
+}

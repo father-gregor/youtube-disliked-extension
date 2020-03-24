@@ -1,0 +1,15 @@
+
+@import '../../../../styles/common/page-variables.scss';
+
+.disliked-video-container {
+    cursor: pointer;
+
+    a {
+        text-decoration: none;
+
+        &,
+        &:visited {
+            color: $main-color-text;
+        }
+    }
+}

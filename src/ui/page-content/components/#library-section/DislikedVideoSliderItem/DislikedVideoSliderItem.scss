@@ -1,0 +1,24 @@
+@import '../../../../../styles/common/page-variables.scss';
+
+.disliked-video-slider-item {
+    display: inline-block;
+
+    .slider-item-title {
+        line-height: 1.6rem;
+        height: 3.2rem;
+        overflow: hidden;
+        margin: 8px 0;
+
+        a {
+            font-weight: 500;
+        }
+    }
+
+    .disliked-video-channel a,
+    .slider-item-viewcount,
+    .slider-item-published {
+        font-size: 89%;
+        line-height: 18px;
+        color: $secondary-color-text;
+    }
+}

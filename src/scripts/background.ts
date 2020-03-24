@@ -107,7 +107,7 @@ async function getCurrentUserChannel (token: string): Promise<IUserChannel> {
 
 async function getDislikedVideos (token: string, pageToken?: string): Promise<IGetVideosResponse> {
     const query: any = {
-        part: 'id,snippet,contentDetails',
+        part: 'id,snippet,contentDetails,statistics',
         myRating: 'dislike',
         maxResults: 15
     };
@@ -127,6 +127,8 @@ async function getDislikedVideos (token: string, pageToken?: string): Promise<IG
                 url: `https://www.youtube.com/watch?v=${v.id}`,
                 thumbnail: v.snippet.thumbnails?.medium?.url,
                 duration: parseDuration(v.contentDetails.duration),
+                viewCount: v.statistics.viewCount,
+                publishedAt: v.snippet.publishedAt,
                 channelId: v.snippet.channelId,
                 channelTitle: v.snippet.channelTitle,
                 channelUrl: `https://www.youtube.com/channel/${v.snippet.channelId}`
