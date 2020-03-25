@@ -1,4 +1,4 @@
-export type ContentChromeMessageType = 'checkYoutubeAuth' | 'getCurrentUserChannel' | 'getDislikedVideos';
+export type ContentChromeMessageType = 'checkYoutubeAuth' | 'removeYoutubeAuth' | 'getCurrentUserChannel' | 'getDislikedVideos';
 
 export type BackgroundChromeMessageType = 'libraryPageOpened';
 

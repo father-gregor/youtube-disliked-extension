@@ -1,9 +1,8 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import {Icon} from 'react-icons-kit';
 import {google} from 'react-icons-kit/fa/google'
 
 import {MessageWithButton} from '../MessageWithButton/MessageWithButton';
+import {ExtensionLogo} from '../ExtensionLogo/ExtensionLogo';
 
 import {createRootContext, IRootContext, RootContextType} from "../../context/RootContext";
 import {Bind} from '../../decorators/Bind.decorator';
@@ -40,13 +39,11 @@ export class PreAuthScreen extends React.Component<{onSuccessAuth: () => void}, 
         return (
             <div className='pre-auth-screen'>
                 <MessageWithButton message={this.context.I18n.getMessage('askForAuthorizationMessage')}
-                                buttonTitle={this.context.I18n.getMessage('askForAuthorizationButton')}
-                                buttonIcon={google}
-                                buttonDisabled={this.state.authButtonDisabled}
-                                onButtonClick={this.handleAskForAuthorization}>
-                                    <div className='extension-info'>
-                                        <p>{this.context.I18n.getMessage('extensionName')}</p>
-                                    </div>
+                                   buttonTitle={this.context.I18n.getMessage('askForAuthorizationButton')}
+                                   buttonIcon={google}
+                                   buttonDisabled={this.state.authButtonDisabled}
+                                   onButtonClick={this.handleAskForAuthorization}>
+                                    <ExtensionLogo></ExtensionLogo>
                 </MessageWithButton>
             </div>
         );

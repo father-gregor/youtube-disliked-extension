@@ -20,10 +20,10 @@
     "loadMoreVideosButton": {
         "message": "Загрузить еще"
     },
-    "infoPanel_header": {
+    "infoPanel@header": {
         "message":"Непонравившиеся"
     },
-    "infoPanel_videoCountTitlePart": {
+    "infoPanel@videoCountTitlePart": {
         "message": "видео"
     },
     "reloadRequiredError": {
@@ -32,16 +32,46 @@
     "openMoreVideosButton": {
         "message": "Ещё"
     },
-    "viewCount_viewsWord": {
+    "viewCount@viewsWord": {
         "message": "просмотров"
     },
-    "viewCount_thousands": {
+    "viewCount@thousands": {
         "message": " тыс."
     },
-    "viewCount_millions": {
+    "viewCount@millions": {
         "message": " млн"
     },
-    "viewCount_billions": {
+    "viewCount@billions": {
         "message": " млрд"
+    },
+    "noVideosErrorMessage": {
+        "message": "Не удалось загрузить непонравившиеся видео. Это могло произойти по различным причинам (включая также проблемы на серверах YouTube), но если вы уверены что вы поставили дизлайк хотя бы одному видео на YouTube то попробуйте обновить данные нажав кнопку ниже."
+    },
+    "noVideosErrorButton": {
+        "message": "Обновить"
+    },
+    "publishDate@agoWord": {
+        "message": "назад"
+    },
+    "publishDate@yearPlural": {
+        "message": "лет"
+    },
+    "publishDate@yearSingular": {
+        "message": "год"
+    },
+    "publishDate@monthPlural": {
+        "message": "месяцев"
+    },
+    "publishDate@monthSingular": {
+        "message": "месяц"
+    },
+    "publishDate@weekPlural": {
+        "message": "недели"
+    },
+    "publishDate@weekSingular": {
+        "message": "неделю"
+    },
+    "publishDate@today": {
+        "message": "Сегодня"
     }
 }

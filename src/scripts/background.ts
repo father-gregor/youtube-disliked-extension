@@ -76,6 +76,10 @@ async function getAuthToken (isInteractive: boolean): Promise<string> {
 }
 
 async function removeAuthToken (corruptedToken: string) {
+    /**
+     * Complete tokken purging from here - https://stackoverflow.com/a/50343218
+     */
+    await fetch(`https://accounts.google.com/o/oauth2/revoke?token=${corruptedToken}`);
     return new Promise((resolve) => {
         chrome.identity.removeCachedAuthToken({token: corruptedToken}, () => {
             resolve();
@@ -156,6 +160,10 @@ chrome.runtime.onMessage.addListener((message: IContentMessageListenerData, send
             if (message.type === 'checkYoutubeAuth') {
                 sendResponse({isAuthorized: !!token});
             }
+            else if (message.type === 'removeYoutubeAuth') {
+                await removeAuthToken(token);
+                sendResponse({authTokenRemoved: true});
+            }
             else if (message.type === 'getCurrentUserChannel') {
                 const channel = await getCurrentUserChannel(token);
                 sendResponse(channel);
@@ -166,7 +174,7 @@ chrome.runtime.onMessage.addListener((message: IContentMessageListenerData, send
             }
         }
         catch (err) {
-            sendResponse({err, authTokenRemoved: true});
+            sendResponse({err});
         }
     });
 

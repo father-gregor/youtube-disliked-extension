@@ -24,6 +24,7 @@ interface IRootContainerProps {
 }
 
 interface IRootContainerState {
+    refreshAuth: () => void;
     isAuthorized: boolean;
     isRootContextLoaded: boolean;
     rootContext: IRootContext;
@@ -42,6 +43,7 @@ class RootContainer extends React.Component<IRootContainerProps, IRootContainerS
         super(props);
 
         this.state = {
+            refreshAuth: this.handleRefreshAuth,
             isAuthorized: false,
             isRootContextLoaded: false,
             rootContext: this.rootContext,
@@ -54,7 +56,10 @@ class RootContainer extends React.Component<IRootContainerProps, IRootContainerS
         }
 
         initRuntimeRootContext().then((context) => {
-            this.rootContext = context;
+            this.rootContext = {
+                ...context,
+                refreshAuth: this.handleRefreshAuth
+            };
 
             this.setState({
                 isAuthorized: context.YoutubeAuth.isAuthorized(),
@@ -77,6 +82,13 @@ class RootContainer extends React.Component<IRootContainerProps, IRootContainerS
     updateRootTheme (currentTheme: 'dark' | 'light') {
         this.setState({
             rootTheme: createRootTheme(currentTheme)
+        });
+    }
+
+    @Bind
+    handleRefreshAuth () {
+        this.setState({
+            isAuthorized: this.state.rootContext.YoutubeAuth.isAuthorized()
         });
     }
 

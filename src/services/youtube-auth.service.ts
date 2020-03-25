@@ -19,6 +19,21 @@ export class YoutubeAuthService {
         return this.authorize(true);
     }
 
+    public async refreshAuthorization () {
+        const isRemoved = await this.removeAuth();
+        if (!isRemoved) {
+            throw new Error('Cannot remove authorization token');
+        }
+
+        return this.authorizeWithConsentPopup();
+    }
+
+    public async removeAuth () {
+        const res = await this.ChromeMessaging.sendMessage('removeYoutubeAuth');
+        this.isAppAuthorized = !res.authTokenRemoved;
+        return res.authTokenRemoved;
+     }
+
     public getUserChannel () {
         return this.userChannel;
     }

@@ -36,7 +36,7 @@ export class DislikedVideosHeader extends React.Component<IDislikedVideosHeaderP
                             <g><path d={this.dislikedIconSvg}></path></g>
                         </svg>
                     </span>
-                    <span className='header-text'>{this.context.I18n.getMessage('infoPanel_header')}</span>
+                    <span className='header-text'>{this.context.I18n.getMessage('infoPanel@header')}</span>
                     {this.props.videosTotalCount != null &&
                     <span className='header-videos-count'>{this.props.videosTotalCount}</span>
                     }

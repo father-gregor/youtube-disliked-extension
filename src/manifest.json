@@ -34,7 +34,7 @@
       "identity",
       "webNavigation"
     ],
-    "content_security_policy": "default-src 'self'; connect-src https://www.googleapis.com",
+    "content_security_policy": "default-src 'self'; connect-src https://www.googleapis.com https://accounts.google.com",
     "content_scripts": [
       {
         "matches": ["https://*.youtube.com/*"],

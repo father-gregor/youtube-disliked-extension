@@ -23,11 +23,11 @@ export class DislikedVideosInfoPanel extends React.Component<IDislikedVideosInfo
             <div className='disliked-videos-info-panel'>
                 <Grid container item xs={12}>
                     <Grid container item>
-                        <h3 className='info-panel-header'>{this.context.I18n.getMessage('infoPanel_header')}</h3>
+                        <h3 className='info-panel-header'>{this.context.I18n.getMessage('infoPanel@header')}</h3>
                     </Grid>
                     {this.props.videosTotalCount != null &&
                     <Grid container item className='info-panel-videos-count'>
-                        {this.props.videosTotalCount} {this.context.I18n.getMessage('infoPanel_videoCountTitlePart')}
+                        {this.props.videosTotalCount} {this.context.I18n.getMessage('infoPanel@videoCountTitlePart')}
                     </Grid>
                     }
                 </Grid>

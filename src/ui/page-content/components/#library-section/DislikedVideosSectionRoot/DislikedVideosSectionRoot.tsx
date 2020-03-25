@@ -5,6 +5,7 @@ import {LoadingSpinner} from '../../LoadingSpinner/LoadingSpinner';
 import {DislikedVideosHeader} from '../DislikedVideosHeader/DislikedVideosHeader';
 import {MessageWithButton} from '../../MessageWithButton/MessageWithButton';
 import {DislikedVideosSlider} from '../DislikedVideosSlider/DislikedVideosSlider';
+import {NoVideosError} from '../../NoVideosError/NoVideosError';
 
 import {Bind} from '../../../decorators/Bind.decorator';
 import {createRootContext, IRootContext, RootContextType} from '../../../context/RootContext';
@@ -13,7 +14,7 @@ import {IYoutubeVideo} from '../../../../../interfaces/video';
 interface IDislikedVideosPopupRootState {
     videos: IYoutubeVideo[];
     videosTotalCount?: number;
-    loadedState?: 'notReady' | 'ready' | 'failed';
+    loadedState?: 'notReady' | 'ready' | 'noVideos' | 'failed';
 }
 
 export class DislikedVideosSectionRoot extends React.Component<{}, IDislikedVideosPopupRootState> {
@@ -44,7 +45,10 @@ export class DislikedVideosSectionRoot extends React.Component<{}, IDislikedVide
                 if (state.videosTotalCount == null) {
                     newState.videosTotalCount = this.context.DislikedVideosStorage.getTotalCount();
                 }
-                if (state.loadedState !== 'ready') {
+                if (isFirstLoad && !newState.videos.length) {
+                    newState.loadedState = 'noVideos';
+                }
+                else if (state.loadedState !== 'ready') {
                     newState.loadedState = 'ready';
                 }
                 return newState;
@@ -64,6 +68,9 @@ export class DislikedVideosSectionRoot extends React.Component<{}, IDislikedVide
         if (this.state.loadedState === 'notReady') {
             isCentered = true;
             content = <LoadingSpinner/>;
+        }
+        else if (this.state.loadedState === 'noVideos') {
+            content = <NoVideosError></NoVideosError>;
         }
         else if (this.state.loadedState === 'ready') {
             content = <DislikedVideosSlider videos={this.state.videos}></DislikedVideosSlider>;

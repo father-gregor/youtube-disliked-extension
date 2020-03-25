@@ -37,8 +37,9 @@ export class DislikedVideosStorageService {
 
         this.videos = this.videos.concat(newVideos.map((video) => {
             if (!video.viewCountLocalized) {
-                video.viewCountLocalized = this.localizedViewCount(video.viewCount);
+                video.viewCountLocalized = this.localizeViewCount(video.viewCount);
             }
+            video.publishedAt = this.localizePublishedDate(video.publishedAt);
             return video;
         }));
         this.totalCount = res.totalCount || this.totalCount;
@@ -57,9 +58,9 @@ export class DislikedVideosStorageService {
         return this.totalCount;
     }
 
-    public localizedViewCount (viewCount: number){
+    private localizeViewCount (viewCount: number){
         const tier = Math.log10(viewCount) / 3 | 0;
-        const viewsWord = this.I18n.getMessage('viewCount_viewsWord');
+        const viewsWord = this.I18n.getMessage('viewCount@viewsWord');
 
         if (tier === 0) {
             return viewCount + ' ' + viewsWord;
@@ -69,7 +70,50 @@ export class DislikedVideosStorageService {
         const scale = Math.pow(10, tier * 3);
         const scaled = viewCount / scale;
 
-        return scaled.toFixed(1).replace('.', ',') + this.I18n.getMessage(`viewCount_${suffix}`) + ' ' + viewsWord;
+        return scaled.toFixed(suffix === 'thousands' ? 0 : 1).replace('.', ',') + this.I18n.getMessage(`viewCount@${suffix}`) + ' ' + viewsWord;
+    }
+
+    private localizePublishedDate (date: string) {
+        const currentDate = new Date();
+        const videoDate = new Date(date);
+
+        const yearDiff = currentDate.getUTCFullYear() - videoDate.getUTCFullYear();
+        const monthDiff = currentDate.getUTCMonth() - videoDate.getUTCMonth();
+        const dayDiff = currentDate.getUTCDate() - videoDate.getUTCDate();
+
+        let resultDiff;
+        let tier;
+        if (yearDiff > 0) {
+            if (yearDiff >= 2) {
+                tier = 'yearPlural';
+                resultDiff = yearDiff;
+            }
+            else if (monthDiff <= 0) {
+                tier = 'yearSingular';
+                resultDiff = yearDiff;
+            }
+            else {
+                tier = 'monthPlural';
+                resultDiff = monthDiff;
+            }
+        }
+        else if (monthDiff > 0) {
+            tier = 'monthPlural';
+            resultDiff = monthDiff;
+        }
+        else if (dayDiff > 0) {
+            tier = 'weekPlural';
+            resultDiff = dayDiff;
+        }
+        else {
+            tier = 'today';
+        }
+
+        if (tier === 'today') {
+            return this.I18n.getMessage('publishDate@today');
+        }
+
+        return `${resultDiff} ${this.I18n.getMessage(`publishDate@${tier}`)} ${this.I18n.getMessage('publishDate@agoWord')}`;
     }
 
     private clearStoredVideos () {

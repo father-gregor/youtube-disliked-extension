@@ -20,10 +20,10 @@
     "loadMoreVideosButton": {
         "message": "Load More"
     },
-    "infoPanel_header": {
+    "infoPanel@header": {
         "message":"Disliked videos"
     },
-    "infoPanel_videoCountTitlePart": {
+    "infoPanel@videoCountTitlePart": {
         "message": "videos"
     },
     "reloadRequiredError": {
@@ -32,16 +32,46 @@
     "openMoreVideosButton": {
         "message": "More"
     },
-    "viewCount_viewsWord": {
+    "viewCount@viewsWord": {
         "message": "views"
     },
-    "viewCount_thousands": {
+    "viewCount@thousands": {
         "message": "K"
     },
-    "viewCount_millions": {
+    "viewCount@millions": {
         "message": "M"
     },
-    "viewCount_billions": {
+    "viewCount@billions": {
         "message": "B"
+    },
+    "noVideosErrorMessage": {
+        "message": "No disliked videos were found. It could happened for various of reasons (including issues on YouTube servers), but if you sure that you disliked at least one video on YouTube then try to refresh authorization by pressing button below."
+    },
+    "noVideosErrorButton": {
+        "message": "Refresh"
+    },
+    "publishDate@agoWord": {
+        "message": "ago"
+    },
+    "publishDate@yearPlural": {
+        "message": "years"
+    },
+    "publishDate@yearSingular": {
+        "message": "year"
+    },
+    "publishDate@monthPlural": {
+        "message": "months"
+    },
+    "publishDate@monthSingular": {
+        "message": "month"
+    },
+    "publishDate@weekPlural": {
+        "message": "weeks"
+    },
+    "publishDate@weekSingular": {
+        "message": "week"
+    },
+    "publishDate@today": {
+        "message": "Today"
     }
 }
