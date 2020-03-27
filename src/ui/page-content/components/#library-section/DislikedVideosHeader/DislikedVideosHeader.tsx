@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
 
 import {createRootContext, IRootContext, RootContextType} from '../../../context/RootContext';
 
@@ -38,13 +39,15 @@ export class DislikedVideosHeader extends React.Component<IDislikedVideosHeaderP
                     </span>
                     <span className='header-text'>{this.context.I18n.getMessage('infoPanel@header')}</span>
                     {this.props.videosTotalCount != null &&
-                    <span className='header-videos-count'>{this.props.videosTotalCount}</span>
+                    <span className='header-videos-count'>
+                        {this.props.videosTotalCount}
+                    </span>
                     }
                 </section>
                 <section className='header-right'>
-                    <span className='header-open-more-videos' onClick={this.handleOpenPopup}>
+                    <Button className='header-open-more-videos' onClick={this.handleOpenPopup}>
                         {this.context.I18n.getMessage('openMoreVideosButton').toUpperCase()}
-                    </span>
+                    </Button>
                 </section>
             </div>
         );

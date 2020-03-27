@@ -2,8 +2,11 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
+import {Icon} from 'react-icons-kit';
+import {exit} from 'react-icons-kit/icomoon/exit'
 
 import {IRootContext, createRootContext, RootContextType} from '../../../context/RootContext';
+import {Bind} from '../../../decorators/Bind.decorator';
 
 import './DislikedVideosInfoPanel.scss';
 
@@ -17,6 +20,12 @@ interface IDislikedVideosInfoPanelProps {
 export class DislikedVideosInfoPanel extends React.Component<IDislikedVideosInfoPanelProps> {
     static contextType: React.Context<IRootContext> = createRootContext();
     context!: RootContextType;
+
+    @Bind
+    async handleAuthLogoutClick () {
+        await this.context.YoutubeAuth.removeAuth();
+        this.context.refreshAuth();
+    }
 
     render () {
         return (
@@ -38,8 +47,13 @@ export class DislikedVideosInfoPanel extends React.Component<IDislikedVideosInfo
                             <Avatar alt={this.props.channelTitle} src={this.props.channelAvatar}></Avatar>
                         </a>
                     </Grid>
-                    <Grid item className='channel-title-container'>
+                    <Grid item className='channel-inline channel-title-container'>
                         <a href={this.props.channelUrl}>{this.props.channelTitle}</a>
+                    </Grid>
+                    <Grid item className='channel-inline'>
+                        <div className='channel-logout' onClick={this.handleAuthLogoutClick}>
+                            <Icon size='100%' icon={exit}></Icon>
+                        </div>
                     </Grid>
                 </Grid>
             </div>

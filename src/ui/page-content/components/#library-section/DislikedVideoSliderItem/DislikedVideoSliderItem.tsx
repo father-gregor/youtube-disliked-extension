@@ -23,7 +23,7 @@ export class DislikedVideoSliderItem extends React.Component<IDislikedVideoSlide
                     <Grid item xs={12} sm container direction='column'>
                         <DislikedVideoThumbnail video={this.props.video} width={this.maxWidth}></DislikedVideoThumbnail>
                         <div className='slider-item-title' style={{maxWidth: this.maxWidth}}>
-                            <a href={this.props.video.url}>{this.props.video.title}</a>
+                            <a href={this.props.video.url} title={this.props.video.title}>{this.props.video.title}</a>
                         </div>
                         <DislikedVideoChannel channelUrl={this.props.video.channelUrl} channelTitle={this.props.video.channelTitle}></DislikedVideoChannel>
                         <div className='slider-item-viewcount'>

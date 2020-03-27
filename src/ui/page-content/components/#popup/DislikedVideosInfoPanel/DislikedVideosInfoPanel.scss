@@ -1,4 +1,5 @@
 @import '../../../../../styles/common/page-variables.scss';
+@import '../../../../../styles/common/page-mixins.scss';
 
 .disliked-videos-info-panel {
     padding: 25px;
@@ -23,11 +24,19 @@
         font-weight: 300;
     }
 
-    .channel-title-container {
-        display:flex;
+    .channel-inline {
+        display: flex;
         flex-direction: column;
         justify-content: center;
+    }
+
+    .channel-title-container {
         font-weight: 500;
+    }
+
+    .channel-logout {
+        width: 25px;
+        cursor: pointer;
     }
 
     .MuiAvatar-root {
@@ -38,5 +47,21 @@
     .MuiDivider-root {
         margin-top: 20px;
         margin-bottom: 20px;
+    }
+}
+
+@include if-dark-theme () {
+    .channel-logout:hover {
+        i {
+            color: darken(#ffffff, 15%);
+        }
+    }
+}
+
+@include if-light-theme () {
+    .channel-logout:hover {
+        i {
+            color: lighten(#000000, 15%);
+        }
     }
 }

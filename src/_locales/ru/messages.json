@@ -50,26 +50,20 @@
     "noVideosErrorButton": {
         "message": "Обновить"
     },
+    "logoutButton": {
+        "message": "Выйти из профиля"
+    },
     "publishDate@agoWord": {
         "message": "назад"
     },
-    "publishDate@yearPlural": {
-        "message": "лет"
+    "publishDate@year": {
+        "message": "[1]=год;[2,3,4]=года;[5+]=лет"
     },
-    "publishDate@yearSingular": {
-        "message": "год"
+    "publishDate@month": {
+        "message": "[1]=месяц;[2,3,4]=месяца;[5+]=месяцев"
     },
-    "publishDate@monthPlural": {
-        "message": "месяцев"
-    },
-    "publishDate@monthSingular": {
-        "message": "месяц"
-    },
-    "publishDate@weekPlural": {
-        "message": "недели"
-    },
-    "publishDate@weekSingular": {
-        "message": "неделю"
+    "publishDate@week": {
+        "message": "[1]=неделя;[2,3,4]=недели;[5+]=недель"
     },
     "publishDate@today": {
         "message": "Сегодня"

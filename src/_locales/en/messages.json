@@ -50,26 +50,20 @@
     "noVideosErrorButton": {
         "message": "Refresh"
     },
+    "logoutButton": {
+        "message": "Logout"
+    },
     "publishDate@agoWord": {
         "message": "ago"
     },
-    "publishDate@yearPlural": {
-        "message": "years"
+    "publishDate@year": {
+        "message": "[1]=year;[2+]=years"
     },
-    "publishDate@yearSingular": {
-        "message": "year"
+    "publishDate@month": {
+        "message": "[1+]=month"
     },
-    "publishDate@monthPlural": {
-        "message": "months"
-    },
-    "publishDate@monthSingular": {
-        "message": "month"
-    },
-    "publishDate@weekPlural": {
-        "message": "weeks"
-    },
-    "publishDate@weekSingular": {
-        "message": "week"
+    "publishDate@week": {
+        "message": "[1]=week;[2+]=weeks"
     },
     "publishDate@today": {
         "message": "Today"

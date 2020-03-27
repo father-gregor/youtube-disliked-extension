@@ -11,12 +11,15 @@ export class DislikedVideosStorageService {
     private ChromeMessaging: ChromeMessagingService;
     private I18n: I18nService;
     private viewCountTiers = ['', 'thousands', 'millions', 'billions'];
+    private publishDateRanges: {[key: string]: (string?) => string};
     private static instance: DislikedVideosStorageService;
 
     private constructor () {
         this.ChromeMessaging = ChromeMessagingService.create();
         I18nService.create().then((instance: I18nService) => {
             this.I18n = instance;
+
+            this.initPublishDateWording();
         });
     }
 
@@ -81,39 +84,71 @@ export class DislikedVideosStorageService {
         const monthDiff = currentDate.getUTCMonth() - videoDate.getUTCMonth();
         const dayDiff = currentDate.getUTCDate() - videoDate.getUTCDate();
 
-        let resultDiff;
-        let tier;
+        let resultDiff: number;
+        let range: string;
         if (yearDiff > 0) {
-            if (yearDiff >= 2) {
-                tier = 'yearPlural';
-                resultDiff = yearDiff;
-            }
-            else if (monthDiff <= 0) {
-                tier = 'yearSingular';
+            if (yearDiff >= 2 || monthDiff <= 0) {
+                range = 'year';
                 resultDiff = yearDiff;
             }
             else {
-                tier = 'monthPlural';
+                range = 'month';
                 resultDiff = monthDiff;
             }
         }
         else if (monthDiff > 0) {
-            tier = 'monthPlural';
+            range = 'month';
             resultDiff = monthDiff;
         }
         else if (dayDiff > 0) {
-            tier = 'weekPlural';
+            range = 'week';
             resultDiff = dayDiff;
         }
         else {
-            tier = 'today';
+            range = 'today';
         }
 
-        if (tier === 'today') {
-            return this.I18n.getMessage('publishDate@today');
+        if (range === 'today') {
+            return this.publishDateRanges['today']();
         }
 
-        return `${resultDiff} ${this.I18n.getMessage(`publishDate@${tier}`)} ${this.I18n.getMessage('publishDate@agoWord')}`;
+        return `${resultDiff} ${this.publishDateRanges[range](resultDiff.toString())} ${this.I18n.getMessage('publishDate@agoWord')}`;
+    }
+
+    private initPublishDateWording () {
+        const todayValue = this.I18n.getMessage('publishDate@today');
+        this.publishDateRanges = {
+            year: this.getDateWordingRanges(this.I18n.getMessage('publishDate@year')),
+            month: this.getDateWordingRanges(this.I18n.getMessage('publishDate@month')),
+            week: this.getDateWordingRanges(this.I18n.getMessage('publishDate@week')),
+            today: () => todayValue
+        };
+    }
+
+    private getDateWordingRanges (i18nValue: string) {
+        let ranges = {};
+        let maxRangeValue;
+        for (let part of i18nValue.split(';')) {
+            const result = new RegExp(/\[(.+?)\]=(.+)/g).exec(part);
+            const rangeValue = result[1];
+            const word =  result[2];
+            if (rangeValue.endsWith('+')) {
+                maxRangeValue = rangeValue.replace('+', '');
+                ranges['max'] = word;
+            }
+            else {
+                for (let ifValue of result[1].split(',')) {
+                    ranges[ifValue] = word;
+                }
+            }
+        }
+
+        return function (value: string) {
+            if (value >= maxRangeValue) {
+                return ranges['max'];
+            }
+            return ranges[value];
+        }
     }
 
     private clearStoredVideos () {
