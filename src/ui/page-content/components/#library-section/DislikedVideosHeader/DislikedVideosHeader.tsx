@@ -29,15 +29,19 @@ export class DislikedVideosHeader extends React.Component<IDislikedVideosHeaderP
         return (
             <div className='disliked-videos-header'>
                 <section className='header-left'>
-                    <span className='header-icon'>
-                        <svg className='style-scope yt-icon'
-                            viewBox='0 0 24 24'
-                            preserveAspectRatio='xMidYMid meet'
-                            focusable='false'>
-                            <g><path d={this.dislikedIconSvg}></path></g>
-                        </svg>
+                    <span className='header-icon-and-text' onClick={this.handleOpenPopup}>
+                        <span className='header-icon'>
+                            <svg className='style-scope yt-icon'
+                                viewBox='0 0 24 24'
+                                preserveAspectRatio='xMidYMid meet'
+                                focusable='false'>
+                                <g><path d={this.dislikedIconSvg}></path></g>
+                            </svg>
+                        </span>
+                        <span className='header-text'>
+                            {this.context.I18n.getMessage('infoPanel@header')}
+                        </span>
                     </span>
-                    <span className='header-text'>{this.context.I18n.getMessage('infoPanel@header')}</span>
                     {this.props.videosTotalCount != null &&
                     <span className='header-videos-count'>
                         {this.props.videosTotalCount}
