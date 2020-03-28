@@ -14,7 +14,6 @@ export class NoVideosError extends React.Component {
     @Bind
     async handleAuthRefreshClick () {
         await this.context.YoutubeAuth.refreshAuthorization();
-        this.context.refreshAuth();
     }
 
     render () {

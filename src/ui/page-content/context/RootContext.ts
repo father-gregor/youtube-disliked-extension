@@ -9,7 +9,6 @@ import {ThemeService} from './../../../services/theme.service';
 import {DislikedVideosLibrarySectionService} from './../../../services/disliked-videos-library-section.service';
 
 export interface IRootContext {
-    refreshAuth: () => void;
     DislikedVideosPopup: DislikedVideosPopupService;
     I18n: I18nService;
     YoutubeAuth: YoutubeAuthService;
@@ -25,7 +24,6 @@ export function createRootContext () {
     const functionDef = createRootContext as any;
     if (!functionDef.RootContext) {
         functionDef.RootContext = React.createContext<IRootContext>({
-            refreshAuth: null,
             DislikedVideosPopup: null,
             I18n: null,
             YoutubeAuth: null,

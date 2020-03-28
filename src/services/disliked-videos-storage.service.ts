@@ -47,8 +47,12 @@ export class DislikedVideosStorageService {
         }));
         this.totalCount = res.totalCount || this.totalCount;
         this.perPageCount = res.perPageCount || this.perPageCount;
-        this.nextPageToken = res.nextPageToken || this.nextPageToken;
-        this.prevPageToken = res.prevPageToken || this.prevPageToken;
+        this.nextPageToken = res.nextPageToken;
+        this.prevPageToken = res.prevPageToken;
+        
+        if (!this.nextPageToken) {
+            this.totalCount = this.videos.length;
+        } 
 
         return newVideos;
     }

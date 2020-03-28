@@ -6,6 +6,7 @@ export class YoutubeAuthService {
     private userChannel: IUserChannel;
     private ChromeMessaging: ChromeMessagingService
     private static instance: YoutubeAuthService;
+    private authChangeCallbacks: (() => void)[] = [];
 
     private constructor () {
         this.ChromeMessaging = ChromeMessagingService.create();
@@ -15,12 +16,26 @@ export class YoutubeAuthService {
         return this.isAppAuthorized;
     }
 
+    public subscribeToAuthChange (callback: () => void) {
+        this.authChangeCallbacks.push(callback);
+    }
+
+    public unsubscribeFromAuthChange (callback: () => void) {
+        this.authChangeCallbacks = this.authChangeCallbacks.filter((c) => c !== callback);
+    }
+
+    public emitOnAuthChange () {
+        for (let callback of this.authChangeCallbacks) {
+            callback();
+        }
+    }
+
     public async authorizeWithConsentPopup () {
         return this.authorize(true);
     }
 
     public async refreshAuthorization () {
-        const isRemoved = await this.removeAuth();
+        const isRemoved = await this.removeAuth(false);
         if (!isRemoved) {
             throw new Error('Cannot remove authorization token');
         }
@@ -28,9 +43,13 @@ export class YoutubeAuthService {
         return this.authorizeWithConsentPopup();
     }
 
-    public async removeAuth () {
+    public async removeAuth (emitChanges = true) {
         const res = await this.ChromeMessaging.sendMessage('removeYoutubeAuth');
+        this.userChannel = null;
         this.isAppAuthorized = !res.authTokenRemoved;
+        if (emitChanges) {
+            this.emitOnAuthChange();
+        }
         return res.authTokenRemoved;
      }
 
@@ -55,6 +74,8 @@ export class YoutubeAuthService {
             if (this.isAppAuthorized) {
                 await this.saveCurrentUserChannel();
             }
+
+            this.emitOnAuthChange();
             return this.isAppAuthorized;
         }
         catch (err) {

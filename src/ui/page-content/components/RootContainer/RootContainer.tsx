@@ -24,7 +24,6 @@ interface IRootContainerProps {
 }
 
 interface IRootContainerState {
-    refreshAuth: () => void;
     isAuthorized: boolean;
     isRootContextLoaded: boolean;
     rootContext: IRootContext;
@@ -38,12 +37,16 @@ class RootContainer extends React.Component<IRootContainerProps, IRootContainerS
     private rootContext: IRootContext = {} as IRootContext;
     private mounted: boolean;
     private messagingSubId: number;
+    private authChangeCallback = (() => {
+        this.setState({
+            isAuthorized: this.state.rootContext.YoutubeAuth.isAuthorized()
+        });
+    }).bind(this);
 
     constructor (props) {
         super(props);
 
         this.state = {
-            refreshAuth: this.handleRefreshAuth,
             isAuthorized: false,
             isRootContextLoaded: false,
             rootContext: this.rootContext,
@@ -56,10 +59,7 @@ class RootContainer extends React.Component<IRootContainerProps, IRootContainerS
         }
 
         initRuntimeRootContext().then((context) => {
-            this.rootContext = {
-                ...context,
-                refreshAuth: this.handleRefreshAuth
-            };
+            this.rootContext = {...context};
 
             this.setState({
                 isAuthorized: context.YoutubeAuth.isAuthorized(),
@@ -67,6 +67,7 @@ class RootContainer extends React.Component<IRootContainerProps, IRootContainerS
                 rootContext: this.rootContext
             });
 
+            this.rootContext.YoutubeAuth.subscribeToAuthChange(this.authChangeCallback);
             this.messagingSubId = this.rootContext.ChromeMessaging.subscribeToErrors((errorType: GeneralErrorType) => {
                 if (this.mounted) {
                     this.setState({currentError: errorType});
@@ -82,13 +83,6 @@ class RootContainer extends React.Component<IRootContainerProps, IRootContainerS
     updateRootTheme (currentTheme: 'dark' | 'light') {
         this.setState({
             rootTheme: createRootTheme(currentTheme)
-        });
-    }
-
-    @Bind
-    handleRefreshAuth () {
-        this.setState({
-            isAuthorized: this.state.rootContext.YoutubeAuth.isAuthorized()
         });
     }
 
@@ -117,6 +111,9 @@ class RootContainer extends React.Component<IRootContainerProps, IRootContainerS
     componentWillUnmount () {
         this.mounted = false;
         PreMountError = null;
+        if (this.rootContext.YoutubeAuth) {
+            this.rootContext.YoutubeAuth.unsubscribeFromAuthChange(this.authChangeCallback);
+        }
         if (this.messagingSubId) {
             this.rootContext.ChromeMessaging.unsubscribe(this.messagingSubId);
         }

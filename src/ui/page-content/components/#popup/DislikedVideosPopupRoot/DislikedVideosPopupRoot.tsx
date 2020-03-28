@@ -12,6 +12,7 @@ import {IRootContext, createRootContext, RootContextType} from '../../../context
 import {IYoutubeVideo} from '../../../../../interfaces/video';
 
 import './DislikedVideosPopupRoot.scss';
+import { NoVideosError } from "../../NoVideosError/NoVideosError";
 
 interface IDislikedVideosPopupRootState {
     videos: IYoutubeVideo[];
@@ -49,6 +50,7 @@ export class DislikedVideosPopupRoot extends React.Component<{}, IDislikedVideos
             this.setState((state: IDislikedVideosPopupRootState) => {
                 const newState: IDislikedVideosPopupRootState = {
                     videos: state.videos.concat(videos),
+                    videosTotalCount: this.context.DislikedVideosStorage.getTotalCount(),
                     isVideosLoading: false,
                     isMoreVideosAvailable: this.context.DislikedVideosStorage.isMoreVideosAvailable()
                 };
@@ -99,18 +101,23 @@ export class DislikedVideosPopupRoot extends React.Component<{}, IDislikedVideos
 
         return (
             <div className='disliked-videos-container'>
-                <Grid container spacing={0} className='root-grid'>
-                    <Grid className={'info-column-grid'} item xs={12} sm={4} md={3}>
-                        <DislikedVideosInfoPanel channelTitle={channel.title}
-                                                 channelAvatar={channel.thumbnail}
-                                                 channelUrl={channel.url}
-                                                 videosTotalCount={this.state.videosTotalCount}>
-                        </DislikedVideosInfoPanel>
+                {channel 
+                    ? <Grid container spacing={0} className='root-grid'>
+                        <Grid className={'info-column-grid'} item xs={12} sm={4} md={3}>
+                            <DislikedVideosInfoPanel channelTitle={channel.title}
+                                                    channelAvatar={channel.thumbnail}
+                                                    channelUrl={channel.url}
+                                                    videosTotalCount={this.state.videosTotalCount}>
+                            </DislikedVideosInfoPanel>
+                        </Grid>
+                        <Grid className={`content-column-grid ${isCentered ? 'centered' : ''}`} item xs={12} sm={8} md={9}>
+                            {content}
+                        </Grid>
                     </Grid>
-                    <Grid className={`content-column-grid ${isCentered ? 'centered' : ''}`} item xs={12} sm={8} md={9}>
-                        {content}
-                    </Grid>
-                </Grid>
+                    : <div className='centered'>
+                        <NoVideosError></NoVideosError>
+                    </div>
+                }
             </div>
         );
     }

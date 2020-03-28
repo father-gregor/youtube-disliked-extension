@@ -24,7 +24,6 @@ export class DislikedVideosInfoPanel extends React.Component<IDislikedVideosInfo
     @Bind
     async handleAuthLogoutClick () {
         await this.context.YoutubeAuth.removeAuth();
-        this.context.refreshAuth();
     }
 
     render () {

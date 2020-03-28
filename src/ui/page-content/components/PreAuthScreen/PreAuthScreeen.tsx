@@ -12,6 +12,7 @@ import './PreAuthScreen.scss';
 export class PreAuthScreen extends React.Component<{onSuccessAuth: () => void}, {authButtonDisabled: boolean}> {
     static contextType: React.Context<IRootContext> = createRootContext();
     context!: RootContextType;
+    private mounted: boolean;
 
     constructor (props) {
         super(props);
@@ -32,7 +33,17 @@ export class PreAuthScreen extends React.Component<{onSuccessAuth: () => void}, 
     }
 
     toggleAuthButton (state: boolean) {
-        this.setState({authButtonDisabled: state});
+        if (this.mounted) {
+            this.setState({authButtonDisabled: state});
+        }
+    }
+
+    componentDidMount () {
+        this.mounted = true;
+    }
+
+    componentWillUnmount () {
+        this.mounted = false;
     }
 
     render () {

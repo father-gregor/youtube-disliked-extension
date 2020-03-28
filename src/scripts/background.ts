@@ -20,11 +20,12 @@ async function fetchUrl (url: string, query: any, token: string) {
     let options = {
         method: 'GET',
         async: true,
+        cache: 'no-store' as any,
+        contentType: 'json',
         headers: {
             Authorization: 'Bearer ' + token,
             'Content-Type': 'application/json'
-        },
-        'contentType': 'json'
+        }
     };
 
     let response = await fetch(urlObj.toString(), options);
