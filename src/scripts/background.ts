@@ -58,9 +58,12 @@ function parseDuration (duration: string) {
         seconds = zeroPadding(seconds);
         return `${hours}:${minutes}:${seconds}`;
     }
-    else {
+    else if (parsedDuration.minutes) {
         seconds = zeroPadding(seconds);
         return `${minutes}:${seconds}`;
+    }
+    else {
+        return `0:${seconds}`;
     }
 
     function zeroPadding (value: string) {
