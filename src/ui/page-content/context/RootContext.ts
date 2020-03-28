@@ -2,20 +2,20 @@ import React from 'react';
 
 import {I18nService} from '../../../services/i18n.service';
 import {YoutubeAuthService} from '../../../services/youtube-auth.service';
-import {DislikedVideosPopupService} from '../../../services/disliked-videos-popup.service';
+import {RendererPopupService} from '../../../services/renderer-popup.service';
 import {DislikedVideosStorageService} from '../../../services/disliked-videos-storage.service';
 import {ChromeMessagingService} from '../../../services/chrome-messaging.service';
 import {ThemeService} from './../../../services/theme.service';
-import {DislikedVideosLibrarySectionService} from './../../../services/disliked-videos-library-section.service';
+import {RendererLibrarySectionService} from '../../../services/renderer-library-section.service';
 
 export interface IRootContext {
-    DislikedVideosPopup: DislikedVideosPopupService;
+    RendererPopup: RendererPopupService;
     I18n: I18nService;
     YoutubeAuth: YoutubeAuthService;
     DislikedVideosStorage: DislikedVideosStorageService;
     ChromeMessaging: ChromeMessagingService;
     Theme: ThemeService;
-    DislikedVideosLibrarySection: DislikedVideosLibrarySectionService;
+    RendererLibrarySection: RendererLibrarySectionService;
 }
 
 export type RootContextType = React.ContextType<React.Context<IRootContext>>;
@@ -24,13 +24,13 @@ export function createRootContext () {
     const functionDef = createRootContext as any;
     if (!functionDef.RootContext) {
         functionDef.RootContext = React.createContext<IRootContext>({
-            DislikedVideosPopup: null,
+            RendererPopup: null,
             I18n: null,
             YoutubeAuth: null,
             DislikedVideosStorage: null,
             ChromeMessaging: null,
             Theme: null,
-            DislikedVideosLibrarySection: null
+            RendererLibrarySection: null
         });
     }
     return functionDef.RootContext;
@@ -38,9 +38,9 @@ export function createRootContext () {
 
 export async function initRuntimeRootContext () {
     const runtimeContext: IRootContext = {
-        DislikedVideosPopup: DislikedVideosPopupService.create(),
+        RendererPopup: RendererPopupService.create(),
         DislikedVideosStorage: DislikedVideosStorageService.create(),
-        DislikedVideosLibrarySection: DislikedVideosLibrarySectionService.create(),
+        RendererLibrarySection: RendererLibrarySectionService.create(),
         ChromeMessaging: ChromeMessagingService.create(),
         Theme: ThemeService.create()
     } as IRootContext;

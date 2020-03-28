@@ -95,7 +95,7 @@ class RootContainer extends React.Component<IRootContainerProps, IRootContainerS
 
     @Bind
     handleCloseList () {
-        this.rootContext.DislikedVideosPopup.closePopup();
+        this.rootContext.RendererPopup.closePopup();
     }
 
     componentDidMount () {

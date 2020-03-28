@@ -3,8 +3,8 @@ import React from 'react';
 import {renderRootComponent} from '../ui/page-content/components/RootContainer/RootContainer';
 import {DislikedVideosSectionRoot} from '../ui/page-content/components/#library-section/DislikedVideosSectionRoot/DislikedVideosSectionRoot';
 
-export class DislikedVideosLibrarySectionService {
-    private static instance: DislikedVideosLibrarySectionService;
+export class RendererLibrarySectionService {
+    private static instance: RendererLibrarySectionService;
 
     private constructor () {}
 
@@ -13,9 +13,9 @@ export class DislikedVideosLibrarySectionService {
     }
 
     public static create () {
-        if (!DislikedVideosLibrarySectionService.instance) {
-            DislikedVideosLibrarySectionService.instance = new DislikedVideosLibrarySectionService();
+        if (!RendererLibrarySectionService.instance) {
+            RendererLibrarySectionService.instance = new RendererLibrarySectionService();
         }
-        return DislikedVideosLibrarySectionService.instance;
+        return RendererLibrarySectionService.instance;
     }
 }

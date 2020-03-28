@@ -3,9 +3,16 @@
 .close-list-button {
     position: absolute;
     top: 20px;
-    right: 20px;
+    right: 10px;
     color: $main-color-text;
-    width: 25px;
-    height: 25px;
     cursor: pointer;
+
+    .MuiButtonBase-root {
+        min-width: 25px;
+    }
+
+    .MuiButton-label {
+        width: 25px;
+        height: 25px;
+    }
 }

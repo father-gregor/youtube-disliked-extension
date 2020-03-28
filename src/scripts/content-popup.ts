@@ -1,12 +1,12 @@
-import {I18nService} from './../services/i18n.service';
-import {DislikedVideosPopupService} from './../services/disliked-videos-popup.service';
+import {I18nService} from '../services/i18n.service';
+import {RendererPopupService} from '../services/renderer-popup.service';
 
-interface IContentSidedrawerDependencies {
-    DislikedVideosPopup: DislikedVideosPopupService;
+interface IContentPopupDependencies {
+    RendererPopup: RendererPopupService;
     I18n: I18nService
 }
 
-export function contentSidedrawer ({DislikedVideosPopup, I18n}: IContentSidedrawerDependencies) {
+export function contentPopup ({RendererPopup, I18n}: IContentPopupDependencies) {
     const LIKED_BUTTON_SELECTOR = 'ytd-app #sections ytd-guide-section-renderer ytd-guide-collapsible-section-entry-renderer #section-items ytd-guide-entry-renderer';
 
     const maxTries = 20;
@@ -36,7 +36,7 @@ export function contentSidedrawer ({DislikedVideosPopup, I18n}: IContentSidedraw
         event.stopPropagation();
         event.preventDefault();
 
-        DislikedVideosPopup.toggleList();
+        RendererPopup.toggleList();
     }
 
     function setupDislikedButtonProps (container: HTMLElement, originalContainer: HTMLElement) {

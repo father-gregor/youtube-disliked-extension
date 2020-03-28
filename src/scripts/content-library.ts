@@ -1,10 +1,10 @@
-import {DislikedVideosLibrarySectionService} from '../services/disliked-videos-library-section.service';
+import {RendererLibrarySectionService} from '../services/renderer-library-section.service';
 
 interface IContentLibraryDependencies {
-    DislikedVideosLibrarySection: DislikedVideosLibrarySectionService
+    RendererLibrarySection: RendererLibrarySectionService
 }
 
-export function contentLibrary ({DislikedVideosLibrarySection}: IContentLibraryDependencies) {
+export function contentLibrary ({RendererLibrarySection}: IContentLibraryDependencies) {
     const ITEM_SECTION_SELECTOR = 'ytd-app ytd-browse[role^="main"] ytd-section-list-renderer #contents ytd-item-section-renderer';
     const ITEM_SECTION_ID = 'extension-root-disliked-section';
 
@@ -21,7 +21,7 @@ export function contentLibrary ({DislikedVideosLibrarySection}: IContentLibraryD
             let dislikedSectionContainerElem: HTMLElement = itemSectionContainerElem.cloneNode(true) as HTMLElement;
             setupDislikedSectionProps(dislikedSectionContainerElem);
             dislikedSectionContainerElem = itemSectionContainerElem.parentNode.insertBefore(dislikedSectionContainerElem, itemSectionContainerElem.nextSibling);
-            DislikedVideosLibrarySection.renderSection(dislikedSectionContainerElem);
+            RendererLibrarySection.renderSection(dislikedSectionContainerElem);
         }
         else if (currentTry >= maxTries) {
             clearInterval(intervalId);

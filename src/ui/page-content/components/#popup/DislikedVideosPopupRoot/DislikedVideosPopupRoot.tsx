@@ -6,13 +6,13 @@ import {LoadingSpinner} from '../../LoadingSpinner/LoadingSpinner';
 import {MessageWithButton} from '../../MessageWithButton/MessageWithButton';
 import {DislikedVideosInfoPanel} from '../DislikedVideosInfoPanel/DislikedVideosInfoPanel';
 import {DislikedVideosList} from '../DislikedVideosList/DislikedVideosList';
+import {NoVideosError} from '../../NoVideosError/NoVideosError';
 
 import {Bind} from '../../../decorators/Bind.decorator';
 import {IRootContext, createRootContext, RootContextType} from '../../../context/RootContext';
 import {IYoutubeVideo} from '../../../../../interfaces/video';
 
 import './DislikedVideosPopupRoot.scss';
-import { NoVideosError } from "../../NoVideosError/NoVideosError";
 
 interface IDislikedVideosPopupRootState {
     videos: IYoutubeVideo[];

@@ -3,7 +3,7 @@ import React from 'react';
 import {DislikedVideosPopupRoot} from '../ui/page-content/components/#popup/DislikedVideosPopupRoot/DislikedVideosPopupRoot';
 import {renderRootComponent} from '../ui/page-content/components/RootContainer/RootContainer';
 
-export class DislikedVideosPopupService {
+export class RendererPopupService {
     private listRootElem: Element;
     private isOpened: boolean;
     private isListInserted = false;
@@ -11,7 +11,7 @@ export class DislikedVideosPopupService {
     private LIST_POPUP_ID = 'extension-root-disliked-popup';
     private LIST_OPENED_BODY_CLASS = 'body_disliked-list-opened';
 
-    private static instance: DislikedVideosPopupService;
+    private static instance: RendererPopupService;
 
     private constructor () {}
 
@@ -54,9 +54,9 @@ export class DislikedVideosPopupService {
     }
 
     public static create () {
-        if (!DislikedVideosPopupService.instance) {
-            DislikedVideosPopupService.instance = new DislikedVideosPopupService();
+        if (!RendererPopupService.instance) {
+            RendererPopupService.instance = new RendererPopupService();
         }
-        return DislikedVideosPopupService.instance;
+        return RendererPopupService.instance;
     }
 }

@@ -22,7 +22,7 @@ export class DislikedVideosHeader extends React.Component<IDislikedVideosHeaderP
 
     @Bind
     handleOpenPopup () {
-        this.context.DislikedVideosPopup.openList();
+        this.context.RendererPopup.openList();
     }
 
     render () {

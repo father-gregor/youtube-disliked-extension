@@ -1,29 +1,30 @@
-import {contentSidedrawer} from './content-sidedrawer';
+import {contentPopup} from './content-popup';
 import {contentLibrary} from './content-library';
 
 import {I18nService} from '../services/i18n.service';
-import {DislikedVideosPopupService} from '../services/disliked-videos-popup.service';
+import {RendererPopupService} from '../services/renderer-popup.service';
+import {RendererLibrarySectionService} from '../services/renderer-library-section.service';
+
+import {BackgroundChromeMessageType} from '../interfaces/general';
 
 import '../styles/content.scss';
-import {BackgroundChromeMessageType} from '../interfaces/general';
-import { DislikedVideosLibrarySectionService } from "../services/disliked-videos-library-section.service";
 
 let I18n: I18nService;
-let DislikedVideosPopup: DislikedVideosPopupService = DislikedVideosPopupService.create();
-let DislikedVideosLibrarySection: DislikedVideosLibrarySectionService = DislikedVideosLibrarySectionService.create();
+let RendererPopup: RendererPopupService = RendererPopupService.create();
+let RendererLibrarySection: RendererLibrarySectionService = RendererLibrarySectionService.create();
 
 (async () => {
     I18n = await I18nService.create();
 
-    contentSidedrawer({DislikedVideosPopup, I18n});
+    contentPopup({RendererPopup, I18n});
 
     if (location.href.includes('/feed/library')) {
-        contentLibrary({DislikedVideosLibrarySection});
+        contentLibrary({RendererLibrarySection});
     }
 
     chrome.runtime.onMessage.addListener((data: {type: BackgroundChromeMessageType}, sender, sendResponse) => {
         if (data.type === 'libraryPageOpened') {
-            contentLibrary({DislikedVideosLibrarySection});
+            contentLibrary({RendererLibrarySection});
         }
         sendResponse();
     });
