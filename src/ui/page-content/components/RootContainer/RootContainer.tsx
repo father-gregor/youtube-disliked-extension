@@ -46,11 +46,13 @@ class RootContainer extends React.Component<IRootContainerProps, IRootContainerS
     constructor (props) {
         super(props);
 
+        this.rootContext = {Theme: ThemeService.create()} as IRootContext;
+
         this.state = {
             isAuthorized: false,
             isRootContextLoaded: false,
             rootContext: this.rootContext,
-            rootTheme: createRootTheme(ThemeService.create().getCurrentTheme()),
+            rootTheme: createRootTheme(this.rootContext.Theme.getCurrentTheme()),
             currentError: PreMountError
         };
 

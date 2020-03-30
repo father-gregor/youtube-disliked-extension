@@ -21,7 +21,7 @@ module.exports = {
     entry: {
         content: './src/scripts/content.ts',
         background: './src/scripts/background.ts',
-        Popup: './src/ui/popup-content/Popup.tsx',
+        'toolbar-popup': './src/scripts/toolbar-popup.tsx',
     },
     output: {
         path: distPath,

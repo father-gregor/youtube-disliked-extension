@@ -11,8 +11,8 @@ export class ThemeService {
         return this.currentThemeMode;
     }
 
-    public updateCurrentTheme () {
-        this.currentThemeMode = document.documentElement.getAttribute('dark') ? 'dark' : 'light';
+    public updateCurrentTheme (theme?: 'light' | 'dark') {
+        this.currentThemeMode = theme || (document.documentElement.getAttribute('dark') ? 'dark' : 'light');
     }
 
     public static create () {

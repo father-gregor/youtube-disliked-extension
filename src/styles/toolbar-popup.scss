@@ -1,0 +1,33 @@
+@import './common/page-variables.scss';
+
+@font-face {
+    font-family: 'Oswald-Medium';
+    font-style: normal;
+    font-weight: 400;
+    src: url('chrome-extension://__MSG_@@extension_id__/assets/fonts/Oswald-Medium.ttf'); 
+}
+
+$main-color-text: #ffffff;
+$secondary-color-text: #aaa;
+$main-background-color: #121212;
+$main-text-font: Roboto, 'Noto', sans-serif;
+
+html {
+    min-width: 400px;
+    min-height: 400px;
+    color: #ffffff;
+    background-color: #212121;
+    font-size: 10px;
+}
+
+#react-popup-root {
+    .pre-auth-screen {
+        .message-with-button {
+            margin: 20px;
+        }
+    
+        .extension-logo {
+            font-size: 35px;
+        }
+    }
+}

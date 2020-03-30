@@ -2,6 +2,7 @@ export class I18nService {
     private currentLanguage: string;
     private messages: {[key: string]: {message: string, description?: string}};
 
+    public static defaultLocale: string;
     private static instanceForLocale: {[key: string]: I18nService} = {};
 
     private constructor (locale: string) {
@@ -30,7 +31,7 @@ export class I18nService {
     }
 
     public static async create (customLocale?: string) {
-        let locale = customLocale || document.documentElement.lang;
+        let locale = customLocale || document.documentElement.lang || I18nService.defaultLocale;
         let instance;
         if (I18nService.instanceForLocale[locale]) {
             instance = I18nService.instanceForLocale[locale];

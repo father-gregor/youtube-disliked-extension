@@ -1,6 +1,8 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
 
+import {RootContextType, IRootContext, createRootContext} from '../../context/RootContext';
+
 interface ILoadingSpinnerProps {
     type: string;
     width: number;
@@ -9,6 +11,8 @@ interface ILoadingSpinnerProps {
 }
 
 export class LoadingSpinner extends React.Component<ILoadingSpinnerProps> {
+    static contextType: React.Context<IRootContext> = createRootContext();
+    context!: RootContextType;
     public static defaultProps: ILoadingSpinnerProps = {
         type: 'Rings',
         width: 300,
@@ -18,7 +22,7 @@ export class LoadingSpinner extends React.Component<ILoadingSpinnerProps> {
     render() {
         let color = this.props.color;
         if (!color) {
-            color = getComputedStyle(document.documentElement).getPropertyValue('--yt-spec-text-primary');
+            color = this.context.Theme.getCurrentTheme() === 'light' ? 'black' : 'white';
         }
 
         return (
