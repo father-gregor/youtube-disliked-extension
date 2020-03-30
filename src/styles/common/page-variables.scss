@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'Oswald-Medium';
+    font-style: normal;
+    font-weight: 400;
+    src: url('chrome-extension://__MSG_@@extension_id__/assets/fonts/Oswald-Medium.ttf'); 
+}
+
 $main-color-text: var(--yt-spec-text-primary);
 $secondary-color-text: var(--yt-spec-text-secondary);
 $main-background-color: var(--yt-app-background);
