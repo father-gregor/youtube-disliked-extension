@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {ToolbarPopup} from '../ui/popup-content/components/ToolbarPopup/ToolbarPopup';
+import {ToolbarPopupRoot} from '../ui/popup-content/components/ToolbarPopupRoot/ToolbarPopupRoot';
 
 import {renderRootComponent} from '../ui/page-content/components/RootContainer/RootContainer';
 import {I18nService} from '../services/i18n.service';
@@ -11,4 +11,4 @@ import '../styles/toolbar-popup.scss';
 I18nService.defaultLocale = 'ru';
 ThemeService.create().updateCurrentTheme('dark');
 
-renderRootComponent(document.getElementById('react-popup-root'), <ToolbarPopup></ToolbarPopup>, false);
+renderRootComponent(document.getElementById('react-popup-root'), <ToolbarPopupRoot></ToolbarPopupRoot>, false);

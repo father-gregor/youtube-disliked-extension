@@ -3,15 +3,6 @@
 
 .disliked-videos-info-panel {
     padding: 25px;
-
-    a {
-        text-decoration: none;
-
-        &,
-        &:visited {
-            color: $main-color-text;
-        }
-    }
     
     .info-panel-header {
         font-size: 2.4rem;
@@ -24,44 +15,8 @@
         font-weight: 300;
     }
 
-    .channel-inline {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .channel-title-container {
-        font-weight: 500;
-    }
-
-    .channel-logout {
-        width: 25px;
-        cursor: pointer;
-    }
-
-    .MuiAvatar-root {
-        width: 48px;
-        height: auto;
-    }
-
     .MuiDivider-root {
         margin-top: 20px;
         margin-bottom: 20px;
-    }
-}
-
-@include if-dark-theme () {
-    .channel-logout:hover {
-        i {
-            color: darken(#ffffff, 15%);
-        }
-    }
-}
-
-@include if-light-theme () {
-    .channel-logout:hover {
-        i {
-            color: lighten(#000000, 15%);
-        }
     }
 }

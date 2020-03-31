@@ -7,14 +7,19 @@ $main-background-color: #121212;
 $main-text-font: Roboto, 'Noto', sans-serif;
 
 html {
-    min-width: 400px;
-    min-height: 400px;
+    width: 400px;
     color: #ffffff;
     background-color: #212121;
     font-size: 10px;
+
+    body {
+        height: 100%;
+    }
 }
 
 #react-popup-root {
+    height: 100%;
+
     .pre-auth-screen {
         .message-with-button {
             margin: 20px;

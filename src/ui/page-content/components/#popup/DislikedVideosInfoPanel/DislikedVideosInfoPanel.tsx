@@ -1,12 +1,10 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
-import {Icon} from 'react-icons-kit';
-import {exit} from 'react-icons-kit/icomoon/exit'
+
+import {ChannelPanel} from '../../ChannelPanel/ChannelPanel';
 
 import {IRootContext, createRootContext, RootContextType} from '../../../context/RootContext';
-import {Bind} from '../../../decorators/Bind.decorator';
 
 import './DislikedVideosInfoPanel.scss';
 
@@ -14,17 +12,12 @@ interface IDislikedVideosInfoPanelProps {
     channelTitle: string
     channelAvatar: string;
     channelUrl: string;
-    videosTotalCount: number;
+    videosTotalCount?: number;
 }
 
 export class DislikedVideosInfoPanel extends React.Component<IDislikedVideosInfoPanelProps> {
     static contextType: React.Context<IRootContext> = createRootContext();
     context!: RootContextType;
-
-    @Bind
-    async handleAuthLogoutClick () {
-        await this.context.YoutubeAuth.removeAuth();
-    }
 
     render () {
         return (
@@ -40,21 +33,7 @@ export class DislikedVideosInfoPanel extends React.Component<IDislikedVideosInfo
                     }
                 </Grid>
                 <Divider/>
-                <Grid container item xs={12} spacing={3}>
-                    <Grid item>
-                        <a href={this.props.channelUrl}>
-                            <Avatar alt={this.props.channelTitle} src={this.props.channelAvatar}></Avatar>
-                        </a>
-                    </Grid>
-                    <Grid item className='channel-inline channel-title-container'>
-                        <a href={this.props.channelUrl}>{this.props.channelTitle}</a>
-                    </Grid>
-                    <Grid item className='channel-inline'>
-                        <div className='channel-logout' onClick={this.handleAuthLogoutClick}>
-                            <Icon size='100%' icon={exit}></Icon>
-                        </div>
-                    </Grid>
-                </Grid>
+                <ChannelPanel title={this.props.channelTitle} avatar={this.props.channelAvatar} url={this.props.channelUrl}></ChannelPanel>
             </div>
         );
     }

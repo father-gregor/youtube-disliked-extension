@@ -1,0 +1,17 @@
+.toolbar-popup-root {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    .toolbar-popup-container {
+        justify-content: center;
+    }
+
+    .toolbar-popup-header {
+        margin-bottom: 15px;
+        font-size: 2.2rem;
+        font-weight: 400;
+        text-align: center;
+    }
+}

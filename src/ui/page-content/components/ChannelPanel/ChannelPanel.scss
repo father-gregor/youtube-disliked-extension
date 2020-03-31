@@ -1,0 +1,57 @@
+@import '../../../../styles/common/page-variables.scss';
+@import '../../../../styles/common/page-mixins.scss';
+
+.channel-panel {
+    a {
+        text-decoration: none;
+
+        &,
+        &:visited {
+            color: $main-color-text;
+        }
+    }
+
+    .channel-info-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .channel-logout-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    .channel-title {
+        font-weight: 500;
+        margin-left: 10px;
+    }
+
+    .channel-logout {
+        width: 25px;
+        cursor: pointer;
+    }
+
+    .MuiAvatar-root {
+        width: 48px;
+        height: auto;
+    }
+}
+
+@include if-dark-theme () {
+    .channel-logout:hover {
+        i {
+            color: darken(#ffffff, 15%);
+        }
+    }
+}
+
+@include if-light-theme () {
+    .channel-logout:hover {
+        i {
+            color: lighten(#000000, 15%);
+        }
+    }
+}
