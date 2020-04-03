@@ -10,6 +10,9 @@ interface ILoadingSpinnerProps {
     color?: string;
 }
 
+console.log(createRootContext);
+console.log(typeof createRootContext);
+
 export class LoadingSpinner extends React.Component<ILoadingSpinnerProps> {
     static contextType: React.Context<IRootContext> = createRootContext();
     context!: RootContextType;

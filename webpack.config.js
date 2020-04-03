@@ -11,6 +11,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const packageJson = require('./package.json');
 const distPath = path.join(__dirname, 'dist/youtube-disliked');
@@ -26,6 +28,19 @@ module.exports = {
     output: {
         path: distPath,
         filename: 'js/[name].js'
+    },
+    optimization: {
+        minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})],
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /node_modules/,
+                    chunks: 'initial',
+                    name: 'vendor',
+                    enforce: true
+                }
+            }
+        } 
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
@@ -58,13 +73,14 @@ module.exports = {
         {
             apply (compiler) {
                 compiler.hooks.afterEmit.tap('insertContentCss', (compilation) => {
-                    const contentCssPath = Object.keys(compilation.assets).find((k) => k.includes('content') && k.endsWith('.css'));
-                    if (contentCssPath) {
-                        const manifestPath = path.join(distPath, 'manifest.json');
-                        let manifestJSON = fs.readFileSync(manifestPath, 'utf-8');
-                        manifestJSON = JSON.parse(manifestJSON);
-                        manifestJSON.content_scripts[0].css.push(contentCssPath);
-                        fs.writeFileSync(manifestPath, JSON.stringify(manifestJSON, null, 4), 'utf-8');
+                    for (let cssPath of Object.keys(compilation.assets)) {
+                        if (cssPath.includes('content') && cssPath.endsWith('.css')) {
+                            const manifestPath = path.join(distPath, 'manifest.json');
+                            let manifestJSON = fs.readFileSync(manifestPath, 'utf-8');
+                            manifestJSON = JSON.parse(manifestJSON);
+                            manifestJSON.content_scripts[0].css.push(cssPath);
+                            fs.writeFileSync(manifestPath, JSON.stringify(manifestJSON, null, 4), 'utf-8');
+                        }
                     }
                 });
             }
@@ -95,5 +111,5 @@ module.exports = {
                 }
             }
         ], {copyUnmodified: true})
-    ]
+    ],
 };

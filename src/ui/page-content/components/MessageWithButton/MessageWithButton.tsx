@@ -33,7 +33,7 @@ export class MessageWithButton extends React.Component<IMessageWithButtonProps> 
         }
         if (this.props.buttonIcon) {
             iconContent = 
-                <div style={{width: 25}}>
+                <div className='message-with-button-icon'>
                     <Icon size='100%' icon={this.props.buttonIcon}></Icon>
                 </div>;
         }
