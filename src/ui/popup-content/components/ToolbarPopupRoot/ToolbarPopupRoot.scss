@@ -14,4 +14,19 @@
         font-weight: 400;
         text-align: center;
     }
+
+    .channel-panel {
+        .MuiAvatar-root {
+            width: 30px;
+
+            .MuiAvatar-img {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        .channel-logout {
+            width: 20px;
+        }
+    }
 }

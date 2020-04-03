@@ -5,6 +5,7 @@ $main-color-text: #ffffff;
 $secondary-color-text: #aaa;
 $main-background-color: #121212;
 $main-text-font: Roboto, 'Noto', sans-serif;
+$main-font-size: 1.3rem;
 
 html {
     width: 400px;
@@ -27,6 +28,14 @@ html {
     
         .extension-logo {
             font-size: 35px;
+        }
+    }
+
+    .react-root-disliked-list-container {
+        &,
+        Button {
+            font-size: $main-font-size;
+            font-family: $main-text-font;
         }
     }
 }
