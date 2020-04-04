@@ -9,7 +9,7 @@ export class RendererLibrarySectionService {
     private constructor () {}
 
     public renderSection (insertionPoint: HTMLElement) {
-        renderRootComponent(insertionPoint, <DislikedVideosSectionRoot></DislikedVideosSectionRoot>);
+        renderRootComponent(insertionPoint, <DislikedVideosSectionRoot></DislikedVideosSectionRoot>, {isContentCloseable: false});
     }
 
     public static create () {

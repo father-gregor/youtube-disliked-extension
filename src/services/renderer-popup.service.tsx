@@ -42,7 +42,7 @@ export class RendererPopupService {
             this.isListInserted = true;
         }
 
-        renderRootComponent(this.listRootElem, <DislikedVideosPopupRoot></DislikedVideosPopupRoot>, true);
+        renderRootComponent(this.listRootElem, <DislikedVideosPopupRoot></DislikedVideosPopupRoot>, {isContentCloseable: true});
         document.body.classList.add(this.LIST_OPENED_BODY_CLASS);
         this.isOpened = true;
     }

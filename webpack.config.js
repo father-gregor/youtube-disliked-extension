@@ -19,7 +19,7 @@ const distPath = path.join(__dirname, 'dist/youtube-disliked');
 
 module.exports = {
     mode: process.env.NODE_ENV || 'development',
-    devtool: 'inline-source-map',
+    devtool: process.env.NODE_ENV === 'production' ? false : 'inline-source-map',
     entry: {
         content: './src/scripts/content.ts',
         background: './src/scripts/background.ts',

@@ -11,4 +11,8 @@ import '../styles/toolbar-popup.scss';
 I18nService.defaultLocale = 'ru';
 ThemeService.create().updateCurrentTheme('dark');
 
-renderRootComponent(document.getElementById('react-popup-root'), <ToolbarPopupRoot></ToolbarPopupRoot>, false);
+renderRootComponent(
+    document.getElementById('react-popup-root'),
+    <ToolbarPopupRoot></ToolbarPopupRoot>,
+    {isContentCloseable: false}
+);

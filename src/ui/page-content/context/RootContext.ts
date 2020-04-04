@@ -46,10 +46,7 @@ export async function initRuntimeRootContext () {
     } as IRootContext;
 
     const [YoutubeAuth, I18n] = await Promise.all([
-        new Promise<YoutubeAuthService>(async (resolve) => {
-            const instance: YoutubeAuthService = await YoutubeAuthService.create();
-            setTimeout(() => resolve(instance), 1000);
-        }),
+        YoutubeAuthService.create(),
         I18nService.create()
     ]);
 

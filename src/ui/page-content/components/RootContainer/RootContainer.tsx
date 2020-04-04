@@ -20,7 +20,7 @@ import './RootContainer.scss';
 const RootContext = createRootContext();
 
 interface IRootContainerProps {
-    isContentCloseable: boolean;
+    isContentCloseable?: boolean;
 }
 
 interface IRootContainerState {
@@ -162,10 +162,10 @@ class RootContainer extends React.Component<IRootContainerProps, IRootContainerS
     }
 }
 
-export function renderRootComponent (insertionPoint: Element, mainContent:React.ReactNode, isCloseable?: boolean) {
+export function renderRootComponent (insertionPoint: Element, mainContent:React.ReactNode, options: IRootContainerProps = {}) {
     ReactDOM.render(
         mainContent ?
-            <RootContainer isContentCloseable={isCloseable}>
+            <RootContainer isContentCloseable={options.isContentCloseable}>
                 {mainContent}
             </RootContainer>
             : null,
