@@ -34,10 +34,10 @@ module.exports = {
         splitChunks: {
             cacheGroups: {
                 vendor: {
-                    test: /node_modules/,
-                    chunks: 'initial',
+                    test: /[\\/]node_modules[\\/]/,
                     name: 'vendor',
-                    enforce: true
+                    chunks: 'all',
+                    minChunks: 2
                 }
             }
         } 
@@ -72,16 +72,19 @@ module.exports = {
         }),
         {
             apply (compiler) {
-                compiler.hooks.afterEmit.tap('insertContentCss', (compilation) => {
-                    for (let cssPath of Object.keys(compilation.assets)) {
-                        if (cssPath.includes('content') && cssPath.endsWith('.css')) {
-                            const manifestPath = path.join(distPath, 'manifest.json');
-                            let manifestJSON = fs.readFileSync(manifestPath, 'utf-8');
-                            manifestJSON = JSON.parse(manifestJSON);
-                            manifestJSON.content_scripts[0].css.push(cssPath);
-                            fs.writeFileSync(manifestPath, JSON.stringify(manifestJSON, null, 4), 'utf-8');
+                compiler.hooks.afterEmit.tap('insertDynamicContentChunks', (compilation) => {
+                    const manifestPath = path.join(distPath, 'manifest.json');
+                    let manifestJSON = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
+
+                    for (let chunkPath of Object.keys(compilation.assets)) {
+                        if ((chunkPath.includes('content') || chunkPath.includes('vendor')) && chunkPath.endsWith('.js')) {
+                            manifestJSON.content_scripts[0].js.push(chunkPath);
+                        }
+                        if (chunkPath.includes('content') && chunkPath.endsWith('.css')) {
+                            manifestJSON.content_scripts[0].css.push(chunkPath);
                         }
                     }
+                    fs.writeFileSync(manifestPath, JSON.stringify(manifestJSON, null, 4), 'utf-8');
                 });
             }
         },
