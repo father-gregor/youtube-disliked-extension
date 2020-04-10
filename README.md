@@ -15,16 +15,17 @@ Extension written in Typescript (mostly) with React for UI and Webpack for bundl
 ### Preparation
 Before you can build or load extension to browser you need create `vault.env` file first and fill-in empty environment variables. Because extension need to make authorized requests to Youtube servers, you'll need to register OAuth key via [Google Console](https://console.developers.google.com/) and add it to `vault.env`.
 
+And don't forget:
+```npm i```
+
 ### Build
 
 For production:
 ```
-npm i
 npm run build
 ```
 For development with watch mode:
 ```
-npm i
 npm run watch
 ```
 
