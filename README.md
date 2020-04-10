@@ -7,8 +7,8 @@ Adds new section 'Disliked' to Youtube UI to show a list of all videos that you 
 #### Features
 - Button in Youtube sidebar to open disliked videos list
 - New section in 'Library' to show latest disliked videos
-- Dark mode that depends on current Youtube theme
-- Multi-language
+- Dark mode (depends on Youtube's current theme)
+- Multi-language (depends on Youtube's current language)
 
 ## Install
 
