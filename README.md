@@ -10,9 +10,28 @@ Adds new section 'Disliked' to Youtube UI to show a list of all videos that you 
 
 ## Development
 
-Basic steps:
+Extension written in Typescript (mostly) with React for UI and Webpack for bundling. If you need example of how to use React for browser extension or example of Webpack configuration feel free to use this repo as a start.
+
+### Preparation
+Before you can build or load extension to browser you need create `vault.env` file first and fill-in empty environment variables. Because extension need to make authorized requests to Youtube servers, you'll need to register OAuth key via [Google Console](https://console.developers.google.com/) and add it to `vault.env`.
+
+### Build
+
+For production:
+```
+npm i
+npm run build
+```
+For development with watch mode:
+```
+npm i
+npm run watch
+```
+
+### Load to Chrome
 
 1. Clone repo: `git checkout https://github.com/father-gregor/youtube-disliked-extension.git`
 2. Go to Chrome extensions page - chrome://extensions
 3. Enable Developer mode
-4. Click on "Load unpacked extension", select folder with cloned repo
+4. Click on "Load unpacked extension", select folder with builded extension `...repo-path/dist/youtube-disliked`
+
