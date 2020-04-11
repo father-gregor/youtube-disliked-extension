@@ -8,7 +8,7 @@ import {ThemeService} from '../services/theme.service';
 
 import '../styles/toolbar-popup.scss';
 
-I18nService.defaultLocale = 'ru';
+I18nService.defaultLocale = chrome.i18n.getUILanguage();
 ThemeService.create().updateCurrentTheme('dark');
 
 renderRootComponent(

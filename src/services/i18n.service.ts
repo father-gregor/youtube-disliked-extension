@@ -1,12 +1,20 @@
 export class I18nService {
     private currentLanguage: string;
-    private messages: {[key: string]: {message: string, description?: string}};
+    private messages: {[key: string]: {[key: string]: any, message: string, description?: string}};
 
     public static defaultLocale: string;
     private static instanceForLocale: {[key: string]: I18nService} = {};
 
     private constructor (locale: string) {
         this.currentLanguage = locale.split('-')[0];
+    }
+
+    public getCurrentLanguage () {
+        return this.currentLanguage;
+    }
+
+    public getElement (id: string) {
+        return this.messages[id];
     }
 
     public getMessage (id: string) {

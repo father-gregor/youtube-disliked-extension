@@ -75,9 +75,18 @@ export class DislikedVideosStorageService {
 
         const suffix = this.viewCountTiers[tier];
         const scale = Math.pow(10, tier * 3);
-        const scaled = viewCount / scale;
+        let scaled: number | string = viewCount / scale;
 
-        return scaled.toFixed(suffix === 'thousands' ? 0 : 1).replace('.', ',') + this.I18n.getMessage(`viewCount@${suffix}`) + ' ' + viewsWord;
+        const fixedPointRule = this.I18n.getElement('viewCount@countFixedPoint').rules[suffix];
+        if (fixedPointRule != null) {
+            const fixedPointSymbol = this.I18n.getElement(`viewCount@${suffix}`).fixedPointSymbol;
+            scaled = scaled.toFixed(fixedPointRule).replace('.', fixedPointSymbol != null ? fixedPointSymbol : ',');
+        }
+        else {
+            scaled = scaled.toLocaleString(this.I18n.getCurrentLanguage());
+        }
+
+        return scaled + this.I18n.getMessage(`viewCount@${suffix}`) + ' ' + viewsWord;
     }
 
     private localizePublishedDate (date: string) {
@@ -116,7 +125,17 @@ export class DislikedVideosStorageService {
             return this.publishDateRanges['today']();
         }
 
-        return `${resultDiff} ${this.publishDateRanges[range](resultDiff.toString())} ${this.I18n.getMessage('publishDate@agoWord')}`;
+        let beforeWord = '';
+        let afterWord = '';
+        const agoWord = this.I18n.getElement('publishDate@agoWord');
+        if (agoWord.position === 'before') {
+            beforeWord = `${agoWord.message} `;
+        }
+        else {
+            afterWord = ` ${agoWord.message}`;
+        }
+
+        return beforeWord + `${resultDiff} ${this.publishDateRanges[range](resultDiff.toString())}` + afterWord;
     }
 
     private initPublishDateWording () {
