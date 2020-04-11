@@ -35,6 +35,15 @@
     "viewCount@viewsWord": {
         "message": "просмотров"
     },
+    "viewCount@countFixedPoint": {
+        "message": "",
+        "rules": {
+            "default": null,
+            "thousands": 0,
+            "millions": 1,
+            "billions": 1
+        }
+    },
     "viewCount@thousands": {
         "message": " тыс."
     },
@@ -54,7 +63,8 @@
         "message": "Выйти из профиля"
     },
     "publishDate@agoWord": {
-        "message": "назад"
+        "message": "назад",
+        "position": "after"
     },
     "publishDate@year": {
         "message": "[1]=год;[2,3,4]=года;[5+]=лет"

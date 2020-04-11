@@ -3,37 +3,37 @@
         "message": "YouTube Disliked"
     },
     "dislikedButtonText": {
-        "message": "Disliked videos"
+        "message": "Vidéos \"Je n'aime pas\""
     },
     "askForAuthorizationMessage": {
         "message": "To retrieve list of your disliked videos you need to sign in to authenticate your account in \"YouTube Disliked\" extension by pressing button below. After that Google auth screen will appear. We don't use this access for anything other than getting disliked videos list - we don't process, store or send your personal data."
     },
     "askForAuthorizationButton": {
-        "message": "Get Disliked Videos List"
+        "message": "Se connecter"
     },
     "failedToLoadVideosMessage": {
         "message": "Unfortunately your videos weren't loaded. Try again by pressing button below."
     },
     "failedToLoadVideosButton" : {
-        "message": "Reload"
+        "message": "Recharge"
     },
     "loadMoreVideosButton": {
-        "message": "Load More"
+        "message": "Charger plus"
     },
     "infoPanel@header": {
-        "message":"Disliked videos"
+        "message":"Vidéos \"Je n'aime pas\""
     },
     "infoPanel@videoCountTitlePart": {
-        "message": "videos"
+        "message": "vidéos"
     },
     "reloadRequiredError": {
         "message": "Something went wrong. Please reload page to fix problem."
     },
     "openMoreVideosButton": {
-        "message": "See all"
+        "message": "Tout voir"
     },
     "viewCount@viewsWord": {
-        "message": "views"
+        "message": "vues"
     },
     "viewCount@countFixedPoint": {
         "message": "",
@@ -45,37 +45,37 @@
         }
     },
     "viewCount@thousands": {
-        "message": "K"
+        "message": " k"
     },
     "viewCount@millions": {
         "message": "M"
     },
     "viewCount@billions": {
-        "message": "B"
+        "message": "Md"
     },
     "noVideosErrorMessage": {
         "message": "No disliked videos were found. It could happened for various of reasons (including issues on YouTube servers), but if you sure that you disliked at least one video on YouTube then try to refresh authorization by pressing button below."
     },
     "noVideosErrorButton": {
-        "message": "Refresh"
+        "message": "Rafraîchir"
     },
     "logoutButton": {
-        "message": "Logout"
+        "message": "Se déconnecter"
     },
     "publishDate@agoWord": {
-        "message": "ago",
-        "position": "after"
+        "message": "il y a",
+        "position": "before "
     },
     "publishDate@year": {
-        "message": "[1]=year;[2+]=years"
+        "message": "[1]=an;[2+]=ans"
     },
     "publishDate@month": {
-        "message": "[1+]=month"
+        "message": "[1+]=mois"
     },
     "publishDate@week": {
-        "message": "[1]=week;[2+]=weeks"
+        "message": "[1]=semaine;[2+]=semaines"
     },
     "publishDate@today": {
-        "message": "Today"
+        "message": "Aujourd'hui"
     }
 }

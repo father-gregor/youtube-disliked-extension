@@ -3,25 +3,25 @@
         "message": "YouTube Disliked"
     },
     "dislikedButtonText": {
-        "message": "Disliked videos"
+        "message": "Videos que no me gustan"
     },
     "askForAuthorizationMessage": {
         "message": "To retrieve list of your disliked videos you need to sign in to authenticate your account in \"YouTube Disliked\" extension by pressing button below. After that Google auth screen will appear. We don't use this access for anything other than getting disliked videos list - we don't process, store or send your personal data."
     },
     "askForAuthorizationButton": {
-        "message": "Get Disliked Videos List"
+        "message": "Iniciar sesión"
     },
     "failedToLoadVideosMessage": {
         "message": "Unfortunately your videos weren't loaded. Try again by pressing button below."
     },
     "failedToLoadVideosButton" : {
-        "message": "Reload"
+        "message": "Volver a cargar"
     },
     "loadMoreVideosButton": {
-        "message": "Load More"
+        "message": "Carga más"
     },
     "infoPanel@header": {
-        "message":"Disliked videos"
+        "message":"Videos que no me gustan"
     },
     "infoPanel@videoCountTitlePart": {
         "message": "videos"
@@ -30,52 +30,53 @@
         "message": "Something went wrong. Please reload page to fix problem."
     },
     "openMoreVideosButton": {
-        "message": "See all"
+        "message": "Ver todo"
     },
     "viewCount@viewsWord": {
-        "message": "views"
+        "message": "visualizaciones"
     },
     "viewCount@countFixedPoint": {
         "message": "",
         "rules": {
             "default": null,
-            "thousands": 0,
+            "thousands": null,
             "millions": 1,
-            "billions": 1
+            "billions": 3
         }
     },
     "viewCount@thousands": {
-        "message": "K"
+        "message": ""
     },
     "viewCount@millions": {
-        "message": "M"
+        "message": " M"
     },
     "viewCount@billions": {
-        "message": "B"
+        "message": " M",
+        "fixedPointSymbol": ""
     },
     "noVideosErrorMessage": {
         "message": "No disliked videos were found. It could happened for various of reasons (including issues on YouTube servers), but if you sure that you disliked at least one video on YouTube then try to refresh authorization by pressing button below."
     },
     "noVideosErrorButton": {
-        "message": "Refresh"
+        "message": "Actualizar"
     },
     "logoutButton": {
-        "message": "Logout"
+        "message": "Cerrar sesión"
     },
     "publishDate@agoWord": {
-        "message": "ago",
-        "position": "after"
+        "message": "Hace",
+        "position": "before"
     },
     "publishDate@year": {
-        "message": "[1]=year;[2+]=years"
+        "message": "[1]=año;[2+]=años"
     },
     "publishDate@month": {
-        "message": "[1+]=month"
+        "message": "[1]=mes;[2+]=meses"
     },
     "publishDate@week": {
-        "message": "[1]=week;[2+]=weeks"
+        "message": "[1]=semana;[2+]=semanas"
     },
     "publishDate@today": {
-        "message": "Today"
+        "message": "Hoy"
     }
 }
