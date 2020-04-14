@@ -1,0 +1,84 @@
+{
+    "extensionName": {
+        "message": "YouTube Disliked"
+    },
+    "extensionDescription": {
+        "message": "Додає нову секцію в інтерфейс Youtube для показу списку всіх відео, яким ви поставили дізлайк через обранний аккаунт."
+    },
+    "dislikedButtonText": {
+        "message": "Відео, які не сподобалися"
+    },
+    "askForAuthorizationMessage": {
+        "message": "Чтобы получить список видео, которым вы поставили дизлайк, вы должны авторизировать ваш аккаунт в расширении \"YouTube Disliked\", нажав кнопку ниже. После этого появится окно авторизации Google. Мы используем этот доступ исключительно для получения списка непонравившихся видео - мы не обрабатываем, не сохраняем и не передаем куда-либо ваши личные данные."
+    },
+    "askForAuthorizationButton": {
+        "message": "Отримати список відео, які не сподобалися"
+    },
+    "failedToLoadVideosMessage": {
+        "message": "Нажалі ваші відео не вдалося завантажити. Спробуйте ще раз натиснувши кнопку нижче."
+    },
+    "failedToLoadVideosButton" : {
+        "message": "Завантажити ще раз"
+    },
+    "loadMoreVideosButton": {
+        "message": "Завантажити ще"
+    },
+    "infoPanel@header": {
+        "message":"Відео, які не сподобалися"
+    },
+    "infoPanel@videoCountTitlePart": {
+        "message": "відео"
+    },
+    "reloadRequiredError": {
+        "message": "Щось пішло не так. Будь-ласка перезаватажте сторінку для того, щоб виправити проблему."
+    },
+    "openMoreVideosButton": {
+        "message": "Більше"
+    },
+    "viewCount@viewsWord": {
+        "message": "переглядів"
+    },
+    "viewCount@countFixedPoint": {
+        "message": "",
+        "rules": {
+            "default": null,
+            "thousands": 0,
+            "millions": 1,
+            "billions": 1
+        }
+    },
+    "viewCount@thousands": {
+        "message": " тис."
+    },
+    "viewCount@millions": {
+        "message": " млн"
+    },
+    "viewCount@billions": {
+        "message": " млрд"
+    },
+    "noVideosErrorMessage": {
+        "message": "Не вдалося завантажити список відео. Це могло статися по різним причинам (включаючи також проблеми на серверах YouTube), але якщо ви впевнені, що поставили дізлайк хоча б одному відео на YouTube, то спробуйте оновити дані, нажавши кнопку нижче."
+    },
+    "noVideosErrorButton": {
+        "message": "Оновити"
+    },
+    "logoutButton": {
+        "message": "Вийти з профілю"
+    },
+    "publishDate@agoWord": {
+        "message": "тому",
+        "position": "after"
+    },
+    "publishDate@year": {
+        "message": "[1]=рік;[2,3,4]=роки;[5+]=років"
+    },
+    "publishDate@month": {
+        "message": "[1]=місяц;[2,3,4]=місяці;[5+]=місяців"
+    },
+    "publishDate@week": {
+        "message": "[1]=тиждень;[2,3,4]=тижні;[5+]=тижнів"
+    },
+    "publishDate@today": {
+        "message": "Сьогодні"
+    }
+}
