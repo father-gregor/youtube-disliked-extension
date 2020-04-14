@@ -2,7 +2,7 @@
 
 > Google Chrome extension - missing 'Disliked' section for Youtube
 
-Adds new section 'Disliked' to Youtube UI to show a list of all videos that you disliked via selected account.
+Adds a new section to Youtube UI to show a list of all videos that you disliked via selected account.
 
 #### Features
 - Button in Youtube sidebar to open disliked videos list
