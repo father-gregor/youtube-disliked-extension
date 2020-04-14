@@ -2,6 +2,9 @@
     "extensionName": {
         "message": "YouTube Disliked"
     },
+    "extensionDescription": {
+        "message": "Добавляет новую секцию в интерфейс Youtube для показа списка всех видео, которым вы поставилил дизлайк через выбранный аккаунт."
+    },
     "dislikedButtonText": {
         "message": "Непонравившиеся"
     },

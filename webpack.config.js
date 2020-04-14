@@ -108,7 +108,6 @@ module.exports = {
                             ...manifest.oauth2,
                             client_id: oauthClientId
                         },
-                        description: packageJson.description,
                         version: packageJson.version
                     }, null, 4))
                 }

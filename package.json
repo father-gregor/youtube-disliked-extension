@@ -1,7 +1,7 @@
 {
   "name": "youtube-disliked-extension",
   "version": "0.9.1",
-  "description": "Add new 'Disliked' button to Youtube that show list of all videos that you disliked.",
+  "description": "Adds a new section to Youtube UI to show a list of all videos that you disliked via selected account.",
   "scripts": {
     "zip": "npm run build && node ./tasks/archive-build",
     "build": "cross-env NODE_ENV=production npx webpack",

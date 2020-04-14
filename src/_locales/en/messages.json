@@ -2,6 +2,9 @@
     "extensionName": {
         "message": "YouTube Disliked"
     },
+    "extensionDescription": {
+        "message": "Adds a new section to Youtube UI to show a list of all videos that you disliked via selected account."
+    },
     "dislikedButtonText": {
         "message": "Disliked videos"
     },
