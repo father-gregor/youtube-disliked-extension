@@ -6,13 +6,13 @@
         "message": "Videos que no me gustan"
     },
     "askForAuthorizationMessage": {
-        "message": "To retrieve list of your disliked videos you need to sign in to authenticate your account in \"YouTube Disliked\" extension by pressing button below. After that Google auth screen will appear. We don't use this access for anything other than getting disliked videos list - we don't process, store or send your personal data."
+        "message": "Para recuperar la lista de tus vídeos no deseados debes iniciar sesión para autentificar tu cuenta en la extensión \"YouTube Disliked\" pulsando el botón de abajo. Después de eso aparecerá la pantalla de autenticación de Google. No utilizamos este acceso para nada más que para obtener la lista de vídeos no deseados; no procesamos, almacenamos ni enviamos tus datos personales."
     },
     "askForAuthorizationButton": {
         "message": "Iniciar sesión"
     },
     "failedToLoadVideosMessage": {
-        "message": "Unfortunately your videos weren't loaded. Try again by pressing button below."
+        "message": "Desafortunadamente tus videos no estaban cargados. Inténtalo de nuevo pulsando el botón de abajo."
     },
     "failedToLoadVideosButton" : {
         "message": "Volver a cargar"
@@ -27,7 +27,7 @@
         "message": "videos"
     },
     "reloadRequiredError": {
-        "message": "Something went wrong. Please reload page to fix problem."
+        "message": "Algo salió mal. Por favor, recarga la página para arreglar el problema."
     },
     "openMoreVideosButton": {
         "message": "Ver todo"
@@ -55,7 +55,7 @@
         "fixedPointSymbol": ""
     },
     "noVideosErrorMessage": {
-        "message": "No disliked videos were found. It could happened for various of reasons (including issues on YouTube servers), but if you sure that you disliked at least one video on YouTube then try to refresh authorization by pressing button below."
+        "message": "No se encontraron videos que no les gustaran. Podría haber sucedido por varias razones (incluyendo problemas en los servidores de YouTube), pero si está seguro de que no le gustó al menos un vídeo de YouTube, intente actualizar la autorización pulsando el botón de abajo."
     },
     "noVideosErrorButton": {
         "message": "Actualizar"

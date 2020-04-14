@@ -6,13 +6,13 @@
         "message": "Vidéos \"Je n'aime pas\""
     },
     "askForAuthorizationMessage": {
-        "message": "To retrieve list of your disliked videos you need to sign in to authenticate your account in \"YouTube Disliked\" extension by pressing button below. After that Google auth screen will appear. We don't use this access for anything other than getting disliked videos list - we don't process, store or send your personal data."
+        "message": "Pour récupérer la liste des vidéos que vous n'aimez pas, vous devez vous connecter pour authentifier votre compte dans l'extension \"YouTube Disliked\" en appuyant sur le bouton ci-dessous. Après cela, l'écran d'authentification Google apparaîtra. Nous n'utilisons cet accès que pour récupérer la liste des vidéos que vous n'aimez pas. Nous ne traitons pas, ne stockons pas et n'envoyons pas vos données personnelles."
     },
     "askForAuthorizationButton": {
         "message": "Se connecter"
     },
     "failedToLoadVideosMessage": {
-        "message": "Unfortunately your videos weren't loaded. Try again by pressing button below."
+        "message": "Malheureusement, vos vidéos n'ont pas été chargées. Essayez à nouveau en appuyant sur le bouton ci-dessous."
     },
     "failedToLoadVideosButton" : {
         "message": "Recharge"
@@ -27,7 +27,7 @@
         "message": "vidéos"
     },
     "reloadRequiredError": {
-        "message": "Something went wrong. Please reload page to fix problem."
+        "message": "Quelque chose a mal tourné. Veuillez recharger la page pour résoudre le problème."
     },
     "openMoreVideosButton": {
         "message": "Tout voir"
@@ -54,7 +54,7 @@
         "message": "Md"
     },
     "noVideosErrorMessage": {
-        "message": "No disliked videos were found. It could happened for various of reasons (including issues on YouTube servers), but if you sure that you disliked at least one video on YouTube then try to refresh authorization by pressing button below."
+        "message": "Aucune vidéo détestée n'a été trouvée. Cela peut être dû à diverses raisons (y compris des problèmes sur les serveurs YouTube), mais si vous êtes sûr de ne pas avoir aimé au moins une vidéo sur YouTube, essayez de rafraîchir l'autorisation en appuyant sur le bouton ci-dessous."
     },
     "noVideosErrorButton": {
         "message": "Rafraîchir"
