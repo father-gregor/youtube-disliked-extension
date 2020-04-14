@@ -3,7 +3,7 @@
         "message": "YouTube Disliked"
     },
     "extensionDescription": {
-        "message": "Fügt einen neuen Abschnitt zu Youtube hinzu, um eine Liste aller Videos anzuzeigen, die Ihnen über das ausgewählte Konto nicht gefallen haben."
+        "message": "Fügt einen neuen Abschnitt zu Youtube hinzu, um eine Liste aller Videos anzuzeigen, die Ihnen nicht gefallen haben."
     },
     "dislikedButtonText": {
         "message": "Videos, die ich nicht mag"

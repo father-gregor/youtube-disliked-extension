@@ -3,7 +3,7 @@
         "message": "YouTube Disliked"
     },
     "extensionDescription": {
-        "message": "Ajout d'une nouvelle section sur Youtube pour afficher une liste de toutes les vidéos que vous n'avez pas aimées via le compte sélectionné."
+        "message": "Ajout d'une nouvelle section sur Youtube pour montrer une liste de toutes les vidéos que vous n'avez pas aimées."
     },
     "dislikedButtonText": {
         "message": "Vidéos \"Je n'aime pas\""
